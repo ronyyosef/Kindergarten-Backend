@@ -159,7 +159,7 @@ functions:
     events:
       - http:
           path: attendance-mock
-          method: posth
+          method: post
           integration: lambda
           cors: true
           request:
