@@ -2,6 +2,7 @@ import logging
 from datetime import date
 
 import boto3
+from boto3.dynamodb.conditions import Key
 
 from const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, HAS_ARRIVED
 
@@ -10,7 +11,7 @@ class AttendanceHandler:
 
     @staticmethod
     def add_attendance(child_id: str, kindergarten_id: str, has_arrived: str):
-        attendance_table = table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
+        attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
 
         new_attendance = {
             ATTENDANCE_PK: child_id,
@@ -19,6 +20,13 @@ class AttendanceHandler:
             HAS_ARRIVED: has_arrived
         }
         try:
-            attendance_table.put_item(Item=new_attendance)
+            return attendance_table.put_item(Item=new_attendance)
         except Exception as e:
             logging.error(f'Cannot put {new_attendance} in {ATTENDANCE_TABLE}, {str(e)}')
+
+    @staticmethod
+    def get_attendance(child_id, date_query):
+        attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
+        response = attendance_table.query(
+            KeyConditionExpression=Key(ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).eq(date_query))
+        return response['Items'][0]
