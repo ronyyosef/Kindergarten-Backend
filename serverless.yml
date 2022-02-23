@@ -1,0 +1,204 @@
+service: aws-python
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: dev
+  region: ${opt:region,'us-east-1'}
+
+custom:
+  cognitoAuthorizerArn: arn:aws:cognito-idp:us-east-1:344089725894:userpool/us-east-1_xVUdvWsda
+  userPoolClientName: test-user-pool-client
+  userPoolName: test-user-pool-name
+  pythonRequirements:
+    dockerizePip: non-linux
+    usePipenv: false
+
+functions:
+  # child
+  GetChildData:
+    handler: lambdas/children/get_child_data_lambda.get_child_data
+    role: ChildrenRole
+    events:
+      - http:
+          path: children-mock
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/children/**'
+  AddChildData:
+    handler: lambdas/children/add_child_data_lambda.add_child_data
+    role: ChildrenRole
+    events:
+      - http:
+          path: children-mock
+          method: post
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/children/**'
+  # teacher
+  GetTeacherData:
+    handler: lambdas/teacher/get_teacher_data_lambda.get_teacher_data
+    role: TeacherRole
+    events:
+      - http:
+          path: teacher-mock
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/teacher/**'
+  AddTeacherData:
+    handler: lambdas/teacher/add_teacher_data_lambda.add_teacher_data
+    role: TeacherRole
+    events:
+      - http:
+          path: teacher-mock
+          method: post
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/teacher/**'
+  # kindergarten
+  GetKindergartenDataMock:
+    handler: lambdas/kindergarten/get_kindergarten_data_lambda_mock.get_kindergarten_data
+    role: KindergartenRole
+    events:
+      - http:
+          path: kindergarten-mock
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/kindergarten/**'
+  GetKindergartenData:
+    handler: lambdas/kindergarten/get_kindergarten_data_lambda.get_kindergarten_data
+    role: KindergartenRole
+    events:
+      - http:
+          path: kindergarten
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+
+    package:
+      patterns:
+        - 'lambdas/kindergarten/**'
+
+  GetAttendanceData:
+    handler: lambdas/attendance/get_attendance_data_lambda.get_attendance_data
+    role: AttendanceRole
+    events:
+      - http:
+          path: attendance-mock
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/attendance/**'
+  AddAttendanceData:
+    handler: lambdas/attendance/add_attendance_data_lambda.add_attendance_data
+    role: AttendanceRole
+    events:
+      - http:
+          path: attendance-mock
+          method: posth
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/attendance/**'
+plugins:
+  - serverless-dependson-plugin
+  - serverless-python-requirements
+  - serverless-plugin-stage-variables
+resources:
+  # roles
+  - ${file(resources/iam/AttendanceRole.yml)}
+  - ${file(resources/iam/ChildrenRole.yml)}
+  - ${file(resources/iam/KindergartenRole.yml)}
+  - ${file(resources/iam/TeacherRole.yml)}
+  # dynamodb
+  - ${file(resources/dynamodb/AttendanceTable.yml)}
+  - ${file(resources/dynamodb/KindergartenChildTable.yml)}
+  - ${file(resources/dynamodb/KindergartenTable.yml)}
+  - ${file(resources/dynamodb/KindergartenTeacherTable.yml)}
+
+  # cognito
+#  - ${file(resources/cognito/Kindergarten-02.yml)}
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!lambdas/**'
+    - '!tests/**'
+    - '!resources/**'
+    - 'lambdas/__init__.py'
+    - 'shared/**'
+
+  individually: true
+
+
