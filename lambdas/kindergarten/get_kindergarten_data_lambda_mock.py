@@ -48,6 +48,7 @@ logger.setLevel(logging.INFO)
 def get_kindergarten_data(event, context):
     logger.info("logging")
     print("printing")
+
     result = {
         TEACHERS: [
             teacher1,
