@@ -41,10 +41,13 @@ children2 = {
     KINDERGARTEN_ID: '1',
     GROUP_NUMBER: '1',
 }
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def get_kindergarten_data(event, context):
-    logging.info(event)
+    logger.info("logging")
+    print("printing")
     result = {
         TEACHERS: [
             teacher1,
