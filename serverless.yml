@@ -2,9 +2,13 @@ service: aws-python
 
 provider:
   name: aws
-  runtime: python3.8
-  stage: dev
+  runtime: python3.9
+  versionFunctions: false
+  stage: ${opt:stage,'dev'}
   region: ${opt:region,'us-east-1'}
+  tracing:
+    apiGateway: true
+    lambda: true
 
 custom:
   cognitoAuthorizerArn: arn:aws:cognito-idp:us-east-1:344089725894:userpool/us-east-1_xVUdvWsda
