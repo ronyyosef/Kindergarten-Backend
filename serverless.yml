@@ -2,9 +2,13 @@ service: aws-python
 
 provider:
   name: aws
-  runtime: python3.8
-  stage: dev
+  runtime: python3.9
+  versionFunctions: false
+  stage: ${opt:stage,'dev'}
   region: ${opt:region,'us-east-1'}
+  tracing:
+    apiGateway: true
+    lambda: true
 
 custom:
   cognitoAuthorizerArn: arn:aws:cognito-idp:us-east-1:344089725894:userpool/us-east-1_xVUdvWsda
@@ -62,6 +66,25 @@ functions:
       - http:
           path: teacher-mock
           method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/teacher/**'
+  UpdateTeacherData:
+    handler: lambdas/teacher/update_teacher_data_lambda.update_teacher_data
+    role: TeacherRole
+    events:
+      - http:
+          path: teacher-mock
+          method: put
           integration: lambda
           cors: true
           request:
