@@ -9,7 +9,7 @@ from const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LIN
 class TeacherHandler:
 
     @staticmethod
-    def add_teacher(phone_number, first_name, last_name, photo_link, kindergarten_id, group_number, email, is_admin):
+    def add_teacher(phone_number, first_name, last_name, photo_link, kindergarten_id, group_number, is_admin):
         teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
 
         new_teacher = {
@@ -22,6 +22,7 @@ class TeacherHandler:
             IS_ADMIN: is_admin
         }
         try:
+            logging.info(f'Adding teacher : {new_teacher}')
             teacher_table.put_item(Item=new_teacher)
         except Exception as e:
             logging.error(f'Cannot put {new_teacher} in {TEACHERS_TABLE}, {str(e)}')
