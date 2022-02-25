@@ -11,7 +11,7 @@ provider:
     lambda: true
 
 custom:
-  cognitoAuthorizerArn: arn:aws:cognito-idp:${aws:region}:#{AWS:AccountId}:userpool/ ${aws:region} _xVUdvWsda
+  cognitoAuthorizerArn: arn:aws:cognito-idp:${aws:region}:${aws:accountId}:userpool/${aws:region}_PokjeshX3
   pythonRequirements:
     dockerizePip: non-linux
     usePipenv: false
