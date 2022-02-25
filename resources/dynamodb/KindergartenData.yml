@@ -1,5 +1,5 @@
 Resources:
-  KindergartenChildTable:
+  KindergartenData:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
@@ -11,4 +11,4 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: "5"
         WriteCapacityUnits: "5"
-      TableName: "KindergartenChildTable"
+      TableName: "KindergartenData"
