@@ -19,6 +19,3 @@ def add_teacher_data(event, context):
     TeacherHandler.add_teacher(phone_number=phone_number, first_name=None, last_name=None, photo_link=None,
                                kindergarten_id=None, group_number=None, is_admin=None)
     return phone_number
-
-
-add_teacher_data(event, {})
