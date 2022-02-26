@@ -212,6 +212,7 @@ package:
     - '!resources/**'
     - 'lambdas/__init__.py'
     - 'shared/**'
+    - 'utils/**'
 
   individually: true
 
