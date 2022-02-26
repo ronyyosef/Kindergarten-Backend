@@ -62,7 +62,7 @@ functions:
     role: TeacherRole
     events:
       - http:
-          path: teacher-mock
+          path: teacher
           method: get
           integration: lambda
           cors: true
@@ -82,7 +82,7 @@ functions:
     role: TeacherRole
     events:
       - http:
-          path: teacher-mock
+          path: teacher
           method: put
           integration: lambda
           cors: true
