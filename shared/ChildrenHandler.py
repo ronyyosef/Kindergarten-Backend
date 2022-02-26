@@ -36,5 +36,5 @@ class ChildrenHandler:
     def get_child(id):
         child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
         response = child_table.query(
-            KeyConditionExpression=Key(ATTENDANCE_PK).eq(id))
+            KeyConditionExpression=Key(ID).eq(id))
         return response['Items'][0]

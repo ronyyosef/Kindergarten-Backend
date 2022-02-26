@@ -7,8 +7,6 @@ from const import ID, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PHOTO_LINK, GROUP_
 from shared.ChildrenHandler import ChildrenHandler
 
 
-
-
 def setup_module():
     pass
 
@@ -17,7 +15,7 @@ def teardown_module():
     pass
 
 
-def test_ChildHandler():
+def test_add_ChildHandler():
     response = ChildrenHandler.add_child(id='test_child_id',
                                          kindergarten_id='test_kindergarten_id',
                                          first_name='test_first_name',
@@ -30,6 +28,8 @@ def test_ChildHandler():
 
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
+
+def test_get_ChildHandler():
     response = ChildrenHandler.get_child(id='test_child_id')
     assert response == {ID: 'test_child_id',
                         KINDERGARTEN_ID: 'test_kindergarten_id',
