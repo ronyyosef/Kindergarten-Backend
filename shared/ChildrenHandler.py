@@ -8,9 +8,10 @@ from utils.logger import logger
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
+child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
+
 
 class ChildrenHandler:
-
     @staticmethod
     def add_child(id: str, kindergarten_id: str, first_name: str, last_name: str, group_number: str,
                   parent1_phone_number: str,
@@ -37,3 +38,9 @@ class ChildrenHandler:
         response = child_table.query(
             KeyConditionExpression=Key(ID).eq(id))
         return response['Items'][0]
+
+    @staticmethod
+    def check_if_key_exists(key_to_search):
+        response = child_table.query(
+            KeyConditionExpression=Key(ID).eq(key_to_search))
+        return len(response["Items"]) >0
