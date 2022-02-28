@@ -1,4 +1,3 @@
-import logging
 
 from shared.AttendanceHandler import AttendanceHandler
 from shared.CognitoHandler import CognitoHandler

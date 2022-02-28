@@ -1,11 +1,12 @@
-import logging
-from datetime import date
 
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from const import CHILD_TABLE, ATTENDANCE_PK, KINDERGARTEN_ID, FIRST_NAME, ID, LAST_NAME, \
+from const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, ID, LAST_NAME, \
     GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK
+from utils.logger import logger
+
+child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
@@ -30,7 +31,7 @@ class ChildrenHandler:
         try:
             return child_table.put_item(Item=new_child)
         except Exception as e:
-            logging.error(f'Cannot put {new_child} in {CHILD_TABLE}, {str(e)}')
+            logger.error(f'Cannot put {new_child} in {CHILD_TABLE}, {str(e)}')
 
     @staticmethod
     def get_child(id):
