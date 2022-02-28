@@ -42,4 +42,4 @@ class ChildrenHandler:
     def check_if_key_exists(key_to_search):
         response = child_table.query(
             KeyConditionExpression=Key(ID).eq(key_to_search))
-        return 'Items' in response
+        return len(response["Items"]) >0

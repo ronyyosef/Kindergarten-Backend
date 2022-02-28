@@ -1,7 +1,7 @@
 import random
 
 from const import MAX_ID
-from logger import logger
+from utils.logger import logger
 
 
 def get_random_id() -> str:
