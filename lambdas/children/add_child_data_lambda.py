@@ -16,11 +16,11 @@ def add_child_data(event, context):
     while id_is_in_use:
         id_for_added_child = get_random_id()
         id_is_in_use = ChildrenHandler.check_if_key_exists(id_for_added_child)
-    logger.info(f"id tobe used {id_for_added_child}")
+    logger.info(f"id to be used {id_for_added_child}")
 
     body: dict = event['customBody']
     child_to_add = {
-        ID: id_is_in_use,
+        ID: id_for_added_child,
         KINDERGARTEN_ID: body.get(KINDERGARTEN_ID, None),
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
@@ -32,4 +32,4 @@ def add_child_data(event, context):
 
     logger.info(f"child to be added is :{child_to_add}")
     ChildrenHandler.add_child(**child_to_add)
-    return {"code": "200", "message": f"Child updated successfully with id {id_for_added_child}"}
+    return {"code": "200", "message": "Child updated successfully", "id_created": id_for_added_child}
