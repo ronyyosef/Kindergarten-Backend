@@ -15,10 +15,11 @@ HAS_ARRIVED = 'has_arrived'
 EXTRA_DATA = 'extra_data'
 ATTENDANCE_PK = 'child_id'
 ATTENDANCE_SK = 'date'
+MAX_ID = 100000000
 # Tables
 ATTENDANCE_TABLE = 'AttendanceData'
 TEACHERS_TABLE = 'TeacherData'
 KINDERGARTEN_TABLE = 'KindergartenData'
 CHILD_TABLE = 'ChildData'
-PARENT1_PHONE_NUMBER = 'test_parent1_phone_number'
-PARENT2_PHONE_NUMBER = 'test_parent2_phone_number'
+PARENT1_PHONE_NUMBER = 'parent1_phone_number'
+PARENT2_PHONE_NUMBER = 'parent2_phone_number'
