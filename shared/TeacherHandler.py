@@ -1,10 +1,10 @@
-import logging
 
 import boto3
 from boto3.dynamodb.conditions import Key
 
 from const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
     IS_ADMIN
+from utils.logger import logger
 
 teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
 
@@ -24,21 +24,21 @@ class TeacherHandler:
             IS_ADMIN: is_admin
         }
         try:
-            logging.info(f'Adding teacher : {new_teacher}')
+            logger.info(f'Adding teacher : {new_teacher}')
             response = teacher_table.put_item(Item=new_teacher)
             return response
         except Exception as e:
-            logging.error(f'Cannot put {new_teacher} in {TEACHERS_TABLE}, {str(e)}')
+            logger.error(f'Cannot put {new_teacher} in {TEACHERS_TABLE}, {str(e)}')
 
     @staticmethod
     def get_teacher_data(phone_number):
         try:
-            logging.info(f'Trying to get teacher: {phone_number}')
+            logger.info(f'Trying to get teacher: {phone_number}')
             response = teacher_table.query(KeyConditionExpression=Key(PHONE_NUMBER).eq(phone_number), Limit=1)
             teacher_data = response["Items"][0] if response['Count'] == 1 else None
             return teacher_data
         except Exception as e:
-            logging.error(f'Error: {str(e)}')
+            logger.error(f'Error: {str(e)}')
 
     @staticmethod
     def update_teacher(phone_number, first_name=None, last_name=None, photo_link=None, kindergarten_id=None,
@@ -61,7 +61,7 @@ class TeacherHandler:
             )
             return response['Attributes']
         except Exception as e:
-            logging.error(f'Cannot put in {TEACHERS_TABLE}, {str(e)}')
+            logger.error(f'Cannot update in {TEACHERS_TABLE}, {str(e)}')
 
     @staticmethod
     def delete_teacher(phone_number):

@@ -1,6 +1,4 @@
-import logging
 
-from const import ID, FIRST_NAME, LAST_NAME, PHOTO_LINK, GROUP_NUMBER, KINDERGARTEN_ID
 from shared.ChildrenHandler import ChildrenHandler
 
 

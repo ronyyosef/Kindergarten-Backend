@@ -1,4 +1,3 @@
-import logging
 
 from shared.ChildrenHandler import ChildrenHandler
 from utils.logger import logger
