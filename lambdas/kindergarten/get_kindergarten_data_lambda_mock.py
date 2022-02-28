@@ -1,7 +1,6 @@
-import logging
-
 from const import ID, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, EMAIL, PHONE_NUMBER, IS_ADMIN, \
     TEACHERS, CHILDREN
+from utils.logger import logger
 
 teacher1 = {
     ID: '56',
@@ -41,12 +40,9 @@ children2 = {
     KINDERGARTEN_ID: '1',
     GROUP_NUMBER: '1',
 }
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
 
 
 def get_kindergarten_data(event, context):
-    logger.info("logging")
 
     result = {
         TEACHERS: [

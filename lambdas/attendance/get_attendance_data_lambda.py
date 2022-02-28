@@ -1,12 +1,12 @@
-import logging
 import datetime
 
 from const import KINDERGARTEN_ID, GROUP_NUMBER, CHILD_ID, DATE, HAS_ARRIVED, EXTRA_DATA
+from utils.logger import logger
 
 
 def get_attendance_data(event, context):
     # TODO get the children id from the event
-    logging.info(event)
+    logger.info(event)
     result = [
         {
             CHILD_ID: '4',
