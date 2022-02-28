@@ -7,6 +7,8 @@ from boto3.dynamodb.conditions import Key
 from const import CHILD_TABLE, ATTENDANCE_PK, KINDERGARTEN_ID, FIRST_NAME, ID, LAST_NAME, \
     GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK
 
+child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
+
 
 class ChildrenHandler:
 
@@ -14,7 +16,6 @@ class ChildrenHandler:
     def add_child(id: str, kindergarten_id: str, first_name: str, last_name: str, group_number: str,
                   parent1_phone_number: str,
                   parent2_phone_number: str = None, photo_link: str = None):
-        child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
         new_child = {
             ID: id,
@@ -34,7 +35,6 @@ class ChildrenHandler:
 
     @staticmethod
     def get_child(id):
-        child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
         response = child_table.query(
             KeyConditionExpression=Key(ID).eq(id))
         return response['Items'][0]

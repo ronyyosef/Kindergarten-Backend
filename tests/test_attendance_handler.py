@@ -18,4 +18,4 @@ def test_AttendanceHandler():
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 
     response = AttendanceHandler.get_attendance(child_id='test_child_id', date_query=str(date.today()))
-    assert response == {'child_id': 'test_child_id', 'date': '2022-02-23', 'kindergarten_id': 'test_kindergarten_id', 'has_arrived': 'test_has_arrived'}
+    assert response == {'child_id': 'test_child_id', 'date': str(date.today()), 'kindergarten_id': 'test_kindergarten_id', 'has_arrived': 'test_has_arrived'}

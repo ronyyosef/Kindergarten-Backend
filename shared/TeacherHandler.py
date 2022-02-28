@@ -6,14 +6,14 @@ from boto3.dynamodb.conditions import Key
 from const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
     IS_ADMIN
 
+teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
+
 
 class TeacherHandler:
 
     @staticmethod
     def add_teacher(phone_number, first_name=None, last_name=None, photo_link=None, kindergarten_id=None,
                     group_number=None, is_admin=None):
-        teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
-
         new_teacher = {
             PHONE_NUMBER: phone_number,
             FIRST_NAME: first_name,
@@ -32,7 +32,6 @@ class TeacherHandler:
 
     @staticmethod
     def get_teacher_data(phone_number):
-        teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
         try:
             logging.info(f'Trying to get teacher: {phone_number}')
             response = teacher_table.query(KeyConditionExpression=Key(PHONE_NUMBER).eq(phone_number), Limit=1)
@@ -44,19 +43,7 @@ class TeacherHandler:
     @staticmethod
     def update_teacher(phone_number, first_name=None, last_name=None, photo_link=None, kindergarten_id=None,
                        group_number=None, is_admin=None):
-        teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
-
-        teacher_update_info = {
-            PHONE_NUMBER: phone_number,
-            FIRST_NAME: first_name,
-            LAST_NAME: last_name,
-            PHOTO_LINK: photo_link,
-            KINDERGARTEN_ID: kindergarten_id,
-            GROUP_NUMBER: group_number,
-            IS_ADMIN: is_admin
-        }
         try:
-
             response = teacher_table.update_item(
                 Key={
                     PHONE_NUMBER: phone_number,
@@ -74,11 +61,10 @@ class TeacherHandler:
             )
             return response['Attributes']
         except Exception as e:
-            logging.error(f'Cannot put {teacher_update_info} in {TEACHERS_TABLE}, {str(e)}')
+            logging.error(f'Cannot put in {TEACHERS_TABLE}, {str(e)}')
 
     @staticmethod
     def delete_teacher(phone_number):
-        teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
         response = teacher_table.delete_item(
             Key={
                 PHONE_NUMBER: phone_number

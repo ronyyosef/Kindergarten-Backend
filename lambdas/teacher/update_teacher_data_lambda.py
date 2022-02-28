@@ -15,4 +15,5 @@ def update_teacher_data(event, context):
         GROUP_NUMBER: body.get(GROUP_NUMBER, None),
         IS_ADMIN: body.get(IS_ADMIN, None),
     }
-    TeacherHandler.update_teacher(**teacher_update_info)
+    response = TeacherHandler.update_teacher(**teacher_update_info)
+    return response
