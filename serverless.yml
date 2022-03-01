@@ -78,11 +78,11 @@ functions:
         - 'lambdas/teacher/**'
 
   UpdateTeacherData:
-    handler: lambdas/teacher/update_teacher_data_lambda.update_teacher_data
+    handler: lambdas/teacher/signup/update_teacher_data_lambda.update_teacher_data
     role: TeacherRole
     events:
       - http:
-          path: teacher
+          path: teacher/signup
           method: put
           integration: lambda
           cors: true
