@@ -23,8 +23,14 @@ class KindergartenHandler:
             logger.error(f'Cannot put {new_kindergarten} in {KINDERGARTEN_TABLE}, {str(e)}')
 
     @staticmethod
-    def get_kindergarten():
-        pass
+    def get_kindergarten(kindergarten_id: str):
+        try:
+            logger.info(f'Trying to get kindergarten: {kindergarten_id}')
+            response = kindergarten_table.query(KeyConditionExpression=Key(ID).eq(kindergarten_id), Limit=1)
+            kindergarten_data = response["Items"][0] if response['Count'] == 1 else None
+            return kindergarten_data
+        except Exception as e:
+            logger.error(f'Error: {str(e)}')
 
     @staticmethod
     def update_kindergarten():
