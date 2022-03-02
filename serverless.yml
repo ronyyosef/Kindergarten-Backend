@@ -11,6 +11,11 @@ provider:
     lambda: true
 
 custom:
+  customDomain:
+    domainName: api.kindergartenil.com
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
   cognitoAuthorizerArn: arn:aws:cognito-idp:${aws:region}:${aws:accountId}:userpool/${aws:region}_PokjeshX3
   pythonRequirements:
     dockerizePip: non-linux
@@ -189,7 +194,7 @@ plugins:
   - serverless-dependson-plugin
   - serverless-python-requirements
   - serverless-plugin-stage-variables
-
+  - serverless-domain-manager
 resources:
   # roles
   - ${file(resources/iam/AttendanceRole.yml)}
