@@ -1,3 +1,4 @@
+from typing import List
 
 import boto3
 from boto3.dynamodb.conditions import Key
@@ -5,8 +6,6 @@ from boto3.dynamodb.conditions import Key
 from const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, ID, LAST_NAME, \
     GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK
 from utils.logger import logger
-
-child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
@@ -43,4 +42,11 @@ class ChildrenHandler:
     def check_if_key_exists(key_to_search):
         response = child_table.query(
             KeyConditionExpression=Key(ID).eq(key_to_search))
-        return len(response["Items"]) >0
+        return len(response["Items"]) > 0
+
+    @staticmethod
+    def get_children_for_kindergarten(kindergarten_id: str) -> List[dict]:
+        response = child_table.scan(
+            FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
+
+        return response['Items']

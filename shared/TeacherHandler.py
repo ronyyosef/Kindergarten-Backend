@@ -70,3 +70,9 @@ class TeacherHandler:
                 PHONE_NUMBER: phone_number
             })
         return response
+
+    @staticmethod
+    def get_teacher_kindergarten_id(phone_number):
+        teacher_data = TeacherHandler.get_teacher_data(phone_number)
+        return teacher_data.get(KINDERGARTEN_ID)
+
