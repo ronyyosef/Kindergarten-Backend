@@ -128,6 +128,22 @@ functions:
             type: COGNITO_USER_POOLS
             arn: ${self:custom.cognitoAuthorizerArn}
 
+  GetKindergartenChildren:
+    handler: lambdas/kindergarten/get_kindergarten_children_lambda.get_kindergarten_children
+    role: KindergartenRole
+    events:
+      - http:
+          path: kindergarten/group_chidren
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
     package:
       patterns:
         - 'lambdas/kindergarten/**'

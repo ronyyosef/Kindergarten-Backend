@@ -25,10 +25,11 @@ class AttendanceHandler:
             logger.error(f'Cannot put {new_attendance} in {ATTENDANCE_TABLE}, {str(e)}')
 
     @staticmethod
-    def get_attendance(child_id, date_query):
+    def get_attendance(child_id, date_query) -> bool:
         response = attendance_table.query(
             KeyConditionExpression=Key(ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).eq(date_query))
-        return response['Items'][0]
+        res = True if response['Count'] >= 1 else False
+        return res
 
     @staticmethod
     def delete_attendance(child_id, date_query):
@@ -58,5 +59,3 @@ class AttendanceHandler:
             return response['Attributes']
         except Exception as e:
             logger.error(f'Cannot update in {ATTENDANCE_TABLE}, {str(e)}')
-
-
