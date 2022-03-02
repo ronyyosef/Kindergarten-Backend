@@ -27,7 +27,7 @@ functions:
     role: ChildrenRole
     events:
       - http:
-          path: children-mock
+          path: children
           method: get
           integration: lambda
           cors: true
@@ -47,7 +47,7 @@ functions:
     role: ChildrenRole
     events:
       - http:
-          path: children-mock
+          path: children
           method: post
           integration: lambda
           cors: true
@@ -83,7 +83,7 @@ functions:
         - 'lambdas/teacher/**'
 
   UpdateTeacherData:
-    handler: lambdas/teacher/signup/update_teacher_data_lambda.update_teacher_data
+    handler: lambdas/signup/signup_teacher_lambda.signup_teacher
     role: TeacherRole
     events:
       - http:
@@ -109,32 +109,14 @@ functions:
       patterns:
         - 'lambdas/cognito/**'
 
-  GetKindergartenDataMock:
-    handler: lambdas/kindergarten/get_kindergarten_data_lambda_mock.get_kindergarten_data
-    role: KindergartenRole
-    events:
-      - http:
-          path: kindergarten-mock
-          method: get
-          integration: lambda
-          cors: true
-          request:
-            template: ${file(./request_apigateway.yml)}
-          response: ${file(./response_apigateway.yml)}
-          authorizer:
-            name: PrivateAuthorizer
-            type: COGNITO_USER_POOLS
-            arn: ${self:custom.cognitoAuthorizerArn}
-    package:
-      patterns:
-        - 'lambdas/kindergarten/**'
+
 
   GetKindergartenData:
     handler: lambdas/kindergarten/get_kindergarten_data_lambda.get_kindergarten_data
     role: KindergartenRole
     events:
       - http:
-          path: kindergarten
+          path: kindergarten/info
           method: get
           integration: lambda
           cors: true
@@ -155,7 +137,7 @@ functions:
     role: AttendanceRole
     events:
       - http:
-          path: attendance-mock
+          path: attendance
           method: get
           integration: lambda
           cors: true
@@ -175,7 +157,7 @@ functions:
     role: AttendanceRole
     events:
       - http:
-          path: attendance-mock
+          path: attendance
           method: post
           integration: lambda
           cors: true
