@@ -46,6 +46,7 @@ class ChildrenHandler:
 
     @staticmethod
     def get_children_for_kindergarten(kindergarten_id: str) -> List[dict]:
-        response = child_table.query(
-            KeyConditionExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
+        response = child_table.scan(
+            FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
+
         return response['Items']
