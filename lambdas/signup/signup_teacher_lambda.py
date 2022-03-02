@@ -7,14 +7,15 @@ from utils.random import get_random_id
 from utils.logger import logger
 
 
-def update_teacher_data(event, context):
+def signup_teacher(event, context):
     teacher_id = CognitoHandler.get_user_id(event)
     body: dict = event['customBody']
 
     if body.get(KINDERGARTEN_ID, None) is None:
         if KINDERGARTEN_NAME not in body:
-            return "Error If kindergarten_id is null, new kindergarten_name must be provided "
+            return "Error If kindergarten_id is null, new kindergarten_name must be provided"
         body[KINDERGARTEN_ID] = create_kindergarten_for_teacher(body[KINDERGARTEN_NAME])
+    # TODO make sure kindergarten_id exist
 
     teacher_update_info = {
         PHONE_NUMBER: teacher_id,
