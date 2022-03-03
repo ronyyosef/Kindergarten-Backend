@@ -50,3 +50,12 @@ class ChildrenHandler:
             FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
 
         return response['Items']
+
+    @staticmethod
+    def child_in_kindergarten(child_id: str, kindergarten_id: str) -> bool:
+        response = child_table.query(
+            KeyConditionExpression=f'{ID} = :id and {KINDERGARTEN_ID} = :kindergarten_id',
+            ExpressionAttributeValues={':id': child_id, ':kindergarten_id': kindergarten_id},
+            Limit=1
+        )
+        return response['Count'] >= 1

@@ -1,9 +1,11 @@
 from datetime import date
+from time import time
 
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, HAS_ARRIVED
+from const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, HAS_ARRIVED, TTL, \
+    ATTENDANCE_TABLE_TTL_TIME_OUT
 from utils.logger import logger
 
 attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
@@ -12,17 +14,25 @@ attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
 class AttendanceHandler:
 
     @staticmethod
-    def add_attendance(child_id: str, kindergarten_id: str, has_arrived: str):
+    def add_attendance(child_id: str, kindergarten_id: str):
         new_attendance = {
             ATTENDANCE_PK: child_id,
             ATTENDANCE_SK: str(date.today()),
             KINDERGARTEN_ID: kindergarten_id,
-            HAS_ARRIVED: has_arrived
+            TTL: int(time() + ATTENDANCE_TABLE_TTL_TIME_OUT)
         }
         try:
             return attendance_table.put_item(Item=new_attendance)
         except Exception as e:
             logger.error(f'Cannot put {new_attendance} in {ATTENDANCE_TABLE}, {str(e)}')
+
+    @staticmethod
+    def remove_attendance(child_id: str):
+        try:
+            return attendance_table.delete_item(
+                Key={ATTENDANCE_PK: child_id, ATTENDANCE_SK: str(date.today())})
+        except Exception as e:
+            logger.error(f'Cannot delete {child_id}, {str(e)}')
 
     @staticmethod
     def get_attendance(child_id, date_query) -> bool:

@@ -24,3 +24,5 @@ CHILD_TABLE = 'ChildData'
 PARENT1_PHONE_NUMBER = 'parent1_phone_number'
 PARENT2_PHONE_NUMBER = 'parent2_phone_number'
 KINDERGARTEN_NAME = 'kindergarten_name'
+TTL = 'ttl'
+ATTENDANCE_TABLE_TTL_TIME_OUT = 3024000  # 35 days
