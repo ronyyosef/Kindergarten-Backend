@@ -100,7 +100,7 @@ functions:
             arn: ${self:custom.cognitoAuthorizerArn}
     package:
       patterns:
-        - 'lambdas/teacher/**'
+        - 'lambdas/signup/**'
 
   CogintoPostConfirmation:
     handler: lambdas/cognito/cognito_post_confirmation_add_teacher_data_lambda.add_teacher_data
@@ -127,6 +127,10 @@ functions:
             name: PrivateAuthorizer
             type: COGNITO_USER_POOLS
             arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/kindergarten/**'
+
 
   GetKindergartenChildren:
     handler: lambdas/kindergarten/get_kindergarten_children_lambda.get_kindergarten_children
