@@ -26,3 +26,5 @@ PARENT2_PHONE_NUMBER = 'parent2_phone_number'
 KINDERGARTEN_NAME = 'kindergarten_name'
 TTL = 'ttl'
 ATTENDANCE_TABLE_TTL_TIME_OUT = 3024000  # 35 days
+PHOTOS_BUCKET = 'kindergarten-photos'
+PRESIGNED_URL_EXPIRE_TIME = 300

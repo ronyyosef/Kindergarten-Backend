@@ -5,6 +5,7 @@ from boto3.dynamodb.conditions import Key
 
 from const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, ID, LAST_NAME, \
     GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK
+from shared.S3PhotosHandler import S3PhotosHandler
 from utils.logger import logger
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
@@ -48,7 +49,9 @@ class ChildrenHandler:
     def get_children_for_kindergarten(kindergarten_id: str) -> List[dict]:
         response = child_table.scan(
             FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
-
+        for item in response['Items']:
+            photo_url = S3PhotosHandler.get_child_photo_url(kindergarten_id, item[ID])
+            item[PHOTO_LINK] = photo_url
         return response['Items']
 
     @staticmethod
