@@ -7,7 +7,6 @@ s3_client = boto3.client('s3')
 
 
 class S3PhotosHandler:
-
     @staticmethod
     def get_photo_url(kindergarten_id, id):
         try:
@@ -23,12 +22,8 @@ class S3PhotosHandler:
 
     @staticmethod
     def put_photo_url(kindergarten_id, id):
-        url = s3_client.generate_presigned_post(
-            Bucket=PHOTOS_BUCKET,
-            Key=f'{kindergarten_id}/{id}.png',
-            ExpiresIn=PRESIGNED_URL_EXPIRE_TIME,
-            Conditions=[
-                ["content-length-range", 1, 10485760]
-            ]
-        )
+        url = s3_client.generate_presigned_url(
+                ClientMethod='put_object',
+                Params={'Bucket': PHOTOS_BUCKET, 'Key': f'{kindergarten_id}/{id}.png'},
+                ExpiresIn=PRESIGNED_URL_EXPIRE_TIME)
         return url
