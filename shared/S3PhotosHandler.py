@@ -11,16 +11,13 @@ class S3PhotosHandler:
     @staticmethod
     def get_photo_url(kindergarten_id, id):
         try:
-            s3_client.head_object(Bucket='kindergarten-photos', Key=f'{kindergarten_id}/{id}.png')
+            s3_client.head_object(Bucket='kindergarten-photos', Key=f'{kindergarten_id}/{id}.jpg')
         except ClientError:
-            url = s3_client.generate_presigned_url(
-                ClientMethod='get_object',
-                Params={'Bucket': PHOTOS_BUCKET, 'Key': 'child_boy_default.jfif'},
-                ExpiresIn=PRESIGNED_URL_EXPIRE_TIME)
+            url = None
         else:
             url = s3_client.generate_presigned_url(
                 ClientMethod='get_object',
-                Params={'Bucket': PHOTOS_BUCKET, 'Key': f'{kindergarten_id}/{id}.png'},
+                Params={'Bucket': PHOTOS_BUCKET, 'Key': f'{kindergarten_id}/{id}.jpg'},
                 ExpiresIn=PRESIGNED_URL_EXPIRE_TIME)
         return url
 
@@ -33,6 +30,6 @@ class S3PhotosHandler:
         #                                         ExpiresIn=3600)
         url = boto3.client('s3').generate_presigned_url(
             ClientMethod='put_object',
-            Params={'Bucket': PHOTOS_BUCKET, 'Key': f'{kindergarten_id}/{id}'},
+            Params={'Bucket': PHOTOS_BUCKET, 'Key': f'{kindergarten_id}/{id}.jpg'},
             ExpiresIn=PRESIGNED_URL_EXPIRE_TIME)
         return url
