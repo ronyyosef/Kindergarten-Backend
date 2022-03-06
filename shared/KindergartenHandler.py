@@ -30,7 +30,7 @@ class KindergartenHandler:
             kindergarten_data = response["Items"][0] if response['Count'] == 1 else None
             return kindergarten_data
         except Exception as e:
-            logger.error(f'Error: {str(e)}')
+            logger.error(f'Error: { str(e)}')
 
     @staticmethod
     def update_kindergarten():
@@ -45,3 +45,4 @@ class KindergartenHandler:
         response = kindergarten_table.query(
             KeyConditionExpression=Key(ID).eq(key_to_search))
         return len(response["Items"]) > 0
+print(KindergartenHandler.get_kindergarten("123"))

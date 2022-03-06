@@ -15,7 +15,7 @@ class ChildrenHandler:
     @staticmethod
     def add_child(id: str, kindergarten_id: str, first_name: str, last_name: str, group_number: str,
                   parent1_phone_number: str,
-                  parent2_phone_number: str = None, photo_link: str = None):
+                  parent2_phone_number: str = None):
 
         new_child = {
             ID: id,
@@ -25,7 +25,6 @@ class ChildrenHandler:
             GROUP_NUMBER: group_number,
             PARENT1_PHONE_NUMBER: parent1_phone_number,
             PARENT2_PHONE_NUMBER: parent2_phone_number,
-            PHOTO_LINK: photo_link,
         }
 
         try:

@@ -22,7 +22,6 @@ def test_add_ChildHandler():
                                          last_name='test_last_name',
                                          parent1_phone_number='test_parent1_phone_number',
                                          parent2_phone_number='test_parent2_phone_number',
-                                         photo_link='test_photo_link',
                                          group_number='test_group_number',
                                          )
 
@@ -37,5 +36,4 @@ def test_get_ChildHandler():
                         LAST_NAME: 'test_last_name',
                         PARENT1_PHONE_NUMBER: 'test_parent1_phone_number',
                         PARENT2_PHONE_NUMBER: 'test_parent2_phone_number',
-                        PHOTO_LINK: 'test_photo_link',
                         GROUP_NUMBER: 'test_group_number'}
