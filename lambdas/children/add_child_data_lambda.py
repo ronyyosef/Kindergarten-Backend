@@ -26,7 +26,6 @@ def add_child_data(event, context):
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
-        PHOTO_LINK: body.get(PHOTO_LINK, None),
         GROUP_NUMBER: teacher_data[GROUP_NUMBER],
         PARENT1_PHONE_NUMBER: body.get(PARENT1_PHONE_NUMBER, None),
         PARENT2_PHONE_NUMBER: body.get(PARENT2_PHONE_NUMBER, None),
