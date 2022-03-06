@@ -4,6 +4,7 @@ from boto3.dynamodb.conditions import Key
 
 from const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
     IS_ADMIN
+from shared.S3PhotosHandler import S3PhotosHandler
 from utils.logger import logger
 
 teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
@@ -35,6 +36,9 @@ class TeacherHandler:
             logger.info(f'Trying to get teacher: {phone_number}')
             response = teacher_table.query(KeyConditionExpression=Key(PHONE_NUMBER).eq(phone_number), Limit=1)
             teacher_data = response["Items"][0] if response['Count'] == 1 else None
+            if teacher_data:
+                photo_url = S3PhotosHandler.get_photo_url(teacher_data[KINDERGARTEN_ID], phone_number)
+                teacher_data[PHOTO_LINK] = photo_url
             return teacher_data
         except Exception as e:
             logger.error(f'Error: {str(e)}')
