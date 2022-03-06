@@ -15,7 +15,7 @@ class ChildrenHandler:
     @staticmethod
     def add_child(id: str, kindergarten_id: str, first_name: str, last_name: str, group_number: str,
                   parent1_phone_number: str,
-                  parent2_phone_number: str = None, photo_link: str = None):
+                  parent2_phone_number: str = None):
 
         new_child = {
             ID: id,
@@ -25,7 +25,6 @@ class ChildrenHandler:
             GROUP_NUMBER: group_number,
             PARENT1_PHONE_NUMBER: parent1_phone_number,
             PARENT2_PHONE_NUMBER: parent2_phone_number,
-            PHOTO_LINK: photo_link,
         }
 
         try:
@@ -37,7 +36,10 @@ class ChildrenHandler:
     def get_child(id):
         response = child_table.query(
             KeyConditionExpression=Key(ID).eq(id))
-        return response['Items'][0]
+        result = response['Items'][0]
+        photo_url = S3PhotosHandler.get_photo_url(result[KINDERGARTEN_ID], id)
+        result[PHOTO_LINK] = photo_url
+        return result
 
     @staticmethod
     def check_if_key_exists(key_to_search):
