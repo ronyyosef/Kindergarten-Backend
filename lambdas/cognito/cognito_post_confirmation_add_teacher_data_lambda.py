@@ -1,5 +1,6 @@
 
 from shared.TeacherHandler import TeacherHandler
+from shared.slack_notification import send_msg
 from utils.logger import logger
 
 event = {'version': '1', 'region': 'us-east-1', 'userPoolId': 'us-east-1_PokjeshX3',
@@ -14,4 +15,5 @@ def add_teacher_data(event, context):
     phone_number = event['request']['userAttributes']['phone_number']
     logger.info(f'Adding new teacher phone number = {phone_number}')
     TeacherHandler.add_teacher(phone_number=phone_number)
+    send_msg("user register")
     return event
