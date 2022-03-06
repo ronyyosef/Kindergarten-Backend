@@ -62,6 +62,26 @@ functions:
       patterns:
         - 'lambdas/children/**'
 
+  UploadChildPhoto:
+    handler: lambdas/children/get_upload_link_lambda.get_upload_link
+    role: KindergartenRole
+    events:
+      - http:
+          path: child/upload_photo_link
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/children/**'
+
   GetTeacherData:
     handler: lambdas/teacher/get_teacher_data_lambda.get_teacher_data
     role: TeacherRole
@@ -101,6 +121,26 @@ functions:
     package:
       patterns:
         - 'lambdas/signup/**'
+
+  UploadTeacherPhoto:
+    handler: lambdas/teacher/get_upload_link_lambda.get_upload_link
+    role: TeacherRole
+    events:
+      - http:
+          path: teacher/upload_photo_link
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/teacher/**'
 
   CogintoPostConfirmation:
     handler: lambdas/cognito/cognito_post_confirmation_add_teacher_data_lambda.add_teacher_data

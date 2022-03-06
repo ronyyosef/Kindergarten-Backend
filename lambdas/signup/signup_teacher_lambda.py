@@ -21,7 +21,6 @@ def signup_teacher(event, context):
         PHONE_NUMBER: teacher_id,
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
-        PHOTO_LINK: body.get(PHOTO_LINK, None),
         KINDERGARTEN_ID: body.get(KINDERGARTEN_ID, None),
         GROUP_NUMBER: body.get(GROUP_NUMBER, None),
         IS_ADMIN: body.get(IS_ADMIN, None),

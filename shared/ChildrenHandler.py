@@ -50,7 +50,7 @@ class ChildrenHandler:
         response = child_table.scan(
             FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
         for item in response['Items']:
-            photo_url = S3PhotosHandler.get_child_photo_url(kindergarten_id, item[ID])
+            photo_url = S3PhotosHandler.get_photo_url(kindergarten_id, item[ID])
             item[PHOTO_LINK] = photo_url
         return response['Items']
 
