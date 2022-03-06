@@ -36,7 +36,10 @@ class ChildrenHandler:
     def get_child(id):
         response = child_table.query(
             KeyConditionExpression=Key(ID).eq(id))
-        return response['Items'][0]
+        result = response['Items'][0]
+        photo_url = S3PhotosHandler.get_photo_url(result[KINDERGARTEN_ID], id)
+        result[PHOTO_LINK] = photo_url
+        return result
 
     @staticmethod
     def check_if_key_exists(key_to_search):
