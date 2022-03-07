@@ -50,7 +50,13 @@ jobs:
             ${{ runner.os }}-
       - name: Install Node dependencies (specifically, serverless-python-requirements)
         run: npm install
-      
+
+      - name: Create env file
+        run: |
+          cat > env.yml << EOF
+          ${{ secrets.ENV }}
+          EOF
+
       - name: serverless deploy
         uses: serverless/github-action@v3
         with:

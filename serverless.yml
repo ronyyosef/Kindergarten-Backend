@@ -9,6 +9,10 @@ provider:
   tracing:
     apiGateway: true
     lambda: true
+  environment:
+    SLACK_ALERTS_WEBHOOK: ${self:custom.environment.SLACK_ALERTS_WEBHOOK}
+    SLACK_REGISTER_WEBHOOK: ${self:custom.environment.SLACK_REGISTER_WEBHOOK}
+
 
 custom:
   customDomain:
@@ -20,6 +24,7 @@ custom:
   pythonRequirements:
     dockerizePip: non-linux
     usePipenv: false
+  environment: ${file(env.yml):${self:provider.stage}, file(env.yml):default}
 
 functions:
   GetChildData:
