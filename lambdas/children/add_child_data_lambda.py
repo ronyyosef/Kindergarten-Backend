@@ -6,10 +6,12 @@ from const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PARENT1_PHONE_NUMBER, 
 from shared.ChildrenHandler import ChildrenHandler
 from shared.CognitoHandler import CognitoHandler
 from shared.TeacherHandler import TeacherHandler
+from shared.lambda_decorator import lambda_decorator
 from utils.logger import logger
 from utils.random import get_random_id
 
 
+@lambda_decorator
 def add_child_data(event, context):
     id_for_added_child = "-1"
     user = CognitoHandler.get_user_id(event)

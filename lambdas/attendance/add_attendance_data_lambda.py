@@ -3,8 +3,10 @@ from shared.AttendanceHandler import AttendanceHandler
 from shared.ChildrenHandler import ChildrenHandler
 from shared.CognitoHandler import CognitoHandler
 from shared.TeacherHandler import TeacherHandler
+from shared.lambda_decorator import lambda_decorator
 
 
+@lambda_decorator
 def add_attendance_data(event, context):
     user = CognitoHandler.get_user_id(event)
     child_id: str = event['customBody'][ID]
