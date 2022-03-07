@@ -1,13 +1,16 @@
-import json
 import traceback
 
+from shared.CognitoHandler import CognitoHandler
 from shared.slack_notification import send_errors_alert_msg
 
 
-def lambda_decorator(func):
+def lambda_decorator(lambda_function):
     def inner(*args, **kwargs):
         try:
-            lambda_result = func(*args, **kwargs)
+            event = args[0]
+            context = args[1]
+
+            lambda_result = lambda_function(event, event)
             if lambda_result:
                 return lambda_result
             else:
@@ -19,12 +22,3 @@ def lambda_decorator(func):
                     "message": "internal server error"}
 
     return inner
-
-
-@lambda_decorator
-def func(event, context):
-    x = 4 / 0
-    print("the func")
-
-
-print(func({}, {}))

@@ -3,10 +3,12 @@ from const import PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_
 from shared.CognitoHandler import CognitoHandler
 from shared.KindergartenHandler import KindergartenHandler
 from shared.TeacherHandler import TeacherHandler
+from shared.lambda_decorator import lambda_decorator
 from utils.random import get_random_id
 from utils.logger import logger
 
 
+@lambda_decorator
 def signup_teacher(event, context):
     teacher_id = CognitoHandler.get_user_id(event)
     body: dict = event['customBody']
