@@ -11,6 +11,7 @@ provider:
     lambda: true
   environment:
     SLACK_ALERTS_WEBHOOK: ${self:custom.environment.SLACK_ALERTS_WEBHOOK}
+    SLACK_REGISTER_WEBHOOK: ${self:custom.environment.SLACK_REGISTER_WEBHOOK}
 
 
 custom:
