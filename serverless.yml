@@ -29,7 +29,7 @@ custom:
 functions:
   GetChildData:
     handler: lambdas/children/get_child_data_lambda.get_child_data
-    role: ChildrenRole
+    role: GetChildDataRole
     events:
       - http:
           path: children
@@ -49,7 +49,7 @@ functions:
 
   AddChildData:
     handler: lambdas/children/add_child_data_lambda.add_child_data
-    role: ChildrenRole
+    role: AddChildDataRole
     events:
       - http:
           path: children
@@ -69,7 +69,7 @@ functions:
 
   UploadChildPhoto:
     handler: lambdas/children/get_upload_link_lambda.get_upload_link
-    role: KindergartenRole
+    role: UploadChildPhotoRole
     events:
       - http:
           path: child/upload_photo_link
@@ -89,7 +89,7 @@ functions:
 
   GetTeacherData:
     handler: lambdas/teacher/get_teacher_data_lambda.get_teacher_data
-    role: TeacherRole
+    role: GetTeacherDataRole
     events:
       - http:
           path: teacher
@@ -109,7 +109,7 @@ functions:
 
   UpdateTeacherData:
     handler: lambdas/signup/signup_teacher_lambda.signup_teacher
-    role: TeacherRole
+    role: UpdateTeacherDataRole
     events:
       - http:
           path: teacher/signup
@@ -129,7 +129,7 @@ functions:
 
   UploadTeacherPhoto:
     handler: lambdas/teacher/get_upload_link_lambda.get_upload_link
-    role: TeacherRole
+    role: UploadTeacherPhotoRole
     events:
       - http:
           path: teacher/upload_photo_link
@@ -149,16 +149,14 @@ functions:
 
   CogintoPostConfirmation:
     handler: lambdas/cognito/cognito_post_confirmation_add_teacher_data_lambda.add_teacher_data
-    role: TeacherRole
+    role: CogintoPostConfirmationRole
     package:
       patterns:
         - 'lambdas/cognito/**'
 
-
-
   GetKindergartenData:
     handler: lambdas/kindergarten/get_kindergarten_data_lambda.get_kindergarten_data
-    role: KindergartenRole
+    role: GetKindergartenDataRole
     events:
       - http:
           path: kindergarten/info
@@ -176,10 +174,9 @@ functions:
       patterns:
         - 'lambdas/kindergarten/**'
 
-
   GetKindergartenChildren:
     handler: lambdas/kindergarten/get_kindergarten_children_lambda.get_kindergarten_children
-    role: KindergartenRole
+    role: GetKindergartenChildrenRole
     events:
       - http:
           path: kindergarten/group_chidren
@@ -199,7 +196,7 @@ functions:
 
   AddAttendanceData:
     handler: lambdas/attendance/add_attendance_data_lambda.add_attendance_data
-    role: AttendanceRole
+    role: AddAttendanceDataRole
     events:
       - http:
           path: attendance
@@ -218,16 +215,21 @@ functions:
         - 'lambdas/attendance/**'
 
 plugins:
-  - serverless-dependson-plugin
   - serverless-python-requirements
   - serverless-plugin-stage-variables
   - serverless-domain-manager
 resources:
   # roles
-  - ${file(resources/iam/AttendanceRole.yml)}
-  - ${file(resources/iam/ChildrenRole.yml)}
-  - ${file(resources/iam/KindergartenRole.yml)}
-  - ${file(resources/iam/TeacherRole.yml)}
+  - ${file(resources/iam/GetChildDataRole.yml)}
+  - ${file(resources/iam/AddChildDataRole.yml)}
+  - ${file(resources/iam/UploadChildPhotoRole.yml)}
+  - ${file(resources/iam/GetTeacherDataRole.yml)}
+  - ${file(resources/iam/UpdateTeacherDataRole.yml)}
+  - ${file(resources/iam/UploadTeacherPhotoRole.yml)}
+  - ${file(resources/iam/CogintoPostConfirmationRole.yml)}
+  - ${file(resources/iam/GetKindergartenDataRole.yml)}
+  - ${file(resources/iam/GetKindergartenChildrenRole.yml)}
+  - ${file(resources/iam/AddAttendanceDataRole.yml)}
   # dynamodb
   - ${file(resources/dynamodb/AttendanceData.yml)}
   - ${file(resources/dynamodb/ChildData.yml)}
