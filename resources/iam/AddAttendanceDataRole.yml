@@ -21,9 +21,14 @@ Resources:
                   Resource: "*"
                 - Effect: Allow
                   Action:
-                    - dynamodb:*
-                  Resource: "*"
-                - Effect: Allow
-                  Action:
-                    - s3:*
-                  Resource: "*"
+                    - dynamodb:DeleteItem
+                    - dynamodb:PutItem
+                    - dynamodb:Query
+                    - dynamodb:GetItem
+                    - dynamodb:UpdateItem
+                    - dynamodb:Scan
+                  Resource:
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ChildData
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/KindergartenData
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/TeacherData
