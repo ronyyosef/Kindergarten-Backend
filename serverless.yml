@@ -23,7 +23,7 @@ custom:
   cognitoAuthorizerArn: arn:aws:cognito-idp:${aws:region}:${aws:accountId}:userpool/${aws:region}_PokjeshX3
   pythonRequirements:
     dockerizePip: non-linux
-    usePipenv: false
+    usePipenv: True
   environment: ${file(env.yml):${self:provider.stage}, file(env.yml):default}
 
 functions:
