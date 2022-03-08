@@ -9,7 +9,7 @@ def lambda_decorator(lambda_function):
         try:
             event = args[0]
             context = args[1]
-
+            event['user_id'] = CognitoHandler.get_user_id(event)
             lambda_result = lambda_function(event, event)
             if lambda_result:
                 return lambda_result
