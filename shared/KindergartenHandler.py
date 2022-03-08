@@ -2,7 +2,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from utils.logger import logger
-from const import KINDERGARTEN_TABLE, KINDERGARTEN_NAME, ID
+from const import KINDERGARTEN_TABLE, KINDERGARTEN_NAME, KINDERGARTEN_ID
 
 kindergarten_table = boto3.resource('dynamodb').Table(KINDERGARTEN_TABLE)
 
@@ -10,10 +10,10 @@ kindergarten_table = boto3.resource('dynamodb').Table(KINDERGARTEN_TABLE)
 class KindergartenHandler:
 
     @staticmethod
-    def add_kindergarten(id: str, kindergarten_name: str):
+    def add_kindergarten(kindergarten_id: str, kindergarten_name: str):
 
         new_kindergarten = {
-            ID: id,
+            KINDERGARTEN_ID: kindergarten_id,
             KINDERGARTEN_NAME: kindergarten_name
         }
 
@@ -26,7 +26,7 @@ class KindergartenHandler:
     def get_kindergarten(kindergarten_id: str):
         try:
             logger.info(f'Trying to get kindergarten: {kindergarten_id}')
-            response = kindergarten_table.query(KeyConditionExpression=Key(ID).eq(kindergarten_id), Limit=1)
+            response = kindergarten_table.query(KeyConditionExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id), Limit=1)
             kindergarten_data = response["Items"][0] if response['Count'] == 1 else None
             return kindergarten_data
         except Exception as e:
@@ -41,8 +41,7 @@ class KindergartenHandler:
         pass
 
     @staticmethod
-    def check_if_key_exists(key_to_search) -> bool:
+    def check_if_key_exists(kindergarten_id) -> bool:
         response = kindergarten_table.query(
-            KeyConditionExpression=Key(ID).eq(key_to_search))
+            KeyConditionExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
         return len(response["Items"]) > 0
-print(KindergartenHandler.get_kindergarten("123"))

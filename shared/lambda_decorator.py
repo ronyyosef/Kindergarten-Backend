@@ -1,6 +1,6 @@
 import traceback
 
-from const import USER_ID
+from const import TEACHER_ID
 from shared.CognitoHandler import CognitoHandler
 from shared.slack_notification import send_errors_alert_msg
 
@@ -10,9 +10,9 @@ def lambda_decorator(lambda_function):
         try:
             event = args[0]
             context = args[1]
-            event[USER_ID] = CognitoHandler.get_user_id(event)
+            event[TEACHER_ID] = CognitoHandler.get_teacher_id(event)
             lambda_result = lambda_function(event, event)
-            if lambda_result:
+            if lambda_result is not None:
                 return lambda_result
             else:
                 return {"statusCode": "200"}

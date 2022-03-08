@@ -1,7 +1,7 @@
 # from datetime import date
 
 # from shared.AttendanceHandler import ChildrenHandler
-from const import ID, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PHOTO_LINK, GROUP_NUMBER, PARENT1_PHONE_NUMBER, \
+from const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PHOTO_LINK, GROUP_NUMBER, PARENT1_PHONE_NUMBER, \
     PARENT2_PHONE_NUMBER
 
 from shared.ChildrenHandler import ChildrenHandler

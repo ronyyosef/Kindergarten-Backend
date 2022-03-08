@@ -1,10 +1,5 @@
-import random
-
-from const import MAX_ID
-from utils.logger import logger
+import uuid
 
 
 def get_random_id() -> str:
-    number = random.randint(1, MAX_ID)
-    logger.info(f"id generated {id}")
-    return str(number).zfill(8)
+    return str(uuid.uuid4())[:8]

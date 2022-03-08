@@ -1,4 +1,3 @@
-ID = 'id'
 FIRST_NAME = 'first_name'
 LAST_NAME = 'last_name'
 PHOTO_LINK = 'photo_link'
@@ -28,4 +27,4 @@ TTL = 'ttl'
 ATTENDANCE_TABLE_TTL_TIME_OUT = 3024000  # 35 days
 PHOTOS_BUCKET = 'kindergarten-photos'
 PRESIGNED_URL_EXPIRE_TIME = 300
-USER_ID = 'user_id'
+TEACHER_ID = 'teacher_id'
