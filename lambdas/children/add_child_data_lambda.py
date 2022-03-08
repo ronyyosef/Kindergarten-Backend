@@ -1,25 +1,20 @@
+import uuid
+
 from const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
-    GROUP_NUMBER, ID, TEACHER_ID
+    GROUP_NUMBER, TEACHER_ID, CHILD_ID
 from shared.ChildrenHandler import ChildrenHandler
 from shared.TeacherHandler import TeacherHandler
 from shared.lambda_decorator import lambda_decorator
 from utils.logger import logger
-from utils.random import get_random_id
 
 
 @lambda_decorator
 def add_child_data(event, context):
-    id_for_added_child = "-1"
-
-    id_is_in_use = True
-    while id_is_in_use:
-        id_for_added_child = get_random_id()
-        id_is_in_use = ChildrenHandler.check_if_key_exists(id_for_added_child)
-    logger.info(f"id to be used {id_for_added_child}")
+    new_child_id = uuid.uuid1()
     teacher_data = TeacherHandler.get_teacher_data(event[TEACHER_ID])
     body: dict = event['customBody']
     child_to_add = {
-        ID: id_for_added_child,
+        CHILD_ID: new_child_id,
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
@@ -30,4 +25,4 @@ def add_child_data(event, context):
 
     logger.info(f"child to be added is :{child_to_add}")
     ChildrenHandler.add_child(**child_to_add)
-    return {"code": "200", "message": "Child updated successfully", "id_created": id_for_added_child}
+    return {"code": "200", "message": "Child updated successfully", "id_created": new_child_id}

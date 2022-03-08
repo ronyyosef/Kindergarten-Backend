@@ -10,7 +10,7 @@ def lambda_decorator(lambda_function):
         try:
             event = args[0]
             context = args[1]
-            event[TEACHER_ID] = CognitoHandler.get_user_id(event)
+            event[TEACHER_ID] = CognitoHandler.get_teacher_id(event)
             lambda_result = lambda_function(event, event)
             if lambda_result:
                 return lambda_result

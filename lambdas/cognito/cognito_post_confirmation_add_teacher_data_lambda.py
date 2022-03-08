@@ -1,26 +1,26 @@
+from const import PHONE_NUMBER
 from shared.TeacherHandler import TeacherHandler
 from shared.slack_notification import send_new_user_msg
-from utils.logger import logger
 
-event = {
-    'version': '1',
-    'region': 'us-east-1',
-    'userPoolId': 'us-east-1_PokjeshX3',
-    'userName': '1da35496-4f62-49a7-a798-102764bd645d',
-    'callerContext': {'awsSdkVersion': 'aws-sdk-unknown-unknown', 'clientId': '36d8opu7j2e9illge6vlfjdu9h'},
-    'triggerSource': 'PostConfirmation_ConfirmSignUp',
-    'request': {
-        'userAttributes':
-            {'sub': '1da35496-4f62-49a7-a798-102764bd645d',
-             'cognito:user_status': 'CONFIRMED',
-            'cognito:phone_number_alias': 'XXXXXXXXXXX',
-             'phone_number_verified': 'false',
-            'phone_number': 'XXXXXXXXX'}}, 'response': {}}
+# event = {
+#     'version': '1',
+#     'region': 'us-east-1',
+#     'userPoolId': 'xxxxxxxxx',
+#     'userName': 'xxxxxxxxxxxxxxxxx',
+#     'callerContext': {'awsSdkVersion': 'aws-sdk-unknown-unknown', 'clientId': 'xxxxxxxxxxxx'},
+#     'triggerSource': 'PostConfirmation_ConfirmSignUp',
+#     'request': {
+#         'userAttributes':
+#             {'sub': 'xxxxxxxxxxxxxxxxxx',
+#              'cognito:user_status': 'CONFIRMED',
+#              'cognito:phone_number_alias': 'XXXXXXXXXXX',
+#              'phone_number_verified': 'false',
+#              'phone_number': 'XXXXXXXXX'}}, 'response': {}}
 
 
 def add_teacher_data(event, context):
-    phone_number = event['userName']
-    logger.info(f'Adding new teacher phone number = {phone_number}')
-    TeacherHandler.add_teacher(phone_number=phone_number)
-    send_new_user_msg(f"New user register {phone_number}")
+    teacher_id = event['userName']
+    phone_number = event['request']['userAttributes'][PHONE_NUMBER]
+    TeacherHandler.add_teacher(teacher_id=teacher_id, phone_number=phone_number)
+    send_new_user_msg(f"New user register, phone number: {phone_number}")
     return event

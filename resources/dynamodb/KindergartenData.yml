@@ -3,10 +3,10 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "id"
+        - AttributeName: "kindergarten_id"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "id"
+        - AttributeName: "kindergarten_id"
           KeyType: "HASH"
       ProvisionedThroughput:
         ReadCapacityUnits: "5"

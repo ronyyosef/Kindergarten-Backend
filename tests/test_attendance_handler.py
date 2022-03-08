@@ -12,8 +12,7 @@ def teardown_module():
 
 
 def test_AttendanceHandler():
-    response = AttendanceHandler.add_attendance(child_id='test_child_id', kindergarten_id='test_kindergarten_id',
-                                                has_arrived='test_has_arrived')
+    response = AttendanceHandler.add_attendance(child_id='test_child_id', kindergarten_id='test_kindergarten_id')
 
     assert response['ResponseMetadata']['HTTPStatusCode'] == 200
 

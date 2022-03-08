@@ -18,7 +18,7 @@ def signup_teacher(event, context):
     # TODO make sure kindergarten_id exist
 
     teacher_update_info = {
-        PHONE_NUMBER: event[TEACHER_ID],
+        TEACHER_ID: event[TEACHER_ID],
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
         KINDERGARTEN_ID: body.get(KINDERGARTEN_ID, None),
