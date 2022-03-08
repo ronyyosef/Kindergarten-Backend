@@ -1,5 +1,5 @@
 Resources:
-    AttendanceRole:
+    GetKindergartenDataRole:
       Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:

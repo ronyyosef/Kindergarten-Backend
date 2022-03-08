@@ -1,5 +1,5 @@
 Resources:
-    TeacherRole:
+    UpdateTeacherDataRole:
       Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:

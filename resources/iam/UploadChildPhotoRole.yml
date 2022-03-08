@@ -1,5 +1,5 @@
 Resources:
-    KindergartenRole:
+    UploadChildPhotoRole:
       Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:
