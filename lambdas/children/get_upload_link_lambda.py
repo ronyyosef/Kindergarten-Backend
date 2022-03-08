@@ -1,4 +1,4 @@
-from const import KINDERGARTEN_ID
+from const import KINDERGARTEN_ID, USER_ID
 from shared.ChildrenHandler import ChildrenHandler
 from shared.CognitoHandler import CognitoHandler
 from shared.S3PhotosHandler import S3PhotosHandler
@@ -14,8 +14,7 @@ def get_upload_link(event, context):
     except:
         return 'child does not exist'
     child_kindergarten_id = child_data[KINDERGARTEN_ID]
-    user = CognitoHandler.get_user_id(event)
-    teacher_kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(user)
+    teacher_kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(event[USER_ID])
     if child_kindergarten_id != teacher_kindergarten_id:
         return 'child and teacher does not in the same class'
     return S3PhotosHandler.put_photo_url(child_kindergarten_id, child_id)

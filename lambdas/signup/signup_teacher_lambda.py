@@ -1,5 +1,5 @@
 from const import PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, IS_ADMIN, \
-    KINDERGARTEN_NAME
+    KINDERGARTEN_NAME, USER_ID
 from shared.CognitoHandler import CognitoHandler
 from shared.KindergartenHandler import KindergartenHandler
 from shared.TeacherHandler import TeacherHandler
@@ -10,7 +10,6 @@ from utils.logger import logger
 
 @lambda_decorator
 def signup_teacher(event, context):
-    teacher_id = CognitoHandler.get_user_id(event)
     body: dict = event['customBody']
 
     if body.get(KINDERGARTEN_ID, None) is None:
@@ -20,7 +19,7 @@ def signup_teacher(event, context):
     # TODO make sure kindergarten_id exist
 
     teacher_update_info = {
-        PHONE_NUMBER: teacher_id,
+        PHONE_NUMBER: event[USER_ID],
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
         KINDERGARTEN_ID: body.get(KINDERGARTEN_ID, None),
