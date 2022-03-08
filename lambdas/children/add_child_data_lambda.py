@@ -1,10 +1,6 @@
-import logging
-import random
-
 from const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
-    GROUP_NUMBER, ID, USER_ID
+    GROUP_NUMBER, ID, TEACHER_ID
 from shared.ChildrenHandler import ChildrenHandler
-from shared.CognitoHandler import CognitoHandler
 from shared.TeacherHandler import TeacherHandler
 from shared.lambda_decorator import lambda_decorator
 from utils.logger import logger
@@ -20,7 +16,7 @@ def add_child_data(event, context):
         id_for_added_child = get_random_id()
         id_is_in_use = ChildrenHandler.check_if_key_exists(id_for_added_child)
     logger.info(f"id to be used {id_for_added_child}")
-    teacher_data = TeacherHandler.get_teacher_data(event[USER_ID])
+    teacher_data = TeacherHandler.get_teacher_data(event[TEACHER_ID])
     body: dict = event['customBody']
     child_to_add = {
         ID: id_for_added_child,

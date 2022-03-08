@@ -5,7 +5,4 @@ class CognitoHandler:
 
     @staticmethod
     def get_user_id(event: dict):
-        return jwt.decode(event["headers"]["Authorization"], options={"verify_signature": False})['phone_number']
-
-
-
+        return jwt.decode(event["headers"]["Authorization"], options={"verify_signature": False})['cognito:username']

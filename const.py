@@ -28,4 +28,4 @@ TTL = 'ttl'
 ATTENDANCE_TABLE_TTL_TIME_OUT = 3024000  # 35 days
 PHOTOS_BUCKET = 'kindergarten-photos'
 PRESIGNED_URL_EXPIRE_TIME = 300
-USER_ID = 'user_id'
+TEACHER_ID = 'user_id'

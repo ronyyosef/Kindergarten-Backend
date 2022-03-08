@@ -1,6 +1,5 @@
 from const import PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, IS_ADMIN, \
-    KINDERGARTEN_NAME, USER_ID
-from shared.CognitoHandler import CognitoHandler
+    KINDERGARTEN_NAME, TEACHER_ID
 from shared.KindergartenHandler import KindergartenHandler
 from shared.TeacherHandler import TeacherHandler
 from shared.lambda_decorator import lambda_decorator
@@ -19,7 +18,7 @@ def signup_teacher(event, context):
     # TODO make sure kindergarten_id exist
 
     teacher_update_info = {
-        PHONE_NUMBER: event[USER_ID],
+        PHONE_NUMBER: event[TEACHER_ID],
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
         KINDERGARTEN_ID: body.get(KINDERGARTEN_ID, None),
