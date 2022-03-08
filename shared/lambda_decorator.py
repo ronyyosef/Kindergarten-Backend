@@ -12,7 +12,7 @@ def lambda_decorator(lambda_function):
             context = args[1]
             event[TEACHER_ID] = CognitoHandler.get_teacher_id(event)
             lambda_result = lambda_function(event, event)
-            if lambda_result:
+            if lambda_result is not None:
                 return lambda_result
             else:
                 return {"statusCode": "200"}

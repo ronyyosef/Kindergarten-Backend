@@ -10,7 +10,7 @@ from utils.logger import logger
 
 @lambda_decorator
 def add_child_data(event, context):
-    new_child_id = uuid.uuid1()
+    new_child_id = str(uuid.uuid4())
     teacher_data = TeacherHandler.get_teacher_data(event[TEACHER_ID])
     body: dict = event['customBody']
     child_to_add = {
