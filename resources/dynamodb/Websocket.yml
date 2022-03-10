@@ -1,18 +1,14 @@
 Resources:
-  AttendanceData:
+  Websocket:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "kindergarten_id"
-          AttributeType: "S"
         - AttributeName: "connection_id"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "kindergarten_id"
-          KeyType: "HASH"
         - AttributeName: "connection_id"
-          KeyType: "RANGE"
+          KeyType: "HASH"
       ProvisionedThroughput:
         ReadCapacityUnits: "5"
         WriteCapacityUnits: "5"
-      TableName: "DashboardWebsocket"
+      TableName: "Websocket"
