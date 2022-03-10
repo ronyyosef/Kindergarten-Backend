@@ -19,5 +19,5 @@ Resources:
         AttributeName: "ttl"
         Enabled: "True"
       StreamSpecification:
-        StreamViewType: "NEW_AND_OLD_IMAGES"
+        StreamViewType: "NEW_IMAGE"
       TableName: "AttendanceData"
