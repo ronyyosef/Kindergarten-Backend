@@ -21,18 +21,13 @@ class AttendanceHandler:
             KINDERGARTEN_ID: kindergarten_id,
             TTL: int(time() + ATTENDANCE_TABLE_TTL_TIME_OUT)
         }
-        try:
-            attendance_table.put_item(Item=new_attendance)
-        except Exception as e:
-            logger.error(f'Cannot put {new_attendance} in {ATTENDANCE_TABLE}, {str(e)}')
+        attendance_table.put_item(Item=new_attendance)
+
 
     @staticmethod
     def remove_attendance(child_id: str) -> None:
-        try:
-            attendance_table.delete_item(
-                Key={ATTENDANCE_PK: child_id, ATTENDANCE_SK: str(date.today())})
-        except Exception as e:
-            logger.error(f'Cannot delete {child_id}, {str(e)}')
+        attendance_table.delete_item(
+            Key={ATTENDANCE_PK: child_id, ATTENDANCE_SK: str(date.today())})
 
     @staticmethod
     def get_attendance(child_id, date_query) -> bool:
@@ -52,18 +47,15 @@ class AttendanceHandler:
 
     @staticmethod
     def update_attendance(child_id: str, date_query: str, kindergarten_id: str) -> dict:
-        try:
-            response = attendance_table.update_item(
-                Key={
-                    ATTENDANCE_PK: child_id,
-                    ATTENDANCE_SK: date_query
-                },
-                UpdateExpression=f'set {KINDERGARTEN_ID}=:1',
-                ExpressionAttributeValues={
-                    ':1': kindergarten_id
-                },
-                ReturnValues='ALL_NEW'
-            )
-            return response['Attributes']
-        except Exception as e:
-            logger.error(f'Cannot update in {ATTENDANCE_TABLE}, {str(e)}')
+        response = attendance_table.update_item(
+            Key={
+                ATTENDANCE_PK: child_id,
+                ATTENDANCE_SK: date_query
+            },
+            UpdateExpression=f'set {KINDERGARTEN_ID}=:1',
+            ExpressionAttributeValues={
+                ':1': kindergarten_id
+            },
+            ReturnValues='ALL_NEW'
+        )
+        return response['Attributes']
