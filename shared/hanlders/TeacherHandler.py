@@ -12,7 +12,8 @@ teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
 class TeacherHandler:
 
     @staticmethod
-    def add_teacher(teacher_id: str, phone_number: str, first_name: str = None, last_name: str = None, kindergarten_id: str = None,
+    def add_teacher(teacher_id: str, phone_number: str, first_name: str = None, last_name: str = None,
+                    kindergarten_id: str = None,
                     group_number: str = None, is_admin: str = None) -> None:
         new_teacher = {
             TEACHER_ID: teacher_id,
@@ -23,50 +24,41 @@ class TeacherHandler:
             GROUP_NUMBER: group_number,
             IS_ADMIN: is_admin
         }
-        try:
-            logger.info(f'Adding teacher : {new_teacher}')
-            teacher_table.put_item(Item=new_teacher)
-        except Exception as e:
-            logger.error(f'Cannot put {new_teacher} in {TEACHERS_TABLE}, {str(e)}')
+        logger.info(f'Adding teacher : {new_teacher}')
+        teacher_table.put_item(Item=new_teacher)
 
     @staticmethod
     def get_teacher_data(teacher_id: str) -> dict:
-        try:
-            logger.info(f'Trying to get teacher: {teacher_id}')
-            response = teacher_table.query(KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
-            teacher_data = response["Items"][0] if response['Count'] == 1 else None
-            if teacher_data:
-                photo_url = S3PhotosHandler.get_photo_url(teacher_data[KINDERGARTEN_ID], teacher_id)
-                teacher_data[PHOTO_LINK] = photo_url
-            return teacher_data
-        except Exception as e:
-            logger.error(f'Error: {str(e)}')
+        logger.info(f'Trying to get teacher: {teacher_id}')
+        response = teacher_table.query(KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
+        teacher_data = response["Items"][0] if response['Count'] == 1 else None
+        if teacher_data:
+            photo_url = S3PhotosHandler.get_photo_url(teacher_data[KINDERGARTEN_ID], teacher_id)
+            teacher_data[PHOTO_LINK] = photo_url
+        return teacher_data
 
     @staticmethod
     def update_teacher(teacher_id: str, first_name: str = None, last_name: str = None, kindergarten_id: str = None,
                        group_number: str = None, is_admin: str = None) -> None:
-        try:
-            response = teacher_table.update_item(
-                Key={
-                    TEACHER_ID: teacher_id,
-                },
-                UpdateExpression=f'set {FIRST_NAME}=:1, {LAST_NAME}=:2,{KINDERGARTEN_ID}=:3,{GROUP_NUMBER}=:4,{IS_ADMIN}=:5',
-                ExpressionAttributeValues={
-                    ':1': first_name,
-                    ':2': last_name,
-                    ':3': kindergarten_id,
-                    ':4': group_number,
-                    ':5': is_admin
-                },
-                ReturnValues='ALL_NEW'
-            )
-            return response['Attributes']
-        except Exception as e:
-            logger.error(f'Cannot update in {TEACHERS_TABLE}, {str(e)}')
+        response = teacher_table.update_item(
+            Key={
+                TEACHER_ID: teacher_id,
+            },
+            UpdateExpression=f'set {FIRST_NAME}=:1, {LAST_NAME}=:2,{KINDERGARTEN_ID}=:3,{GROUP_NUMBER}=:4,{IS_ADMIN}=:5',
+            ExpressionAttributeValues={
+                ':1': first_name,
+                ':2': last_name,
+                ':3': kindergarten_id,
+                ':4': group_number,
+                ':5': is_admin
+            },
+            ReturnValues='ALL_NEW'
+        )
+        return response['Attributes']
 
     @staticmethod
     def delete_teacher(teacher_id: str) -> None:
-        response = teacher_table.delete_item(
+        teacher_table.delete_item(
             Key={
                 TEACHER_ID: teacher_id
             })
