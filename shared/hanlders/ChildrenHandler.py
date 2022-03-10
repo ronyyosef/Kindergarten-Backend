@@ -3,9 +3,9 @@ from typing import List
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
+from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, CHILD_ID
-from shared.S3PhotosHandler import S3PhotosHandler
+from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 from utils.logger import logger
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)

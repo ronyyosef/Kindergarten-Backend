@@ -1,4 +1,4 @@
-from shared.TeacherHandler import TeacherHandler
+from shared.hanlders.TeacherHandler import TeacherHandler
 
 
 def setup_module():

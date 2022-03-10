@@ -1,10 +1,9 @@
 import uuid
 
-from const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
-    GROUP_NUMBER, TEACHER_ID, CHILD_ID
-from shared.ChildrenHandler import ChildrenHandler
-from shared.TeacherHandler import TeacherHandler
-from shared.lambda_decorator import lambda_decorator
+from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, GROUP_NUMBER, TEACHER_ID, CHILD_ID
+from shared.hanlders.ChildrenHandler import ChildrenHandler
+from shared.hanlders.TeacherHandler import TeacherHandler
+from shared.hanlders.lambda_decorator import lambda_decorator
 from utils.logger import logger
 
 

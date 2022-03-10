@@ -1,4 +1,4 @@
-from shared.CognitoHandler import CognitoHandler
+from shared.hanlders.CognitoHandler import CognitoHandler
 from tests.shared import event_mock
 
 

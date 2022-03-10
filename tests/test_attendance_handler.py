@@ -1,6 +1,6 @@
 from datetime import date
 
-from shared.AttendanceHandler import AttendanceHandler
+from shared.hanlders.AttendanceHandler import AttendanceHandler
 
 
 def setup_module():

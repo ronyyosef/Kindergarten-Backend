@@ -2,7 +2,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from utils.logger import logger
-from const import KINDERGARTEN_TABLE, KINDERGARTEN_NAME, KINDERGARTEN_ID
+from shared.const import KINDERGARTEN_TABLE, KINDERGARTEN_NAME, KINDERGARTEN_ID
 
 kindergarten_table = boto3.resource('dynamodb').Table(KINDERGARTEN_TABLE)
 

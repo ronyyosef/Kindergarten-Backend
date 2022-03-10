@@ -4,7 +4,7 @@ from time import time
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, HAS_ARRIVED, TTL, \
+from shared.const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, TTL, \
     ATTENDANCE_TABLE_TTL_TIME_OUT
 from utils.logger import logger
 

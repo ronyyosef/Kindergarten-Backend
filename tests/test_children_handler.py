@@ -1,10 +1,8 @@
 # from datetime import date
 
 # from shared.AttendanceHandler import ChildrenHandler
-from const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PHOTO_LINK, GROUP_NUMBER, PARENT1_PHONE_NUMBER, \
-    PARENT2_PHONE_NUMBER, CHILD_ID
 
-from shared.ChildrenHandler import ChildrenHandler
+from shared.hanlders.ChildrenHandler import ChildrenHandler
 
 
 def setup_module():

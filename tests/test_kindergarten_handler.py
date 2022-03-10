@@ -1,4 +1,4 @@
-from shared.KindergartenHandler import KindergartenHandler
+from shared.hanlders.KindergartenHandler import KindergartenHandler
 
 
 def setup_module():
