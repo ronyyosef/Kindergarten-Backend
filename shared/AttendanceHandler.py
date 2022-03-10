@@ -14,7 +14,7 @@ attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
 class AttendanceHandler:
 
     @staticmethod
-    def add_attendance(child_id: str, kindergarten_id: str):
+    def add_attendance(child_id: str, kindergarten_id: str) -> None:
         new_attendance = {
             ATTENDANCE_PK: child_id,
             ATTENDANCE_SK: str(date.today()),
@@ -22,14 +22,14 @@ class AttendanceHandler:
             TTL: int(time() + ATTENDANCE_TABLE_TTL_TIME_OUT)
         }
         try:
-            return attendance_table.put_item(Item=new_attendance)
+            attendance_table.put_item(Item=new_attendance)
         except Exception as e:
             logger.error(f'Cannot put {new_attendance} in {ATTENDANCE_TABLE}, {str(e)}')
 
     @staticmethod
-    def remove_attendance(child_id: str):
+    def remove_attendance(child_id: str) -> None:
         try:
-            return attendance_table.delete_item(
+            attendance_table.delete_item(
                 Key={ATTENDANCE_PK: child_id, ATTENDANCE_SK: str(date.today())})
         except Exception as e:
             logger.error(f'Cannot delete {child_id}, {str(e)}')
@@ -42,9 +42,8 @@ class AttendanceHandler:
         return res
 
     @staticmethod
-    def delete_attendance(child_id, date_query):
+    def delete_attendance(child_id: str, date_query: str) -> None:
         response = attendance_table.delete_item(
-
             Key={
                 ATTENDANCE_PK: child_id,
                 ATTENDANCE_SK: date_query
@@ -52,7 +51,7 @@ class AttendanceHandler:
         return response
 
     @staticmethod
-    def update_attendance(child_id, date_query, kindergarten_id: str):
+    def update_attendance(child_id: str, date_query: str, kindergarten_id: str) -> dict:
         try:
             response = attendance_table.update_item(
                 Key={
