@@ -33,7 +33,7 @@ def create_kindergarten_for_teacher(kindergarten_name: str) -> str:
     id_is_in_use = True
     while id_is_in_use:
         id_for_added_kindergarten = get_random_id()
-        id_is_in_use = KindergartenHandler.check_if_key_exists(id_for_added_kindergarten)
+        id_is_in_use = KindergartenHandler.check_if_kindergarten_exists(id_for_added_kindergarten)
     logger.info(f"id to be used {id_for_added_kindergarten}")
     KindergartenHandler.add_kindergarten(id_for_added_kindergarten, kindergarten_name)
     return id_for_added_kindergarten
