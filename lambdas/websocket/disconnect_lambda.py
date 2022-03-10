@@ -1,5 +1,8 @@
 import logging
 
+import boto3
+from boto3.dynamodb.table import BatchWriter
+
 from shared.hanlders.lambda_decorator import lambda_decorator
 
 # @lambda_decorator
@@ -21,4 +24,9 @@ event = {'headers': {'Host': '6t7ekp92lc.execute-api.us-east-1.amazonaws.com', '
 def disconnect(event, context):
     logger.info(event)
     connectionID = event["requestContext"]["connectionId"]
+    table: BatchWriter = boto3.resource('dynamodb').Table('Websocket')
+    table.delete_item(Key={"connection_id": connectionID})
     return {"statusCode": 200, "body": 'some body'}
+
+
+disconnect(event, {})

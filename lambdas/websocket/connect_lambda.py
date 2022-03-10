@@ -1,5 +1,8 @@
 import logging
 
+import boto3
+from boto3.dynamodb.table import TableResource, BatchWriter
+
 from shared.hanlders.lambda_decorator import lambda_decorator
 
 event = {'headers': {'Host': '6t7ekp92lc.execute-api.us-east-1.amazonaws.com',
@@ -28,6 +31,8 @@ from utils.logger import logger
 def connect(event, context):
     logger.info(event)
     connectionID = event["requestContext"]["connectionId"]
+    table: BatchWriter = boto3.resource('dynamodb').Table('Websocket')
+    table.put_item(Item={"connection_id": connectionID})
     return {"statusCode": 200, "body": 'some body'}
 
 
