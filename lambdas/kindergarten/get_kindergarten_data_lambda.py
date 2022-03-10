@@ -1,7 +1,7 @@
-from const import TEACHER_ID
-from shared.KindergartenHandler import KindergartenHandler
-from shared.TeacherHandler import TeacherHandler
-from shared.lambda_decorator import lambda_decorator
+from shared.const import TEACHER_ID
+from shared.hanlders.KindergartenHandler import KindergartenHandler
+from shared.hanlders.TeacherHandler import TeacherHandler
+from shared.hanlders.lambda_decorator import lambda_decorator
 
 
 @lambda_decorator

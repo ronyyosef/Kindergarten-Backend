@@ -1,7 +1,7 @@
 import traceback
 
-from const import TEACHER_ID
-from shared.CognitoHandler import CognitoHandler
+from shared.const import TEACHER_ID
+from shared.hanlders.CognitoHandler import CognitoHandler
 from shared.slack_notification import send_errors_alert_msg
 
 

@@ -1,5 +1,5 @@
-from const import PHONE_NUMBER
-from shared.TeacherHandler import TeacherHandler
+from shared.const import PHONE_NUMBER
+from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.slack_notification import send_new_user_msg
 
 # event = {

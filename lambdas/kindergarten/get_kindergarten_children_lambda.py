@@ -1,10 +1,10 @@
 from datetime import date
 
-from const import TEACHER_ID, CHILD_ID
-from shared.AttendanceHandler import AttendanceHandler
-from shared.ChildrenHandler import ChildrenHandler
-from shared.TeacherHandler import TeacherHandler
-from shared.lambda_decorator import lambda_decorator
+from shared.const import TEACHER_ID, CHILD_ID
+from shared.hanlders.AttendanceHandler import AttendanceHandler
+from shared.hanlders.ChildrenHandler import ChildrenHandler
+from shared.hanlders.TeacherHandler import TeacherHandler
+from shared.hanlders.lambda_decorator import lambda_decorator
 
 
 @lambda_decorator

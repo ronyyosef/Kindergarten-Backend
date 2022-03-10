@@ -1,8 +1,8 @@
-from const import PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, IS_ADMIN, \
+from shared.const import FIRST_NAME, LAST_NAME, KINDERGARTEN_ID, GROUP_NUMBER, IS_ADMIN, \
     KINDERGARTEN_NAME, TEACHER_ID
-from shared.KindergartenHandler import KindergartenHandler
-from shared.TeacherHandler import TeacherHandler
-from shared.lambda_decorator import lambda_decorator
+from shared.hanlders.KindergartenHandler import KindergartenHandler
+from shared.hanlders.TeacherHandler import TeacherHandler
+from shared.hanlders.lambda_decorator import lambda_decorator
 from utils.random import get_random_id
 from utils.logger import logger
 

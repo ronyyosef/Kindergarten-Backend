@@ -1,7 +1,7 @@
 import boto3 as boto3
 from botocore.exceptions import ClientError
 
-from const import PHOTOS_BUCKET, PRESIGNED_URL_EXPIRE_TIME
+from shared.const import PHOTOS_BUCKET, PRESIGNED_URL_EXPIRE_TIME
 
 s3_client = boto3.client('s3')
 
