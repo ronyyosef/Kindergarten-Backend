@@ -236,6 +236,13 @@ functions:
       patterns:
         - 'lambdas/websocket/**'
 
+  AttandanceDataStream:
+    handler: lambdas/websocket/dynamodb_stream_lambda.send_message
+    role: AttandanceDataStreamRole
+    package:
+      patterns:
+        - 'lambdas/websocket/**'
+
 plugins:
   - serverless-python-requirements
   - serverless-plugin-stage-variables
@@ -253,6 +260,7 @@ resources:
   - ${file(resources/iam/GetKindergartenChildrenRole.yml)}
   - ${file(resources/iam/AddAttendanceDataRole.yml)}
   - ${file(resources/iam/WebsocketRole.yml)}
+  - ${file(resources/iam/AttandanceDataStreamRole.yml)}
   # dynamodb
   - ${file(resources/dynamodb/AttendanceData.yml)}
   - ${file(resources/dynamodb/ChildData.yml)}
