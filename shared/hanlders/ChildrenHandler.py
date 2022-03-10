@@ -26,11 +26,7 @@ class ChildrenHandler:
             PARENT1_PHONE_NUMBER: parent1_phone_number,
             PARENT2_PHONE_NUMBER: parent2_phone_number,
         }
-
-        try:
-            child_table.put_item(Item=new_child)
-        except Exception as e:
-            logger.error(f'Cannot put {new_child} in {CHILD_TABLE}, {str(e)}')
+        child_table.put_item(Item=new_child)
 
     @staticmethod
     def get_child(child_id: str) -> dict:
