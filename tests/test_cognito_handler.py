@@ -11,6 +11,6 @@ def teardown_module():
 
 
 def test_cognitoHandler():
-    user = CognitoHandler.get_teacher_id(event_mock)
-    assert user == '+972532840340'
+    teacher_id = CognitoHandler.get_teacher_id(event_mock)
+    assert teacher_id == '74b835f4-775c-4c41-bea6-5a77b624e7dd'
 
