@@ -18,6 +18,4 @@ Resources:
       TimeToLiveSpecification:
         AttributeName: "ttl"
         Enabled: "True"
-      StreamSpecification:
-        StreamViewType: "NEW_IMAGE"
       TableName: "AttendanceData"

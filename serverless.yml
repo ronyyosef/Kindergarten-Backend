@@ -18,10 +18,18 @@ provider:
 
 custom:
   customDomain:
-    domainName: api.kindergartenil.com
-    basePath: ''
-    stage: ${self:provider.stage}
-    createRoute53Record: true
+    rest:
+      domainName: api.kindergartenil.com
+      basePath: ''
+      stage: ${self:provider.stage}
+      createRoute53Record: true
+      endpointType: edge
+    websocket:
+      domainName: websocket.kindergartenil.com
+      basePath: ''
+      stage: ${self:provider.stage}
+      createRoute53Record: true
+      endpointType: regional
   cognitoAuthorizerArn: arn:aws:cognito-idp:${aws:region}:${aws:accountId}:userpool/${aws:region}_PokjeshX3
   pythonRequirements:
     dockerizePip: non-linux
@@ -239,9 +247,9 @@ functions:
   AttandanceDataStream:
     handler: lambdas/websocket/dynamodb_stream_lambda.send_message
     role: AttandanceDataStreamRole
-    events:
-      - stream:
-          arn: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/stream/2022-03-10T22:29:06.426
+#    events:
+#      - stream:
+#          arn: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/stream/2022-03-10T22:55:54.027
     package:
       patterns:
         - 'lambdas/websocket/**'
