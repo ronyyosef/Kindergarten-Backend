@@ -21,7 +21,6 @@ class AttendanceHandler:
             KINDERGARTEN_ID: kindergarten_id,
             TTL: int(time() + ATTENDANCE_TABLE_TTL_TIME_OUT),
             TIME_IN: time_in,
-            TIME_OUT: None
         }
         attendance_table.put_item(Item=new_attendance)
 
