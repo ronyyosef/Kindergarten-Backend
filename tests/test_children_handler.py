@@ -2,7 +2,7 @@
 
 # from shared.AttendanceHandler import ChildrenHandler
 from const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PHOTO_LINK, GROUP_NUMBER, PARENT1_PHONE_NUMBER, \
-    PARENT2_PHONE_NUMBER
+    PARENT2_PHONE_NUMBER, CHILD_ID
 
 from shared.ChildrenHandler import ChildrenHandler
 
@@ -16,7 +16,7 @@ def teardown_module():
 
 
 def test_add_ChildHandler():
-    response = ChildrenHandler.add_child(id='test_child_id',
+    response = ChildrenHandler.add_child(child_id='test_child_id',
                                          kindergarten_id='test_kindergarten_id',
                                          first_name='test_first_name',
                                          last_name='test_last_name',
@@ -29,11 +29,5 @@ def test_add_ChildHandler():
 
 
 def test_get_ChildHandler():
-    response = ChildrenHandler.get_child(id='test_child_id')
-    assert response == {ID: 'test_child_id',
-                        KINDERGARTEN_ID: 'test_kindergarten_id',
-                        FIRST_NAME: 'test_first_name',
-                        LAST_NAME: 'test_last_name',
-                        PARENT1_PHONE_NUMBER: 'test_parent1_phone_number',
-                        PARENT2_PHONE_NUMBER: 'test_parent2_phone_number',
-                        GROUP_NUMBER: 'test_group_number'}
+    response = ChildrenHandler.get_child(child_id='test_child_id')
+    assert response == {'child_id': 'test_child_id', 'last_name': 'test_last_name', 'group_number': 'test_group_number', 'kindergarten_id': 'test_kindergarten_id', 'first_name': 'test_first_name', 'parent2_phone_number': 'test_parent2_phone_number', 'parent1_phone_number': 'test_parent1_phone_number', 'photo_link': None}

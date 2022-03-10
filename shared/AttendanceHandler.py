@@ -52,17 +52,16 @@ class AttendanceHandler:
         return response
 
     @staticmethod
-    def update_attendance(child_id, date_query, kindergarten_id: str, has_arrived: str):
+    def update_attendance(child_id, date_query, kindergarten_id: str):
         try:
             response = attendance_table.update_item(
                 Key={
                     ATTENDANCE_PK: child_id,
                     ATTENDANCE_SK: date_query
                 },
-                UpdateExpression=f'set {KINDERGARTEN_ID}=:1, {HAS_ARRIVED}=:2',
+                UpdateExpression=f'set {KINDERGARTEN_ID}=:1',
                 ExpressionAttributeValues={
-                    ':1': kindergarten_id,
-                    ':2': has_arrived
+                    ':1': kindergarten_id
                 },
                 ReturnValues='ALL_NEW'
             )
