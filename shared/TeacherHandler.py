@@ -12,8 +12,8 @@ teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
 class TeacherHandler:
 
     @staticmethod
-    def add_teacher(teacher_id, phone_number, first_name=None, last_name=None, kindergarten_id=None,
-                    group_number=None, is_admin=None):
+    def add_teacher(teacher_id: str, phone_number: str, first_name: str = None, last_name: str = None, kindergarten_id: str = None,
+                    group_number: str = None, is_admin: str = None) -> None:
         new_teacher = {
             TEACHER_ID: teacher_id,
             PHONE_NUMBER: phone_number,
@@ -25,13 +25,12 @@ class TeacherHandler:
         }
         try:
             logger.info(f'Adding teacher : {new_teacher}')
-            response = teacher_table.put_item(Item=new_teacher)
-            return response
+            teacher_table.put_item(Item=new_teacher)
         except Exception as e:
             logger.error(f'Cannot put {new_teacher} in {TEACHERS_TABLE}, {str(e)}')
 
     @staticmethod
-    def get_teacher_data(teacher_id):
+    def get_teacher_data(teacher_id: str) -> dict:
         try:
             logger.info(f'Trying to get teacher: {teacher_id}')
             response = teacher_table.query(KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
@@ -44,8 +43,8 @@ class TeacherHandler:
             logger.error(f'Error: {str(e)}')
 
     @staticmethod
-    def update_teacher(teacher_id, first_name=None, last_name=None, kindergarten_id=None,
-                       group_number=None, is_admin=None):
+    def update_teacher(teacher_id: str, first_name: str = None, last_name: str = None, kindergarten_id: str = None,
+                       group_number: str = None, is_admin: str = None) -> None:
         try:
             response = teacher_table.update_item(
                 Key={
@@ -66,14 +65,13 @@ class TeacherHandler:
             logger.error(f'Cannot update in {TEACHERS_TABLE}, {str(e)}')
 
     @staticmethod
-    def delete_teacher(teacher_id):
+    def delete_teacher(teacher_id: str) -> None:
         response = teacher_table.delete_item(
             Key={
                 TEACHER_ID: teacher_id
             })
-        return response
 
     @staticmethod
-    def get_teacher_kindergarten_id(teacher_id):
+    def get_teacher_kindergarten_id(teacher_id: str) -> str:
         teacher_data = TeacherHandler.get_teacher_data(teacher_id)
         return teacher_data.get(KINDERGARTEN_ID)

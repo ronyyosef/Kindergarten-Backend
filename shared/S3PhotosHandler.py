@@ -8,7 +8,7 @@ s3_client = boto3.client('s3')
 
 class S3PhotosHandler:
     @staticmethod
-    def get_photo_url(kindergarten_id, id):
+    def get_photo_url(kindergarten_id: str, id: str) -> str:
         try:
             s3_client.head_object(Bucket='kindergarten-photos', Key=f'{kindergarten_id}/{id}.png')
         except ClientError:
@@ -21,7 +21,7 @@ class S3PhotosHandler:
         return url
 
     @staticmethod
-    def put_photo_url(kindergarten_id, id):
+    def put_photo_url(kindergarten_id: str, id: str) -> str:
         url = s3_client.generate_presigned_url(
                 ClientMethod='put_object',
                 Params={'Bucket': PHOTOS_BUCKET, 'Key': f'{kindergarten_id}/{id}.png'},

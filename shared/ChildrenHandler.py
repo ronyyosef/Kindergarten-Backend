@@ -15,7 +15,7 @@ class ChildrenHandler:
     @staticmethod
     def add_child(child_id: str, kindergarten_id: str, first_name: str, last_name: str, group_number: str,
                   parent1_phone_number: str,
-                  parent2_phone_number: str = None):
+                  parent2_phone_number: str = None) -> None:
 
         new_child = {
             CHILD_ID: child_id,
@@ -28,12 +28,12 @@ class ChildrenHandler:
         }
 
         try:
-            return child_table.put_item(Item=new_child)
+            child_table.put_item(Item=new_child)
         except Exception as e:
             logger.error(f'Cannot put {new_child} in {CHILD_TABLE}, {str(e)}')
 
     @staticmethod
-    def get_child(child_id):
+    def get_child(child_id: str) -> dict:
         response = child_table.query(
             KeyConditionExpression=Key(CHILD_ID).eq(child_id))
         result = response['Items'][0]
@@ -42,9 +42,9 @@ class ChildrenHandler:
         return result
 
     @staticmethod
-    def check_if_key_exists(key_to_search):
+    def check_if_key_exists(child_id: str) -> bool:
         response = child_table.query(
-            KeyConditionExpression=Key(CHILD_ID).eq(key_to_search))
+            KeyConditionExpression=Key(CHILD_ID).eq(child_id))
         return len(response["Items"]) > 0
 
     @staticmethod
