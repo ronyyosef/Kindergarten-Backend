@@ -6,6 +6,8 @@ provider:
   versionFunctions: false
   stage: ${opt:stage,'dev'}
   region: ${opt:region,'us-east-1'}
+  websocketApiName: live-dynamodb-api
+  websocketApiRouteSelectionExpression: $request.body.action
   tracing:
     apiGateway: true
     lambda: true
@@ -216,15 +218,17 @@ functions:
 
   connectHandler:
     handler: lambdas/websocket/connect_lambda.connect
+    role: WebsocketRole
     events:
       - websocket:
           route: $connect
-  package:
-    patterns:
-      - 'lambdas/websocket/**'
+    package:
+      patterns:
+        - 'lambdas/websocket/**'
 
   disconnectHandler:
     handler: lambdas/websocket/disconnect_lambda.disconnect
+    role: WebsocketRole
     events:
       - websocket:
           route: $disconnect
@@ -248,6 +252,7 @@ resources:
   - ${file(resources/iam/GetKindergartenDataRole.yml)}
   - ${file(resources/iam/GetKindergartenChildrenRole.yml)}
   - ${file(resources/iam/AddAttendanceDataRole.yml)}
+  - ${file(resources/iam/WebsocketRole.yml)}
   # dynamodb
   - ${file(resources/dynamodb/AttendanceData.yml)}
   - ${file(resources/dynamodb/ChildData.yml)}
