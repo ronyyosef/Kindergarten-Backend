@@ -31,8 +31,9 @@ Resources:
                     - dynamodb:GetRecords
                     - dynamodb:GetShardIterator
                     - dynamodb:ListStreams
+                    - dynamodb:ListShards
                   Resource:
-                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/*
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ChildData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/KindergartenData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/TeacherData

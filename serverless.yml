@@ -239,6 +239,9 @@ functions:
   AttandanceDataStream:
     handler: lambdas/websocket/dynamodb_stream_lambda.send_message
     role: AttandanceDataStreamRole
+    events:
+      - stream:
+          arn: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/stream/2022-03-10T22:29:06.426
     package:
       patterns:
         - 'lambdas/websocket/**'
