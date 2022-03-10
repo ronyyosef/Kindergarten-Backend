@@ -28,3 +28,5 @@ ATTENDANCE_TABLE_TTL_TIME_OUT = 3024000  # 35 days
 PHOTOS_BUCKET = 'kindergarten-photos'
 PRESIGNED_URL_EXPIRE_TIME = 300
 TEACHER_ID = 'teacher_id'
+TIME_IN = "time_in"
+TIME_OUT = "time_out"
