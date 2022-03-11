@@ -39,13 +39,11 @@ def add_attendance_data(event, context, date_query=None):
     else:
         raise Exception(f"child_attendance: {child_attendance} is not valid")
 
-    AttendanceHandler.update_attendance(child_id=child_attendance.get(CHILD_ID, None),
-                                        date_query=child_attendance.get(
-                                            DATE, None),
-                                        kindergarten_id=child_attendance.get(
-                                            KINDERGARTEN_ID, None),
-                                        time_out=child_attendance.get(
-                                            TIME_OUT, None),
-                                        time_in=child_attendance.get(
-                                            TIME_IN, None),
-                                        is_present=child_attendance.get(IS_PRESENT, None))
+    AttendanceHandler.update_attendance(
+        child_id=child_attendance.get(
+            CHILD_ID, None), date_query=child_attendance.get(
+            DATE, None), kindergarten_id=child_attendance.get(
+                KINDERGARTEN_ID, None), time_out=child_attendance.get(
+                    TIME_OUT, None), time_in=child_attendance.get(
+                        TIME_IN, None), is_present=child_attendance.get(
+                            IS_PRESENT, None))

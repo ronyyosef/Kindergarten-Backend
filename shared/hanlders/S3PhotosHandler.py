@@ -11,7 +11,8 @@ class S3PhotosHandler:
     def get_photo_url(kindergarten_id: str, id: str) -> str:
         try:
             s3_client.head_object(
-                Bucket='kindergarten-photos', Key=f'{kindergarten_id}/{id}.png')
+                Bucket='kindergarten-photos',
+                Key=f'{kindergarten_id}/{id}.png')
         except ClientError:
             url = None
         else:

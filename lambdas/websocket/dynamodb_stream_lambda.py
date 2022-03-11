@@ -7,8 +7,9 @@ from botocore.exceptions import ClientError
 from shared.const import KINDERGARTEN_ID
 from utils.logger import logger
 
-web_socket_client = boto3.client('apigatewaymanagementapi',
-                                 endpoint_url='https://websocket.kindergartenil.com')
+web_socket_client = boto3.client(
+    'apigatewaymanagementapi',
+    endpoint_url='https://websocket.kindergartenil.com')
 
 
 def send_message(event, context):

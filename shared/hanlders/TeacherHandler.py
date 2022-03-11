@@ -12,9 +12,14 @@ teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
 class TeacherHandler:
 
     @staticmethod
-    def add_teacher(teacher_id: str, phone_number: str, first_name: str = None, last_name: str = None,
-                    kindergarten_id: str = None,
-                    group_number: str = None, is_admin: str = None) -> None:
+    def add_teacher(
+            teacher_id: str,
+            phone_number: str,
+            first_name: str = None,
+            last_name: str = None,
+            kindergarten_id: str = None,
+            group_number: str = None,
+            is_admin: str = None) -> None:
         new_teacher = {
             TEACHER_ID: teacher_id,
             PHONE_NUMBER: phone_number,
@@ -40,8 +45,13 @@ class TeacherHandler:
         return teacher_data
 
     @staticmethod
-    def update_teacher(teacher_id: str, first_name: str = None, last_name: str = None, kindergarten_id: str = None,
-                       group_number: str = None, is_admin: str = None) -> None:
+    def update_teacher(
+            teacher_id: str,
+            first_name: str = None,
+            last_name: str = None,
+            kindergarten_id: str = None,
+            group_number: str = None,
+            is_admin: str = None) -> None:
         response = teacher_table.update_item(
             Key={
                 TEACHER_ID: teacher_id,
@@ -52,10 +62,8 @@ class TeacherHandler:
                 ':2': last_name,
                 ':3': kindergarten_id,
                 ':4': group_number,
-                ':5': is_admin
-            },
-            ReturnValues='ALL_NEW'
-        )
+                ':5': is_admin},
+            ReturnValues='ALL_NEW')
         return response['Attributes']
 
     @staticmethod

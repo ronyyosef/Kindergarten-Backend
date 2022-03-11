@@ -13,9 +13,14 @@ child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
 class ChildrenHandler:
     @staticmethod
-    def add_child(child_id: str, kindergarten_id: str, first_name: str, last_name: str, group_number: str,
-                  parent1_phone_number: str,
-                  parent2_phone_number: str = None) -> None:
+    def add_child(
+            child_id: str,
+            kindergarten_id: str,
+            first_name: str,
+            last_name: str,
+            group_number: str,
+            parent1_phone_number: str,
+            parent2_phone_number: str = None) -> None:
 
         new_child = {
             CHILD_ID: child_id,
@@ -59,7 +64,7 @@ class ChildrenHandler:
         response = child_table.query(
             KeyConditionExpression=f'{CHILD_ID} = :child_id and {KINDERGARTEN_ID} = :kindergarten_id',
             ExpressionAttributeValues={
-                ':child_id': child_id, ':kindergarten_id': kindergarten_id},
-            Limit=1
-        )
+                ':child_id': child_id,
+                ':kindergarten_id': kindergarten_id},
+            Limit=1)
         return response['Count'] >= 1

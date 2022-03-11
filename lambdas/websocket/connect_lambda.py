@@ -32,8 +32,8 @@ event = {'headers': {'Host': 'websocket.kindergartenil.com',
 def connect(event, context):
     logger.info(event)
     # add verify
-    user_name = jwt.decode(event['queryStringParameters']['token'], options={"verify_signature": False})[
-        'cognito:username']
+    user_name = jwt.decode(event['queryStringParameters']['token'], options={
+                           "verify_signature": False})['cognito:username']
     kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(user_name)
     connectionID = event["requestContext"]["connectionId"]
     table = boto3.resource('dynamodb').Table('WebsocketConnectionManager')

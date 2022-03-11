@@ -13,8 +13,13 @@ attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
 class AttendanceHandler:
 
     @staticmethod
-    def add_attendance(child_id: str, kindergarten_id: str, attendance_status: str = None, time_in: str = None,
-                       time_out: str = None, is_present: str = "no"):
+    def add_attendance(
+            child_id: str,
+            kindergarten_id: str,
+            attendance_status: str = None,
+            time_in: str = None,
+            time_out: str = None,
+            is_present: str = "no"):
         new_attendance = {
             ATTENDANCE_PK: child_id,
             ATTENDANCE_SK: str(date.today()),
@@ -34,8 +39,8 @@ class AttendanceHandler:
 
     @staticmethod
     def get_attendance(child_id, date_query: str = str(date.today())):
-        response = attendance_table.query(
-            KeyConditionExpression=Key(ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).eq(date_query))
+        response = attendance_table.query(KeyConditionExpression=Key(
+            ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).eq(date_query))
         attendance_data = response["Items"][0] if response['Count'] == 1 else None
         return attendance_data
 
@@ -58,18 +63,15 @@ class AttendanceHandler:
         response = attendance_table.update_item(
             Key={
                 ATTENDANCE_PK: child_id,
-                ATTENDANCE_SK: date_query
-            },
+                ATTENDANCE_SK: date_query},
             UpdateExpression=f'set {KINDERGARTEN_ID}=:1, {TIME_IN}=:2, {TIME_OUT}=:3, {IS_PRESENT} =:4',
             ExpressionAttributeValues={
                 ':1': kindergarten_id,
                 ':2': time_in,
                 ':3': time_out,
                 ':4': is_present,
-
             },
-            ReturnValues='ALL_NEW'
-        )
+            ReturnValues='ALL_NEW')
         return response['Attributes']
 
     @staticmethod
