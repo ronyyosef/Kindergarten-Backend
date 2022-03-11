@@ -211,6 +211,26 @@ functions:
       patterns:
         - 'lambdas/kindergarten/**'
 
+  GetKindergartenAttendanceSpreadsheet:
+    handler: lambdas/kindergarten/get_kindergarten_children_lambda.get_attendance_spreadsheet
+    role: GetKindergartenChildrenRole
+    events:
+      - http:
+          path: kindergarten/attendance_spreadsheet
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/kindergarten/**'
+
   AddAttendanceData:
     handler: lambdas/attendance/add_attendance_data_lambda.add_attendance_data
     role: AddAttendanceDataRole
