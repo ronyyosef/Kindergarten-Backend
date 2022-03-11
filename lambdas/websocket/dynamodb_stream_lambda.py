@@ -4,7 +4,7 @@ from botocore.exceptions import ClientError
 from utils.logger import logger
 
 web_socket_client = boto3.client('apigatewaymanagementapi',
-                                 endpoint_url='https://1f8qirmdzh.execute-api.us-east-1.amazonaws.com/dev')
+                                 endpoint_url='https://websocket.kindergartenil.com')
 # # MODIFY
 # event = {'Records': [{'eventID': '851163a450805a957c316866fca2a3da', 'eventName': 'MODIFY', 'eventVersion': '1.1',
 #                       'eventSource': 'aws:dynamodb', 'awsRegion': 'us-east-1',
