@@ -13,7 +13,7 @@ def teardown_module():
     pass
 
 
-def test_add_ChildHandler():
+def test_add_child_handler():
     ChildrenHandler.add_child(child_id='test_child_id',
                               kindergarten_id='test_kindergarten_id',
                               first_name='test_first_name',

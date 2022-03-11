@@ -37,10 +37,10 @@ event = {
 
 def disconnect(event, context):
     logger.info(event)
-    connectionID = event["requestContext"]["connectionId"]
+    connection_id = event["requestContext"]["connectionId"]
     table: BatchWriter = boto3.resource(
         'dynamodb').Table('WebsocketConnectionManager')
-    table.delete_item(Key={"connection_id": connectionID})
+    table.delete_item(Key={"connection_id": connection_id})
     return {"statusCode": 200, "body": 'some body'}
 
 

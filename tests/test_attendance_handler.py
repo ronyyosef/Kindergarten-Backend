@@ -11,7 +11,7 @@ def teardown_module():
     pass
 
 
-def test_AttendanceHandler():
+def test_attendance_handler():
     AttendanceHandler.add_attendance(
         child_id='test_child_id', kindergarten_id='test_kindergarten_id')
     response = AttendanceHandler.get_attendance(
@@ -24,3 +24,5 @@ def test_AttendanceHandler():
     assert response is not None
     AttendanceHandler.delete_attendance(
         child_id='test_child_id', date_query=str(date.today()))
+
+    dummy = 4

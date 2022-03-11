@@ -17,7 +17,6 @@ class AttendanceHandler:
     def add_attendance(
             child_id: str,
             kindergarten_id: str,
-            attendance_status: str = None,
             time_in: str = None,
             time_out: str = None,
             is_present: str = "no"):
@@ -66,7 +65,8 @@ class AttendanceHandler:
             Key={
                 ATTENDANCE_PK: child_id,
                 ATTENDANCE_SK: date_query},
-            UpdateExpression=f'set {KINDERGARTEN_ID}=:1, {TIME_IN}=:2, {TIME_OUT}=:3, {IS_PRESENT} =:4',
+            UpdateExpression=f'set {KINDERGARTEN_ID}=:1,'
+                             f' {TIME_IN}=:2, {TIME_OUT}=:3, {IS_PRESENT} =:4',
             ExpressionAttributeValues={
                 ':1': kindergarten_id,
                 ':2': time_in,

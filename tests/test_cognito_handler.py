@@ -10,6 +10,6 @@ def teardown_module():
     pass
 
 
-def test_cognitoHandler():
+def test_cognito_handler():
     teacher_id = CognitoHandler.get_teacher_id(event_mock)
     assert teacher_id == '74b835f4-775c-4c41-bea6-5a77b624e7dd'

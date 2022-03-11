@@ -1,3 +1,5 @@
+import logging
+
 import boto3
 from boto3.dynamodb.conditions import Key
 
@@ -19,7 +21,7 @@ class KindergartenHandler:
 
     @staticmethod
     def get_kindergarten(kindergarten_id: str) -> dict:
-        logger.info(f'Trying to get kindergarten: {kindergarten_id}')
+        logging.info(f'Trying to get kindergarten: {kindergarten_id}')
         response = kindergarten_table.query(
             KeyConditionExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id),
             Limit=1)

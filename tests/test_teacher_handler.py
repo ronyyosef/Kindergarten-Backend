@@ -9,7 +9,7 @@ def teardown_module():
     pass
 
 
-def test_TeacherHandler():
+def test_teacher_handler():
     TeacherHandler.add_teacher(
         teacher_id='test_teacher_id', phone_number='test_phone_number')
 
