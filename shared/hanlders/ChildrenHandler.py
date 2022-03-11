@@ -4,9 +4,9 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
-    GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, CHILD_ID
+    GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
+    CHILD_ID
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
-from utils.logger import logger
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
@@ -21,7 +21,6 @@ class ChildrenHandler:
             group_number: str,
             parent1_phone_number: str,
             parent2_phone_number: str = None) -> None:
-
         new_child = {
             CHILD_ID: child_id,
             KINDERGARTEN_ID: kindergarten_id,

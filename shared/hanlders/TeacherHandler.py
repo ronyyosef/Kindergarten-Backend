@@ -1,7 +1,8 @@
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
+from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
+    PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
     IS_ADMIN, TEACHER_ID
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 from utils.logger import logger

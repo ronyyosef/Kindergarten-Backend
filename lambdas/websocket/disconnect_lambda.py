@@ -1,9 +1,5 @@
-import logging
-
 import boto3
 from boto3.dynamodb.table import BatchWriter
-
-from shared.hanlders.lambda_decorator import lambda_decorator
 
 # @lambda_decorator
 from utils.logger import logger
@@ -31,7 +27,7 @@ event = {
         'connectedAt': 1646931807909,
         'requestTimeEpoch': 1646931811062,
         'identity': {
-                    'sourceIp': '5.102.253.21'},
+            'sourceIp': '5.102.253.21'},
         'requestId': 'OxxXgGPmoAMFiQQ=',
         'domainName': '6t7ekp92lc.execute-api.us-east-1.amazonaws.com',
         'connectionId': 'OxxXBfG1oAMActQ=',

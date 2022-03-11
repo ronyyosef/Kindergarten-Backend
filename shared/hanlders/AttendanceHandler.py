@@ -4,7 +4,8 @@ from time import time
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from shared.const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, TTL, \
+from shared.const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, \
+    KINDERGARTEN_ID, TTL, \
     ATTENDANCE_TABLE_TTL_TIME_OUT, TIME_IN, TIME_OUT, CHILD_ID, DATE, IS_PRESENT
 
 attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
@@ -41,7 +42,8 @@ class AttendanceHandler:
     def get_attendance(child_id, date_query: str = str(date.today())):
         response = attendance_table.query(KeyConditionExpression=Key(
             ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).eq(date_query))
-        attendance_data = response["Items"][0] if response['Count'] == 1 else None
+        attendance_data = response["Items"][0] if response[
+                                                      'Count'] == 1 else None
         return attendance_data
 
     @staticmethod
