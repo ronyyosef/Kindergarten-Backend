@@ -30,3 +30,4 @@ PRESIGNED_URL_EXPIRE_TIME = 300
 TEACHER_ID = 'teacher_id'
 TIME_IN = "time_in"
 TIME_OUT = "time_out"
+IS_PRESENT = "is_present"
