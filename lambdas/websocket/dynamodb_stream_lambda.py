@@ -43,7 +43,7 @@ NewImage = {'date': {'S': '2022-03-10'},
 def send_message(event, context):
     logger.info(event)
     logger.info(context)
-    table = boto3.resource('dynamodb').Table('WebsocketConnectionManager01')
+    table = boto3.resource('dynamodb').Table('WebsocketConnectionManager')
     response = table.scan()
     for item in response["Items"]:
         connection = item['connection_id']
