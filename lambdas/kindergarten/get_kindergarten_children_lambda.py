@@ -12,5 +12,8 @@ def get_kindergarten_children(event, context):
     children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id)
     for child in children:
         attend_status = AttendanceHandler.get_attendance(child_id=child.get(CHILD_ID), date_query=str(date.today()))
-        child['is_present'] = attend_status["is_present"]
+        if attend_status:
+            child['is_present'] = attend_status["is_present"]
+        else:
+            child['is_present'] = "no"
     return children
