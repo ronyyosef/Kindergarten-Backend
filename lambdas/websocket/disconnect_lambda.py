@@ -24,7 +24,7 @@ event = {'headers': {'Host': '6t7ekp92lc.execute-api.us-east-1.amazonaws.com', '
 def disconnect(event, context):
     logger.info(event)
     connectionID = event["requestContext"]["connectionId"]
-    table: BatchWriter = boto3.resource('dynamodb').Table('Websocket')
+    table: BatchWriter = boto3.resource('dynamodb').Table('WebsocketConnectionManager')
     table.delete_item(Key={"connection_id": connectionID})
     return {"statusCode": 200, "body": 'some body'}
 

@@ -1,17 +1,21 @@
 Resources:
-  Websocket:
+  WebsocketConnectionManager:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
+        - AttributeName: "kindergarten_id"
+          AttributeType: "S"
         - AttributeName: "connection_id"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "connection_id"
+        - AttributeName: "kindergarten_id"
           KeyType: "HASH"
+        - AttributeName: "connection_id"
+          KeyType: "RANGE"
       ProvisionedThroughput:
         ReadCapacityUnits: "5"
         WriteCapacityUnits: "5"
       TimeToLiveSpecification:
         AttributeName: "ttl"
         Enabled: "True"
-      TableName: "Websocket"
+      TableName: "WebsocketConnectionManager"
