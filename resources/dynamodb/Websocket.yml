@@ -10,6 +10,9 @@ Resources:
           KeyType: "HASH"
       GlobalSecondaryIndexes:
         - IndexName: connectionIndex
+          AttributeDefinitions:
+            - AttributeName: "connection_id"
+              AttributeType: "S"
           KeySchema:
             - AttributeName: "connection_id"
               KeyType: "HASH"
