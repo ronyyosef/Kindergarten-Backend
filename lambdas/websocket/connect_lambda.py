@@ -24,7 +24,7 @@ event = {'headers': {'Host': 'websocket.kindergartenil.com',
                             'requestTime': '11/Mar/2022:08:56:44 +0000', 'messageDirection': 'IN', 'stage': 'dev',
                             'connectedAt': 1646989004400, 'requestTimeEpoch': 1646989004401,
                             'identity': {'sourceIp': '5.102.253.21'}, 'requestId': 'Oz8_-FqUoAMF_vQ=',
-                            'domainName': 'websocket.kindergartenil.com', 'connectionId': 'Oz8_-d-qoAMCLMg=',
+                            'domainName': 'websocket.kindergartenil.com', 'connectionId': 'Oz8_-123-qoAMC123LMg=',
                             'apiId': '0ocw2ogu91'}, 'isBase64Encoded': False}
 
 from utils.logger import logger
