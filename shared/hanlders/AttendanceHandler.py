@@ -14,7 +14,7 @@ attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
 class AttendanceHandler:
 
     @staticmethod
-    def add_attendance(child_id: str, kindergarten_id: str, time_in: str) -> None:
+    def add_attendance(child_id: str, kindergarten_id: str, time_in: str = str(date.today())) -> None:
         new_attendance = {
             ATTENDANCE_PK: child_id,
             ATTENDANCE_SK: str(date.today()),
@@ -47,7 +47,8 @@ class AttendanceHandler:
         return response
 
     @staticmethod
-    def update_attendance(child_id: str, date_query: str, kindergarten_id: str, time_out: str) -> dict:
+    def update_attendance(child_id: str, date_query: str, kindergarten_id: str,
+                          time_out: str = str(date.today())) -> dict:
         response = attendance_table.update_item(
             Key={
                 ATTENDANCE_PK: child_id,

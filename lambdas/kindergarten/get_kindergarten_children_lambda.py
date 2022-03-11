@@ -13,9 +13,10 @@ def get_kindergarten_children(event, context):
     children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id)
     for child in children:
         attend_status = AttendanceHandler.get_attendance(child_id=child.get(CHILD_ID), date_query=str(date.today()))
-        if attend_status and "time_in" in child and "time_out" not in child:
+        if attend_status and attend_status["time_in"] is not None and attend_status["time_out"] is None:
             child['is_present'] = True
         else:
             child['is_present'] = False
 
     return children
+
