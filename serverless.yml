@@ -211,7 +211,7 @@ functions:
         - 'lambdas/kindergarten/**'
 
   GetKindergartenAttendanceSpreadsheet:
-    handler: lambdas/kindergarten/get_kindergarten_children_lambda.get_attendance_spreadsheet
+    handler: lambdas/kindergarten/get_attendance_spreadsheet.get_attendance_spreadsheet
     role: GetKindergartenChildrenRole
     events:
       - http:
