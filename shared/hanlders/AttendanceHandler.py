@@ -6,7 +6,6 @@ from boto3.dynamodb.conditions import Key
 
 from shared.const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, TTL, \
     ATTENDANCE_TABLE_TTL_TIME_OUT, TIME_IN, TIME_OUT, CHILD_ID, DATE, IS_PRESENT
-from utils.logger import logger
 
 attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
 
@@ -34,7 +33,7 @@ class AttendanceHandler:
             Key={ATTENDANCE_PK: child_id, ATTENDANCE_SK: str(date.today())})
 
     @staticmethod
-    def get_attendance(child_id, date_query: str = str(date.today())) -> bool:
+    def get_attendance(child_id, date_query: str = str(date.today())):
         response = attendance_table.query(
             KeyConditionExpression=Key(ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).eq(date_query))
         attendance_data = response["Items"][0] if response['Count'] == 1 else None
@@ -53,9 +52,9 @@ class AttendanceHandler:
     def update_attendance(child_id: str,
                           date_query: str,
                           kindergarten_id: str,
-                          time_in: str=None,
-                          time_out: str=None,
-                          is_present: str="no") -> dict:
+                          time_in: str = None,
+                          time_out: str = None,
+                          is_present: str = "no") -> dict:
         response = attendance_table.update_item(
             Key={
                 ATTENDANCE_PK: child_id,
@@ -75,6 +74,7 @@ class AttendanceHandler:
 
     @staticmethod
     def check_if_attendance_exists(child_id: str, time_to_check: str = str(date.today())) -> bool:
+        response = None
         try:
             response = attendance_table.query(
                 KeyConditionExpression=Key(CHILD_ID).eq(child_id) & Key(DATE).eq(time_to_check),
