@@ -8,10 +8,12 @@ from shared.hanlders.lambda_decorator import lambda_decorator
 
 @lambda_decorator
 def get_kindergarten_children(event, context):
-    kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(event[TEACHER_ID])
+    kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(
+        event[TEACHER_ID])
     children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id)
     for child in children:
-        attend_status = AttendanceHandler.get_attendance(child_id=child.get(CHILD_ID), date_query=str(date.today()))
+        attend_status = AttendanceHandler.get_attendance(
+            child_id=child.get(CHILD_ID), date_query=str(date.today()))
         if attend_status:
             child['is_present'] = attend_status["is_present"]
         else:

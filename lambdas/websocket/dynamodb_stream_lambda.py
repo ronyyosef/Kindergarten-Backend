@@ -16,7 +16,8 @@ def send_message(event, context):
         logger.info(event)
         table = boto3.resource('dynamodb').Table('WebsocketConnectionManager')
         for record in event['Records']:
-            if record['eventName'] == 'REMOVE': break
+            if record['eventName'] == 'REMOVE':
+                break
             data = record['dynamodb']['NewImage']
             child_id = data['child_id']['S']
             kindergarten_id = data['kindergarten_id']['S']
@@ -35,7 +36,7 @@ def send_message(event, context):
                     )
                 except ClientError as ex:
                     table.delete_item(Key={"connection_id": connection})
-    except:
+    except BaseException:
         pass
 
 

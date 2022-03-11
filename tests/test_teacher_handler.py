@@ -10,7 +10,8 @@ def teardown_module():
 
 
 def test_TeacherHandler():
-    TeacherHandler.add_teacher(teacher_id='test_teacher_id', phone_number='test_phone_number')
+    TeacherHandler.add_teacher(
+        teacher_id='test_teacher_id', phone_number='test_phone_number')
 
     response = TeacherHandler.get_teacher_data('test_teacher_id')
     assert response == {'last_name': None, 'group_number': None, 'is_admin': None, 'kindergarten_id': None,

@@ -24,4 +24,5 @@ def add_child_data(event, context):
 
     logger.info(f"child to be added is :{child_to_add}")
     ChildrenHandler.add_child(**child_to_add)
-    return {"code": "200", "message": "Child updated successfully", "id_created": new_child_id}
+    return {"code": "200", "message": "Child updated successfully",
+            "id_created": new_child_id}

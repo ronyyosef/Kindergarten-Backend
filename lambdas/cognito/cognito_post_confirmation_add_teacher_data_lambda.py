@@ -21,6 +21,7 @@ from shared.slack_notification import send_new_user_msg
 def add_teacher_data(event, context):
     teacher_id = event['userName']
     phone_number = event['request']['userAttributes'][PHONE_NUMBER]
-    TeacherHandler.add_teacher(teacher_id=teacher_id, phone_number=phone_number)
+    TeacherHandler.add_teacher(
+        teacher_id=teacher_id, phone_number=phone_number)
     send_new_user_msg(f"New user register, phone number: {phone_number}")
     return event

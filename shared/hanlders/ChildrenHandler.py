@@ -33,7 +33,8 @@ class ChildrenHandler:
         response = child_table.query(
             KeyConditionExpression=Key(CHILD_ID).eq(child_id))
         result = response['Items'][0]
-        photo_url = S3PhotosHandler.get_photo_url(result[KINDERGARTEN_ID], child_id)
+        photo_url = S3PhotosHandler.get_photo_url(
+            result[KINDERGARTEN_ID], child_id)
         result[PHOTO_LINK] = photo_url
         return result
 
@@ -48,7 +49,8 @@ class ChildrenHandler:
         response = child_table.scan(
             FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
         for item in response['Items']:
-            photo_url = S3PhotosHandler.get_photo_url(kindergarten_id, item[CHILD_ID])
+            photo_url = S3PhotosHandler.get_photo_url(
+                kindergarten_id, item[CHILD_ID])
             item[PHOTO_LINK] = photo_url
         return response['Items']
 
@@ -56,7 +58,8 @@ class ChildrenHandler:
     def child_in_kindergarten(child_id: str, kindergarten_id: str) -> bool:
         response = child_table.query(
             KeyConditionExpression=f'{CHILD_ID} = :child_id and {KINDERGARTEN_ID} = :kindergarten_id',
-            ExpressionAttributeValues={':child_id': child_id, ':kindergarten_id': kindergarten_id},
+            ExpressionAttributeValues={
+                ':child_id': child_id, ':kindergarten_id': kindergarten_id},
             Limit=1
         )
         return response['Count'] >= 1

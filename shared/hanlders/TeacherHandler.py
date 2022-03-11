@@ -30,10 +30,12 @@ class TeacherHandler:
     @staticmethod
     def get_teacher_data(teacher_id: str) -> dict:
         logger.info(f'Trying to get teacher: {teacher_id}')
-        response = teacher_table.query(KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
+        response = teacher_table.query(
+            KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
         teacher_data = response["Items"][0] if response['Count'] == 1 else None
         if teacher_data:
-            photo_url = S3PhotosHandler.get_photo_url(teacher_data[KINDERGARTEN_ID], teacher_id)
+            photo_url = S3PhotosHandler.get_photo_url(
+                teacher_data[KINDERGARTEN_ID], teacher_id)
             teacher_data[PHOTO_LINK] = photo_url
         return teacher_data
 
