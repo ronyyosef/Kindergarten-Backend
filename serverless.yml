@@ -6,6 +6,8 @@ provider:
   versionFunctions: false
   stage: ${opt:stage,'dev'}
   region: ${opt:region,'us-east-1'}
+  websocketApiName: live-dynamodb-api
+  websocketApiRouteSelectionExpression: $request.body.action
   tracing:
     apiGateway: true
     lambda: true
@@ -16,10 +18,18 @@ provider:
 
 custom:
   customDomain:
-    domainName: api.kindergartenil.com
-    basePath: ''
-    stage: ${self:provider.stage}
-    createRoute53Record: true
+    rest:
+      domainName: api.kindergartenil.com
+      basePath: ''
+      stage: ${self:provider.stage}
+      createRoute53Record: true
+      endpointType: edge
+    websocket:
+      domainName: websocket.kindergartenil.com
+      basePath: ''
+      stage: ${self:provider.stage}
+      createRoute53Record: true
+      endpointType: regional
   cognitoAuthorizerArn: arn:aws:cognito-idp:${aws:region}:${aws:accountId}:userpool/${aws:region}_PokjeshX3
   pythonRequirements:
     dockerizePip: non-linux
@@ -214,6 +224,36 @@ functions:
       patterns:
         - 'lambdas/attendance/**'
 
+  connectHandler:
+    handler: lambdas/websocket/connect_lambda.connect
+    role: WebsocketRole
+    events:
+      - websocket:
+          route: $connect
+    package:
+      patterns:
+        - 'lambdas/websocket/**'
+
+  disconnectHandler:
+    handler: lambdas/websocket/disconnect_lambda.disconnect
+    role: WebsocketRole
+    events:
+      - websocket:
+          route: $disconnect
+    package:
+      patterns:
+        - 'lambdas/websocket/**'
+
+  AttandanceDataStream:
+    handler: lambdas/websocket/dynamodb_stream_lambda.send_message
+    role: AttandanceDataStreamRole
+#    events:
+#      - stream:
+#          arn: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/stream/2022-03-10T22:55:54.027
+    package:
+      patterns:
+        - 'lambdas/websocket/**'
+
 plugins:
   - serverless-python-requirements
   - serverless-plugin-stage-variables
@@ -230,11 +270,14 @@ resources:
   - ${file(resources/iam/GetKindergartenDataRole.yml)}
   - ${file(resources/iam/GetKindergartenChildrenRole.yml)}
   - ${file(resources/iam/AddAttendanceDataRole.yml)}
+  - ${file(resources/iam/WebsocketRole.yml)}
+  - ${file(resources/iam/AttandanceDataStreamRole.yml)}
   # dynamodb
   - ${file(resources/dynamodb/AttendanceData.yml)}
   - ${file(resources/dynamodb/ChildData.yml)}
   - ${file(resources/dynamodb/KindergartenData.yml)}
   - ${file(resources/dynamodb/TeacherData.yml)}
+  - ${file(resources/dynamodb/Websocket.yml)}
 
   # cognito
 #  - ${file(resources/cognito/Kindergarten-02.yml)}

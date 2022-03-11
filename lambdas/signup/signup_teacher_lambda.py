@@ -25,8 +25,7 @@ def signup_teacher(event, context):
         GROUP_NUMBER: body.get(GROUP_NUMBER, None),
         IS_ADMIN: body.get(IS_ADMIN, None),
     }
-    response = TeacherHandler.update_teacher(**teacher_update_info)
-    return response
+    TeacherHandler.update_teacher(**teacher_update_info)
 
 
 def create_kindergarten_for_teacher(kindergarten_name: str) -> str:

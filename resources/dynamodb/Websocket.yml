@@ -1,0 +1,17 @@
+Resources:
+  Websocket:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "connection_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "connection_id"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+      TimeToLiveSpecification:
+        AttributeName: "ttl"
+        Enabled: "True"
+      TableName: "Websocket"
