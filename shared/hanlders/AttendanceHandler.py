@@ -5,7 +5,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from shared.const import ATTENDANCE_TABLE, ATTENDANCE_PK, ATTENDANCE_SK, KINDERGARTEN_ID, TTL, \
-    ATTENDANCE_TABLE_TTL_TIME_OUT, TIME_IN, TIME_OUT, CHILD_ID, DATE, ATTENDANCE_STATUS, IS_PRESENT
+    ATTENDANCE_TABLE_TTL_TIME_OUT, TIME_IN, TIME_OUT, CHILD_ID, DATE, IS_PRESENT
 from utils.logger import logger
 
 attendance_table = boto3.resource('dynamodb').Table(ATTENDANCE_TABLE)
@@ -53,9 +53,9 @@ class AttendanceHandler:
     def update_attendance(child_id: str,
                           date_query: str,
                           kindergarten_id: str,
-                          time_in: str,
-                          time_out: str,
-                          is_present: str) -> dict:
+                          time_in: str=None,
+                          time_out: str=None,
+                          is_present: str="no") -> dict:
         response = attendance_table.update_item(
             Key={
                 ATTENDANCE_PK: child_id,
