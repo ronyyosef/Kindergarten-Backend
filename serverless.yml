@@ -283,7 +283,7 @@ resources:
   - ${file(resources/dynamodb/ChildData.yml)}
   - ${file(resources/dynamodb/KindergartenData.yml)}
   - ${file(resources/dynamodb/TeacherData.yml)}
-  - ${file(resources/dynamodb/Websocket.yml)}
+#  - ${file(resources/dynamodb/Websocket.yml)}
 
   # cognito
 #  - ${file(resources/cognito/Kindergarten-02.yml)}

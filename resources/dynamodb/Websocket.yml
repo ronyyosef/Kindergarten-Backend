@@ -5,13 +5,22 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "kindergarten_id"
           AttributeType: "S"
-        - AttributeName: "connection_id"
-          AttributeType: "S"
       KeySchema:
         - AttributeName: "kindergarten_id"
           KeyType: "HASH"
-        - AttributeName: "connection_id"
-          KeyType: "RANGE"
+      GlobalSecondaryIndexes:
+        - IndexName: connectionIndex
+          AttributeDefinitions:
+            - AttributeName: "connection_id"
+              AttributeType: "S"
+          KeySchema:
+            - AttributeName: "connection_id"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: "5"
+            WriteCapacityUnits: "5"
       ProvisionedThroughput:
         ReadCapacityUnits: "5"
         WriteCapacityUnits: "5"
