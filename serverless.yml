@@ -160,12 +160,6 @@ functions:
   CogintoPostConfirmation:
     handler: lambdas/cognito/cognito_post_confirmation_add_teacher_data_lambda.add_teacher_data
     role: CogintoPostConfirmationRole
-    events:
-      - cognitoUserPool:
-          pool: ${self:custom.cognitoAuthorizerArn}
-          trigger: PostConfirmation
-          forceDeploy: true
-
     package:
       patterns:
         - 'lambdas/cognito/**'
@@ -236,6 +230,10 @@ functions:
     events:
       - websocket:
           route: $connect
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
     package:
       patterns:
         - 'lambdas/websocket/**'
@@ -246,6 +244,10 @@ functions:
     events:
       - websocket:
           route: $disconnect
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
     package:
       patterns:
         - 'lambdas/websocket/**'
