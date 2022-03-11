@@ -21,4 +21,4 @@ Resources:
       TimeToLiveSpecification:
         AttributeName: "ttl"
         Enabled: "True"
-      TableName: "WebsocketConnectionManager"
+      TableName: "WebsocketConnectionManager01"

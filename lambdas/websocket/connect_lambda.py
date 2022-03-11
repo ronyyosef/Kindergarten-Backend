@@ -37,7 +37,7 @@ def connect(event, context):
         'cognito:username']
     kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(user_name)
     connectionID = event["requestContext"]["connectionId"]
-    table = boto3.resource('dynamodb').Table('WebsocketConnectionManager')
+    table = boto3.resource('dynamodb').Table('WebsocketConnectionManager01')
     table.put_item(Item={"connection_id": connectionID, 'kindergarten_id': kindergarten_id})
     return {"statusCode": 200, "body": 'connect successfully'}
 
