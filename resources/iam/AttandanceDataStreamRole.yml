@@ -34,10 +34,12 @@ Resources:
                     - dynamodb:ListShards
                   Resource:
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/*
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ChildData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/KindergartenData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/TeacherData
-                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/Websocket
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/WebsocketConnectionManager/*
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/WebsocketConnectionManager
                 - Effect: Allow
                   Action:
                     - execute-api:ManageConnections
