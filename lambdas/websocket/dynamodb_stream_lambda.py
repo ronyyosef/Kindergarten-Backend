@@ -22,7 +22,7 @@ event = {'Records': [{'eventID': '851163a450805a957c316866fca2a3da', 'eventName'
                                                 'ttl': {'N': '1649955555'}, 'time_out': {'S': '19:08:59'}},
                                    'SequenceNumber': '9192100000000025472410832', 'SizeBytes': 179,
                                    'StreamViewType': 'NEW_IMAGE'},
-                       'eventSourceARN': 'arn:aws:dynamodb:us-east-1:344089725894:table/AttendanceData/stream/2022-03-10T20:51:31.023'}]}
+                      'eventSourceARN': 'arn:aws:dynamodb:us-east-1:344089725894:table/AttendanceData/stream/2022-03-10T20:51:31.023'}]}
 # # INSERT
 event2 = {'Records': [{'eventID': '67220458628aed3fe5748d707795fb37', 'eventName': 'INSERT', 'eventVersion': '1.1',
                        'eventSource': 'aws:dynamodb', 'awsRegion': 'us-east-1',
@@ -46,13 +46,12 @@ NewImage = {'date': {'S': '2022-03-10'},
 
 def send_message(event, context):
     logger.info(event)
-    logger.info(context)
     table = boto3.resource('dynamodb').Table('WebsocketConnectionManager')
     for record in event['Records']:
         data = record['dynamodb']['NewImage']
         child_id = data['child_id']['S']
         kindergarten_id = data['kindergarten_id']['S']
-        is_present = True #data['is_present']['S']
+        is_present = True  # data['is_present']['S']
         message = {'child_id': child_id, "is_present": is_present}
         response = table.query(
             IndexName='kindergarten_id_index',
