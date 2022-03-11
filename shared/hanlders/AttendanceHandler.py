@@ -15,7 +15,7 @@ class AttendanceHandler:
 
     @staticmethod
     def add_attendance(child_id: str, kindergarten_id: str, attendance_status: str = None, time_in: str = None,
-                       time_out: str = None):
+                       time_out: str = None, is_present: str = "no"):
         new_attendance = {
             ATTENDANCE_PK: child_id,
             ATTENDANCE_SK: str(date.today()),
@@ -23,7 +23,7 @@ class AttendanceHandler:
             TTL: int(time() + ATTENDANCE_TABLE_TTL_TIME_OUT),
             TIME_IN: time_in,
             TIME_OUT: time_out,
-            ATTENDANCE_STATUS: attendance_status
+            IS_PRESENT: is_present
         }
         attendance_table.put_item(Item=new_attendance)
         return new_attendance
