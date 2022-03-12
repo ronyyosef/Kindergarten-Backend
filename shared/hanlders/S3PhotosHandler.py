@@ -5,8 +5,6 @@ from botocore.exceptions import ClientError
 
 from shared.const import PHOTOS_BUCKET, PRESIGNED_URL_EXPIRE_TIME
 
-os.environ['S3_UPLOAD_AWS_ACCESS_KEY_ID'] = ''
-os.environ['S3_UPLOAD_AWS_SECRET_ACCESS_KEY'] = ''
 s3_client = boto3.client("s3",
                          region_name="us-east-1",
                          aws_access_key_id=os.environ[

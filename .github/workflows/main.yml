@@ -14,6 +14,8 @@ jobs:
           - 3.9
     steps:
       - uses: actions/checkout@v2
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
