@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 
 from shared.const import MARCH
@@ -13,7 +12,6 @@ class SpreadsheetHandler:
     @staticmethod
     def get_kindergarten_spreadsheet(kindergarten_id: str, month=MARCH):
         kindergarten_data = KindergartenHandler.get_kindergarten(kindergarten_id)
-        # kindergarten_name = kindergarten_data["kindergarten_name"]
         kindergarten_id = kindergarten_data["kindergarten_id"]
 
         columns = ["child_name", "day", "time_in", "time_out", "total_stay", "ate_pizza"]
@@ -48,8 +46,6 @@ class SpreadsheetHandler:
             df_child["ate_pizza"] = pd.Series(ate_pizza, dtype=pd.StringDtype())
             df_child["child_name"] = f'{child["first_name"]} {child["last_name"]}'
             df_child = df_child.fillna("")
-            result = df_child.to_json(orient='index')
-            parsed = json.loads(result)
-            df_children_list.append(json.dumps(parsed, indent=4))
+            df_children_list.append(df_child.to_csv())
 
         return df_children_list
