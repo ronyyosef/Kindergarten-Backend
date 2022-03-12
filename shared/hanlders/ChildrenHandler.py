@@ -4,19 +4,23 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
-    GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, CHILD_ID
+    GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
+    CHILD_ID
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
-from utils.logger import logger
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
 
 
 class ChildrenHandler:
     @staticmethod
-    def add_child(child_id: str, kindergarten_id: str, first_name: str, last_name: str, group_number: str,
-                  parent1_phone_number: str,
-                  parent2_phone_number: str = None) -> None:
-
+    def add_child(
+            child_id: str,
+            kindergarten_id: str,
+            first_name: str,
+            last_name: str,
+            group_number: str,
+            parent1_phone_number: str,
+            parent2_phone_number: str = None) -> None:
         new_child = {
             CHILD_ID: child_id,
             KINDERGARTEN_ID: kindergarten_id,
@@ -33,7 +37,8 @@ class ChildrenHandler:
         response = child_table.query(
             KeyConditionExpression=Key(CHILD_ID).eq(child_id))
         result = response['Items'][0]
-        photo_url = S3PhotosHandler.get_photo_url(result[KINDERGARTEN_ID], child_id)
+        photo_url = S3PhotosHandler.get_photo_url(
+            result[KINDERGARTEN_ID], child_id)
         result[PHOTO_LINK] = photo_url
         return result
 
@@ -48,7 +53,8 @@ class ChildrenHandler:
         response = child_table.scan(
             FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
         for item in response['Items']:
-            photo_url = S3PhotosHandler.get_photo_url(kindergarten_id, item[CHILD_ID])
+            photo_url = S3PhotosHandler.get_photo_url(
+                kindergarten_id, item[CHILD_ID])
             item[PHOTO_LINK] = photo_url
         return response['Items']
 
@@ -56,7 +62,8 @@ class ChildrenHandler:
     def child_in_kindergarten(child_id: str, kindergarten_id: str) -> bool:
         response = child_table.query(
             KeyConditionExpression=f'{CHILD_ID} = :child_id and {KINDERGARTEN_ID} = :kindergarten_id',
-            ExpressionAttributeValues={':child_id': child_id, ':kindergarten_id': kindergarten_id},
-            Limit=1
-        )
+            ExpressionAttributeValues={
+                ':child_id': child_id,
+                ':kindergarten_id': kindergarten_id},
+            Limit=1)
         return response['Count'] >= 1

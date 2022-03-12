@@ -1,7 +1,8 @@
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
+from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
+    PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
     IS_ADMIN, TEACHER_ID
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 from utils.logger import logger
@@ -12,9 +13,14 @@ teacher_table = boto3.resource('dynamodb').Table(TEACHERS_TABLE)
 class TeacherHandler:
 
     @staticmethod
-    def add_teacher(teacher_id: str, phone_number: str, first_name: str = None, last_name: str = None,
-                    kindergarten_id: str = None,
-                    group_number: str = None, is_admin: str = None) -> None:
+    def add_teacher(
+            teacher_id: str,
+            phone_number: str,
+            first_name: str = None,
+            last_name: str = None,
+            kindergarten_id: str = None,
+            group_number: str = None,
+            is_admin: str = None) -> None:
         new_teacher = {
             TEACHER_ID: teacher_id,
             PHONE_NUMBER: phone_number,
@@ -30,16 +36,23 @@ class TeacherHandler:
     @staticmethod
     def get_teacher_data(teacher_id: str) -> dict:
         logger.info(f'Trying to get teacher: {teacher_id}')
-        response = teacher_table.query(KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
+        response = teacher_table.query(
+            KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
         teacher_data = response["Items"][0] if response['Count'] == 1 else None
         if teacher_data:
-            photo_url = S3PhotosHandler.get_photo_url(teacher_data[KINDERGARTEN_ID], teacher_id)
+            photo_url = S3PhotosHandler.get_photo_url(
+                teacher_data[KINDERGARTEN_ID], teacher_id)
             teacher_data[PHOTO_LINK] = photo_url
         return teacher_data
 
     @staticmethod
-    def update_teacher(teacher_id: str, first_name: str = None, last_name: str = None, kindergarten_id: str = None,
-                       group_number: str = None, is_admin: str = None) -> None:
+    def update_teacher(
+            teacher_id: str,
+            first_name: str = None,
+            last_name: str = None,
+            kindergarten_id: str = None,
+            group_number: str = None,
+            is_admin: str = None) -> None:
         response = teacher_table.update_item(
             Key={
                 TEACHER_ID: teacher_id,
@@ -50,10 +63,8 @@ class TeacherHandler:
                 ':2': last_name,
                 ':3': kindergarten_id,
                 ':4': group_number,
-                ':5': is_admin
-            },
-            ReturnValues='ALL_NEW'
-        )
+                ':5': is_admin},
+            ReturnValues='ALL_NEW')
         return response['Attributes']
 
     @staticmethod

@@ -313,10 +313,11 @@ package:
     - '!lambdas/**'
     - '!tests/**'
     - '!resources/**'
+    - '!env.yml'
     - 'lambdas/__init__.py'
     - 'shared/**'
     - 'utils/**'
-
-  individually: true
+    - 'lambdas/**'
+#  individually: true
 
 

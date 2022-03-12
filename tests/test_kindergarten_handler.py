@@ -9,8 +9,9 @@ def teardown_module():
     pass
 
 
-def test_KindergartenHandler():
+def test_Kindergarten_handler():
     KindergartenHandler.add_kindergarten('test_id', 'name')
 
     response = KindergartenHandler.get_kindergarten('test_id')
-    assert response == {'kindergarten_name': 'name', 'kindergarten_id': 'test_id'}
+    assert response == {'kindergarten_name': 'name',
+                        'kindergarten_id': 'test_id'}

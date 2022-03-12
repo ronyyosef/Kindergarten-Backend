@@ -1,4 +1,3 @@
-
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
 
