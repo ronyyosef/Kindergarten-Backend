@@ -37,6 +37,7 @@ class S3PhotosHandler:
             Bucket=PHOTOS_BUCKET,
             Key=f'{kindergarten_id}/{id}.png',
             ExpiresIn=PRESIGNED_URL_EXPIRE_TIME,
+            Fields={"Content-Type": "multipart/form-data"},
             Conditions=[
                 ["content-length-range", 1,
                  5120000]])
