@@ -48,7 +48,8 @@ class AttendanceHandler:
     @staticmethod
     def get_attendance_for_entire_month(child_id, report_month):
         response = attendance_table.query(
-            KeyConditionExpression=Key(ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).between(f"2022-{report_month}-00",f"2022-{report_month}-30"))
+            KeyConditionExpression=Key(ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).between(
+                f"2022-{report_month}-00", f"2022-{report_month}-30"))
         attendance_data = response["Items"] if response['Count'] >= 1 else None
         return attendance_data
 

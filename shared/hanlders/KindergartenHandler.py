@@ -4,7 +4,6 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from shared.const import KINDERGARTEN_TABLE, KINDERGARTEN_NAME, KINDERGARTEN_ID
-from utils.logger import logger
 
 kindergarten_table = boto3.resource('dynamodb').Table(KINDERGARTEN_TABLE)
 
@@ -34,7 +33,8 @@ class KindergartenHandler:
         pass
 
     @staticmethod
-    def delete_kindergarten():
+    def delete_kindergarten(kindergarten_id: str):
+        # TODO
         pass
 
     @staticmethod
