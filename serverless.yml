@@ -14,7 +14,8 @@ provider:
   environment:
     SLACK_ALERTS_WEBHOOK: ${self:custom.environment.SLACK_ALERTS_WEBHOOK}
     SLACK_REGISTER_WEBHOOK: ${self:custom.environment.SLACK_REGISTER_WEBHOOK}
-
+    S3_UPLOAD_AWS_ACCESS_KEY_ID: ${self:custom.environment.S3_UPLOAD_AWS_ACCESS_KEY_ID}
+    S3_UPLOAD_AWS_SECRET_ACCESS_KEY: ${self:custom.environment.S3_UPLOAD_AWS_SECRET_ACCESS_KEY}
 
 custom:
   customDomain:
