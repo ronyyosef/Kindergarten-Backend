@@ -1,8 +1,10 @@
+import logging
+
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from utils.logger import logger
 from shared.const import KINDERGARTEN_TABLE, KINDERGARTEN_NAME, KINDERGARTEN_ID
+from utils.logger import logger
 
 kindergarten_table = boto3.resource('dynamodb').Table(KINDERGARTEN_TABLE)
 
@@ -19,10 +21,12 @@ class KindergartenHandler:
 
     @staticmethod
     def get_kindergarten(kindergarten_id: str) -> dict:
-        logger.info(f'Trying to get kindergarten: {kindergarten_id}')
-        response = kindergarten_table.query(KeyConditionExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id),
-                                            Limit=1)
-        kindergarten_data = response["Items"][0] if response['Count'] == 1 else None
+        logging.info(f'Trying to get kindergarten: {kindergarten_id}')
+        response = kindergarten_table.query(
+            KeyConditionExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id),
+            Limit=1)
+        kindergarten_data = response["Items"][0] if response[
+                                                        'Count'] == 1 else None
         return kindergarten_data
 
     @staticmethod

@@ -1,6 +1,8 @@
 import uuid
 
-from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, GROUP_NUMBER, TEACHER_ID, CHILD_ID
+from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
+    PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, \
+    GROUP_NUMBER, TEACHER_ID, CHILD_ID
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
@@ -24,4 +26,5 @@ def add_child_data(event, context):
 
     logger.info(f"child to be added is :{child_to_add}")
     ChildrenHandler.add_child(**child_to_add)
-    return {"code": "200", "message": "Child updated successfully", "id_created": new_child_id}
+    return {"code": "200", "message": "Child updated successfully",
+            "id_created": new_child_id}
