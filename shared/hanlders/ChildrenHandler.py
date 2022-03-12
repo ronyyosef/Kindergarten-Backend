@@ -67,3 +67,8 @@ class ChildrenHandler:
                 ':kindergarten_id': kindergarten_id},
             Limit=1)
         return response['Count'] >= 1
+
+    @staticmethod
+    def delete_child(child_id):
+        # TODO
+        pass
