@@ -35,7 +35,6 @@ custom:
   cognitoAuthorizerName: Kindergarten-02
   pythonRequirements:
     dockerizePip: non-linux
-    usePipenv: false
   environment: ${file(env.yml):${self:provider.stage}, file(env.yml):default}
 
 functions:
