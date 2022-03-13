@@ -16,6 +16,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies
         run: npm install
+      - name: Create env file
+        run: |
+          cat > env.yml << EOF
+          ${{ secrets.ENV }}
+          EOF
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
