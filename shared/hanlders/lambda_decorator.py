@@ -20,6 +20,7 @@ def lambda_decorator(lambda_function):
             tb = traceback.format_exc()
             send_errors_alert_msg(f'{str(ex)}: \n\n {str(tb)}')
             return {"statusCode": "500",
-                    "message": "internal server error"}
+                    "message": "internal server error",
+                    "exception": f'{str(ex)}: \n\n {str(tb)}'}
 
     return inner
