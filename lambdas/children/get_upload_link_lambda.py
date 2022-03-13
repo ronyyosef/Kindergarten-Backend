@@ -1,4 +1,4 @@
-from shared.const import KINDERGARTEN_ID, TEACHER_ID
+from shared.const import KINDERGARTEN_ID, TEACHER_ID, EVENT_QUERY_STRING
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -7,7 +7,7 @@ from shared.hanlders.lambda_decorator import lambda_decorator
 
 @lambda_decorator
 def get_upload_link(event, context):
-    child_id = event['querystring']['child_id']
+    child_id = event[EVENT_QUERY_STRING]['child_id']
     try:
         child_data = ChildrenHandler.get_child(child_id)
     except BaseException:

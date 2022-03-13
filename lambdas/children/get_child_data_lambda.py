@@ -1,3 +1,4 @@
+from shared.const import EVENT_QUERY_STRING
 from shared.hanlders.AttendanceHandler import AttendanceHandler
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
@@ -5,7 +6,7 @@ from shared.hanlders.lambda_decorator import lambda_decorator
 
 @lambda_decorator
 def get_child_data(event, context):
-    response = ChildrenHandler.get_child(event["querystring"]["id"])
+    response = ChildrenHandler.get_child(event[EVENT_QUERY_STRING]["id"])
     child_id = response.get("child_id", None)
     if child_id:
         child_attendance = AttendanceHandler.get_attendance(child_id=child_id)
