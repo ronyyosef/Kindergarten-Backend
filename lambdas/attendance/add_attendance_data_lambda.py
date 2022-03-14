@@ -10,7 +10,7 @@ from shared.hanlders.AttendanceHandler import AttendanceHandler
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
-import pandas
+
 
 @lambda_decorator
 def add_attendance_data(event, context):
@@ -42,6 +42,7 @@ def add_attendance_data(event, context):
             TIME_OUT, None), time_in=child_attendance.get(
             TIME_IN, None), is_present=child_attendance.get(
             IS_PRESENT, None))
+
 
 # class Data(BaseModel):
 #     id: str
