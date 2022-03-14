@@ -1,9 +1,12 @@
 import boto3
 from boto3.dynamodb.conditions import Key
+from botocore.exceptions import ClientError
 
 from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
     PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
     IS_ADMIN, TEACHER_ID
+from shared.error_handling.error_codes import INPUT_ERROR
+from shared.error_handling.exception import MyException
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 from utils.logger import logger
 
@@ -39,6 +42,8 @@ class TeacherHandler:
         response = teacher_table.query(
             KeyConditionExpression=Key(TEACHER_ID).eq(teacher_id), Limit=1)
         teacher_data = response["Items"][0] if response['Count'] == 1 else None
+        if teacher_data is None:
+            raise MyException('Teacher not exist', INPUT_ERROR)
         if teacher_data:
             photo_url = S3PhotosHandler.get_photo_url(
                 teacher_data[KINDERGARTEN_ID], teacher_id)

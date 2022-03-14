@@ -10,7 +10,7 @@ from shared.hanlders.AttendanceHandler import AttendanceHandler
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
-
+import pandas
 
 @lambda_decorator
 def add_attendance_data(event, context):
@@ -67,18 +67,20 @@ class InputData(BaseModel):
         try:
             values[CHILD_ID] = values[EVENT_BODY][ID]
             values[IS_PRESENT] = values[EVENT_BODY][IS_PRESENT]
-            values[
-                KINDERGARTEN_ID] = TeacherHandler.get_teacher_kindergarten_id(
-                values[TEACHER_ID])
-
-            if values[IS_PRESENT] != 'yes' and values[IS_PRESENT] != 'no':
-                raise MyException("is_present should be: yes|no", INPUT_ERROR)
-
-            if not ChildrenHandler.child_in_kindergarten(
-                    values[CHILD_ID], values[KINDERGARTEN_ID]):
-                raise MyException(
-                    'child not exist/ child not in this kindergarten',
-                    INPUT_ERROR)
         except BaseException:
-            raise MyException("Input Error, parameter is missing", INPUT_ERROR)
+            raise MyException("Input Error", INPUT_ERROR)
+
+        if values[IS_PRESENT] != 'yes' and values[IS_PRESENT] != 'no':
+            raise MyException("is_present should be: yes|no", INPUT_ERROR)
+
+        values[
+            KINDERGARTEN_ID] = TeacherHandler.get_teacher_kindergarten_id(
+            values[TEACHER_ID])
+
+        if not ChildrenHandler.child_in_kindergarten(
+                values[CHILD_ID], values[KINDERGARTEN_ID]):
+            raise MyException(
+                'child not exist/ child not in this kindergarten',
+                INPUT_ERROR)
+
         return values
