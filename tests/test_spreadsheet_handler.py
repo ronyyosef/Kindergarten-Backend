@@ -29,6 +29,6 @@ def test_spreadsheet_handler():
         spreadsheet_attendance) == 1, "Report should have data of 1 child in it"
     KindergartenHandler.delete_kindergarten(
         kindergarten_id=test_kindergarten_id)
-    ChildrenHandler.delete_child(child_id=test_child_id)
+    ChildrenHandler.delete_child(child_id=test_child_id, kindergarten_id=test_kindergarten_id)
     AttendanceHandler.delete_attendance(child_id=test_child_id,
                                         date_query=str(date.today()))

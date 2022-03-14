@@ -78,6 +78,26 @@ functions:
       patterns:
         - 'lambdas/children/**'
 
+  DeleteChildData:
+    handler: lambdas/children/delete_child_data_lambda.delete_child_data
+    role: AddChildDataRole
+    events:
+      - http:
+          path: children
+          method: delete
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/children/**'
+
   UploadChildPhoto:
     handler: lambdas/children/get_upload_link_lambda.get_upload_link
     role: UploadChildPhotoRole
