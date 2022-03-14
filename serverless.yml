@@ -2,7 +2,7 @@ service: aws-python
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.7
   versionFunctions: false
   stage: ${opt:stage,'dev'}
   region: ${opt:region,'us-east-1'}
@@ -34,7 +34,7 @@ custom:
   cognitoAuthorizerArn: arn:aws:cognito-idp:${aws:region}:${aws:accountId}:userpool/${aws:region}_PokjeshX3
   cognitoAuthorizerName: Kindergarten-02
   pythonRequirements:
-    dockerizePip: non-linux
+    dockerizePip: true
   environment: ${file(env.yml):${self:provider.stage}, file(env.yml):default}
 
 functions:

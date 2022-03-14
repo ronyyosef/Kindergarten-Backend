@@ -2,7 +2,7 @@ import uuid
 
 from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, \
-    GROUP_NUMBER, TEACHER_ID, CHILD_ID
+    GROUP_NUMBER, TEACHER_ID, CHILD_ID, EVENT_BODY
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
@@ -13,7 +13,7 @@ from utils.logger import logger
 def add_child_data(event, context):
     new_child_id = str(uuid.uuid4())
     teacher_data = TeacherHandler.get_teacher_data(event[TEACHER_ID])
-    body: dict = event['customBody']
+    body: dict = event[EVENT_BODY]
     child_to_add = {
         CHILD_ID: new_child_id,
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],
