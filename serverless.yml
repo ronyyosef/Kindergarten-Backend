@@ -83,7 +83,7 @@ functions:
     role: AddChildDataRole
     events:
       - http:
-          path: children
+          path: children/delete
           method: post
           integration: lambda
           cors: true
