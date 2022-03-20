@@ -36,10 +36,13 @@ class ChildrenHandler:
     def get_child(child_id: str) -> dict:
         response = child_table.query(
             KeyConditionExpression=Key(CHILD_ID).eq(child_id))
-        result = response['Items'][0]
-        photo_url = S3PhotosHandler.get_photo_url(
-            result[KINDERGARTEN_ID], child_id)
-        result[PHOTO_LINK] = photo_url
+        if len(response['Items']) > 0:
+            result = response['Items'][0]
+            photo_url = S3PhotosHandler.get_photo_url(
+                result[KINDERGARTEN_ID], child_id)
+            result[PHOTO_LINK] = photo_url
+        else:
+            result = None
         return result
 
     @staticmethod
@@ -69,6 +72,10 @@ class ChildrenHandler:
         return response['Count'] >= 1
 
     @staticmethod
-    def delete_child(child_id):
-        # TODO
-        pass
+    def delete_child(child_id: str, kindergarten_id: str):
+        response = child_table.delete_item(
+            Key={
+                CHILD_ID: child_id,
+                KINDERGARTEN_ID: kindergarten_id
+            })
+        return response
