@@ -84,7 +84,7 @@ functions:
     events:
       - http:
           path: children
-          method: delete
+          method: post
           integration: lambda
           cors: true
           request:
