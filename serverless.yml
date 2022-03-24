@@ -366,6 +366,9 @@ plugins:
   - serverless-domain-manager
 resources:
   # roles
+  - ${file(resources/iam/GetGroupDataRole.yml)}
+  - ${file(resources/iam/DeleteGroupDataRole.yml)}
+  - ${file(resources/iam/AddGroupDataRole.yml)}
   - ${file(resources/iam/GetChildDataRole.yml)}
   - ${file(resources/iam/AddChildDataRole.yml)}
   - ${file(resources/iam/UploadChildPhotoRole.yml)}
