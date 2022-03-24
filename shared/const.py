@@ -4,7 +4,7 @@ FIRST_NAME = 'first_name'
 LAST_NAME = 'last_name'
 PHOTO_LINK = 'photo_link'
 KINDERGARTEN_ID = 'kindergarten_id'
-GROUP_NUMBER = 'group_number'
+GROUP_NAME = 'group_name'
 EMAIL = 'email'
 PHONE_NUMBER = 'phone_number'
 IS_ADMIN = 'is_admin'
@@ -20,6 +20,7 @@ ATTENDANCE_SK = 'date'
 MAX_ID = 100000000
 # Tables
 ATTENDANCE_TABLE = 'AttendanceData'
+GROUPS_TABLE = 'GroupsData'
 TEACHERS_TABLE = 'TeacherData'
 KINDERGARTEN_TABLE = 'KindergartenData'
 CHILD_TABLE = 'ChildData'
@@ -34,6 +35,7 @@ TEACHER_ID = 'teacher_id'
 TIME_IN = "time_in"
 TIME_OUT = "time_out"
 IS_PRESENT = "is_present"
+MAIN_GROUP = "Main Group"
 
 JANUARY = "01"
 FEBRUARY = "02"

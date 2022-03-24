@@ -1,6 +1,7 @@
-from shared.const import FIRST_NAME, LAST_NAME, KINDERGARTEN_ID, GROUP_NUMBER, \
+from shared.const import FIRST_NAME, LAST_NAME, KINDERGARTEN_ID, GROUP_NAME, \
     IS_ADMIN, \
-    KINDERGARTEN_NAME, TEACHER_ID
+    KINDERGARTEN_NAME, TEACHER_ID, MAIN_GROUP
+from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.KindergartenHandler import KindergartenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
@@ -17,6 +18,7 @@ def signup_teacher(event, context):
             return "Error If kindergarten_id is null, new kindergarten_name must be provided"
         body[KINDERGARTEN_ID] = create_kindergarten_for_teacher(
             body[KINDERGARTEN_NAME])
+        GroupsHandler.add_group_to_kindergarten(body[KINDERGARTEN_ID], MAIN_GROUP)
 
     if KindergartenHandler.check_if_kindergarten_exists(body[KINDERGARTEN_ID]) is False:
         raise Exception(f"Kindergarten with id: {body[KINDERGARTEN_ID]} does not exist")
@@ -26,7 +28,7 @@ def signup_teacher(event, context):
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
         KINDERGARTEN_ID: body.get(KINDERGARTEN_ID, None),
-        GROUP_NUMBER: body.get(GROUP_NUMBER, None),
+        GROUP_NAME: MAIN_GROUP,
         IS_ADMIN: body.get(IS_ADMIN, None),
     }
     TeacherHandler.update_teacher(**teacher_update_info)

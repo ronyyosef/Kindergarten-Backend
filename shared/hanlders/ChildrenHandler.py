@@ -4,7 +4,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
-    GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
+    GROUP_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
     CHILD_ID
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 
@@ -18,7 +18,7 @@ class ChildrenHandler:
             kindergarten_id: str,
             first_name: str,
             last_name: str,
-            group_number: str,
+            group_name: str,
             parent1_phone_number: str,
             parent2_phone_number: str = None) -> None:
         new_child = {
@@ -26,7 +26,7 @@ class ChildrenHandler:
             KINDERGARTEN_ID: kindergarten_id,
             FIRST_NAME: first_name,
             LAST_NAME: last_name,
-            GROUP_NUMBER: group_number,
+            GROUP_NAME: group_name,
             PARENT1_PHONE_NUMBER: parent1_phone_number,
             PARENT2_PHONE_NUMBER: parent2_phone_number,
         }

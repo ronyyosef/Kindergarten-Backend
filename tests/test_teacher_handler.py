@@ -16,7 +16,7 @@ def test_teacher_handler():
     response = TeacherHandler.get_teacher_data('test_teacher_id')
     assert response == {
         'last_name': None,
-        'group_number': None,
+        'group_name': None,
         'is_admin': None,
         'kindergarten_id': None,
         'first_name': None,
@@ -28,12 +28,12 @@ def test_teacher_handler():
         first_name='fname',
         last_name='lname',
         kindergarten_id='test_kindergarten',
-        group_number='test',
+        group_name='test',
         is_admin='test')
     response = TeacherHandler.get_teacher_data('test_teacher_id')
     assert response == {
         'last_name': 'lname',
-        'group_number': 'test',
+        'group_name': 'test',
         'is_admin': 'test',
         'kindergarten_id': 'test_kindergarten',
         'first_name': 'fname',

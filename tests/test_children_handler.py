@@ -17,13 +17,13 @@ def test_add_child_handler():
                               last_name='test_last_name',
                               parent1_phone_number='test_parent1_phone_number',
                               parent2_phone_number='test_parent2_phone_number',
-                              group_number='test_group_number',
+                              group_name='test_group_name',
                               )
     response = ChildrenHandler.get_child(child_id='test_child_id')
     assert response == {
         'child_id': 'test_child_id',
         'last_name': 'test_last_name',
-        'group_number': 'test_group_number',
+        'group_name': 'test_group_name',
         'kindergarten_id': 'test_kindergarten_id',
         'first_name': 'test_first_name',
         'parent2_phone_number': 'test_parent2_phone_number',
@@ -39,13 +39,13 @@ def test_delete_child_handler():
                               last_name='test_last_name',
                               parent1_phone_number='test_parent1_phone_number',
                               parent2_phone_number='test_parent2_phone_number',
-                              group_number='test_group_number',
+                              group_name='test_group_name',
                               )
     response = ChildrenHandler.get_child(child_id=test_child_id)
     assert response == {
         'child_id': test_child_id,
         'last_name': 'test_last_name',
-        'group_number': 'test_group_number',
+        'group_name': 'test_group_name',
         'kindergarten_id': 'test_kindergarten_id',
         'first_name': 'test_first_name',
         'parent2_phone_number': 'test_parent2_phone_number',

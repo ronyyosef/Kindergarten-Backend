@@ -18,7 +18,7 @@ def test_spreadsheet_handler():
                               last_name='test_last_name',
                               parent1_phone_number='test_parent1_phone_number',
                               parent2_phone_number='test_parent2_phone_number',
-                              group_number='test_group_number',
+                              group_name='test_group_name',
                               )
     AttendanceHandler.add_attendance(
         child_id=test_child_id, kindergarten_id='test_kindergarten_id')

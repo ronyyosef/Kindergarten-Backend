@@ -230,6 +230,66 @@ functions:
       patterns:
         - 'lambdas/kindergarten/**'
 
+  GetKindergartenGroups:
+    handler: lambdas/groups/get_kindergarten_groups_lambda.get_kindergarten_groups
+    role: GetGroupDataRole
+    events:
+      - http:
+          path: groups
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/groups/**'
+
+  AddKindergartenGroup:
+    handler: lambdas/groups/add_kindergarten_group_lambda.add_kindergarten_group
+    role: AddGroupDataRole
+    events:
+      - http:
+          path: groups
+          method: post
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/groups/**'
+
+  DeleteKindergartenGroup:
+    handler: lambdas/groups/delete_kindergarten_group_lambda.delete_kindergarten_group
+    role: DeleteGroupDataRole
+    events:
+      - http:
+          path: groups/delete
+          method: post
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/groups/**'
+
   GetKindergartenAttendanceSpreadsheet:
     handler: lambdas/kindergarten/get_attendance_spreadsheet.get_attendance_spreadsheet
     role: GetKindergartenChildrenRole
