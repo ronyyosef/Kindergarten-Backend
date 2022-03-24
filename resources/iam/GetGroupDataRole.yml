@@ -1,5 +1,5 @@
 Resources:
-  GetAttendanceDataRole:
+  GetGroupDataRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
