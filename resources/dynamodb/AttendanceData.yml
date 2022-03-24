@@ -12,7 +12,9 @@ Resources:
           KeyType: "HASH"
         - AttributeName: "date"
           KeyType: "RANGE"
-      BillingMode: PAY_PER_REQUEST
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
       TimeToLiveSpecification:
         AttributeName: "ttl"
         Enabled: "True"

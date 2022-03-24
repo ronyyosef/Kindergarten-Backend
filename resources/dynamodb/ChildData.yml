@@ -12,5 +12,7 @@ Resources:
           KeyType: "HASH"
         - AttributeName: "kindergarten_id"
           KeyType: "RANGE"
-      BillingMode: PAY_PER_REQUEST
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
       TableName: "ChildData"
