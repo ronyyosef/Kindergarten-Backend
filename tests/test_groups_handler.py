@@ -2,6 +2,7 @@ from shared.hanlders.GroupsHandler import GroupsHandler
 from utils.random import get_random_id
 
 test_kindergarten_id = "test"
+test_group_name = "test_group_name"
 
 
 def test_add_groups():
@@ -16,7 +17,7 @@ def test_add_groups():
 
 def test_get_groups():
     response = GroupsHandler.get_kindergarten_groups(test_kindergarten_id)
-    assert "67f3fb57" in response["groups_in_kindergarten"]
+    assert test_group_name in response["groups_in_kindergarten"]
 
 
 def test_delete_groups():

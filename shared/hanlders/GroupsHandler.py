@@ -26,10 +26,16 @@ class GroupsHandler:
         groups_table.put_item(Item=new_group)
 
     @staticmethod
-    def delete_group_from_kindergarten(kindergarten_id, group_name_to_delete):
+    def delete_group_from_kindergarten(kindergarten_id: str,
+                                       group_name_to_delete: str) -> dict:
         response = groups_table.delete_item(
             Key={
                 KINDERGARTEN_ID: kindergarten_id,
                 GROUP_NAME: group_name_to_delete
             })
         return response
+
+    @staticmethod
+    def group_exist(kindergarten_id: str, group_name: str) -> bool:
+        return group_name in GroupsHandler.get_kindergarten_groups(kindergarten_id)[
+            'groups_in_kindergarten']

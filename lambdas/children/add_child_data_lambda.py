@@ -4,6 +4,7 @@ from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, \
     GROUP_NAME, TEACHER_ID, CHILD_ID, EVENT_BODY
 from shared.hanlders.ChildrenHandler import ChildrenHandler
+from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
 from utils.logger import logger
@@ -14,12 +15,19 @@ def add_child_data(event, context):
     new_child_id = str(uuid.uuid4())
     teacher_data = TeacherHandler.get_teacher_data(event[TEACHER_ID])
     body: dict = event[EVENT_BODY]
+    group_name = body.get(
+        GROUP_NAME,
+        teacher_data[GROUP_NAME])
+    if GroupsHandler.group_exist(
+            kindergarten_id=teacher_data[KINDERGARTEN_ID],
+            group_name=group_name) is False:
+        return "group_name does not exist"
     child_to_add = {
         CHILD_ID: new_child_id,
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],
         FIRST_NAME: body.get(FIRST_NAME, None),
         LAST_NAME: body.get(LAST_NAME, None),
-        GROUP_NAME: teacher_data[GROUP_NAME],
+        GROUP_NAME: body.get(GROUP_NAME, teacher_data[GROUP_NAME]),
         PARENT1_PHONE_NUMBER: body.get(PARENT1_PHONE_NUMBER, None),
         PARENT2_PHONE_NUMBER: body.get(PARENT2_PHONE_NUMBER, None),
     }
