@@ -6,6 +6,9 @@ from boto3.dynamodb.conditions import Key, Attr
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     GROUP_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
     CHILD_ID
+from shared.error_handling.error_codes import INPUT_ERROR
+from shared.error_handling.exception import MyException
+from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 
 child_table = boto3.resource('dynamodb').Table(CHILD_TABLE)
@@ -90,3 +93,26 @@ class ChildrenHandler:
                 KINDERGARTEN_ID: kindergarten_id
             })
         return response
+
+    @staticmethod
+    def update_child_group_name(
+            child_id: str,
+            kindergarten_id: str,
+            group_name: str):
+
+        if GroupsHandler.group_exist(kindergarten_id=kindergarten_id,
+                                     group_name=group_name) is False:
+            raise MyException('group_name does not exist', INPUT_ERROR)
+        response = child_table.get_item(
+            Key={
+                CHILD_ID: child_id,
+                KINDERGARTEN_ID: kindergarten_id
+            })
+        item = response.get('Item', None)
+        if item is None:
+            raise MyException('child does not exist', INPUT_ERROR)
+        item[GROUP_NAME] = group_name
+        child_table.put_item(Item=item)
+
+
+# ChildrenHandler.update_child_group_name(child_id="b19cc6dc-641c-4a3d-8b41-3adebe2379f4",kindergarten_id= "71801af0", group_name="1")

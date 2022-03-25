@@ -1,6 +1,6 @@
 from shared.const import FIRST_NAME, LAST_NAME, KINDERGARTEN_ID, GROUP_NAME, \
-     \
-    KINDERGARTEN_NAME, TEACHER_ID, MAIN_GROUP
+ \
+    KINDERGARTEN_NAME, TEACHER_ID, MAIN_GROUP, EVENT_BODY
 from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.KindergartenHandler import KindergartenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -11,7 +11,7 @@ from utils.random import get_random_id
 
 @lambda_decorator
 def signup_teacher(event, context):
-    body: dict = event['customBody']
+    body: dict = event[EVENT_BODY]
 
     if body.get(KINDERGARTEN_ID, None) is None:
         if KINDERGARTEN_NAME not in body:
