@@ -76,6 +76,13 @@ class ChildrenHandler:
         return response['Items']
 
     @staticmethod
+    def get_children_for_kindergarten_and_group_no_photo_link(
+            kindergarten_id: str, group_name: str) -> List[dict]:
+        response = child_table.scan(FilterExpression=Key(KINDERGARTEN_ID).eq(
+            kindergarten_id) & Attr(GROUP_NAME).eq(group_name))
+        return response['Items']
+
+    @staticmethod
     def child_in_kindergarten(child_id: str, kindergarten_id: str) -> bool:
         response = child_table.query(
             KeyConditionExpression=f'{CHILD_ID} = :child_id and {KINDERGARTEN_ID} = :kindergarten_id',
