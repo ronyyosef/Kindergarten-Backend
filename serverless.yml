@@ -58,6 +58,27 @@ functions:
       patterns:
         - 'lambdas/children/**'
 
+  UpdateChildGroupName:
+    handler: lambdas/children/update_child_group_name_lambda.update_child_group_name
+    role: UpdateChildGroupNameRole
+    events:
+      - http:
+          path: children/update_group_name
+          method: PUT
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/children/**'
+
+
   AddChildData:
     handler: lambdas/children/add_child_data_lambda.add_child_data
     role: AddChildDataRole
@@ -408,6 +429,7 @@ resources:
   - ${file(resources/iam/AddGroupDataRole.yml)}
   - ${file(resources/iam/GetChildDataRole.yml)}
   - ${file(resources/iam/AddChildDataRole.yml)}
+  - ${file(resources/iam/UpdateChildGroupNameRole.yml)}
   - ${file(resources/iam/UploadChildPhotoRole.yml)}
   - ${file(resources/iam/GetTeacherDataRole.yml)}
   - ${file(resources/iam/UpdateTeacherDataRole.yml)}
