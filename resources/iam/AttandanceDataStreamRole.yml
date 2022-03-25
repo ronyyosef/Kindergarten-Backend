@@ -38,6 +38,7 @@ Resources:
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ChildData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/KindergartenData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/TeacherData
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/GroupsData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/WebsocketConnectionManager/*
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/WebsocketConnectionManager
                 - Effect: Allow

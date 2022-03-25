@@ -1,10 +1,10 @@
 from typing import List
 
 import boto3
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Key, Attr
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
-    GROUP_NUMBER, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
+    GROUP_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
     CHILD_ID
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 
@@ -18,7 +18,7 @@ class ChildrenHandler:
             kindergarten_id: str,
             first_name: str,
             last_name: str,
-            group_number: str,
+            group_name: str,
             parent1_phone_number: str,
             parent2_phone_number: str = None) -> None:
         new_child = {
@@ -26,7 +26,7 @@ class ChildrenHandler:
             KINDERGARTEN_ID: kindergarten_id,
             FIRST_NAME: first_name,
             LAST_NAME: last_name,
-            GROUP_NUMBER: group_number,
+            GROUP_NAME: group_name,
             PARENT1_PHONE_NUMBER: parent1_phone_number,
             PARENT2_PHONE_NUMBER: parent2_phone_number,
         }
@@ -55,6 +55,17 @@ class ChildrenHandler:
     def get_children_for_kindergarten(kindergarten_id: str) -> List[dict]:
         response = child_table.scan(
             FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
+        for item in response['Items']:
+            photo_url = S3PhotosHandler.get_photo_url(
+                kindergarten_id, item[CHILD_ID])
+            item[PHOTO_LINK] = photo_url
+        return response['Items']
+
+    @staticmethod
+    def get_children_for_kindergarten_and_group(
+            kindergarten_id: str, group_name: str) -> List[dict]:
+        response = child_table.scan(FilterExpression=Key(KINDERGARTEN_ID).eq(
+            kindergarten_id) & Attr(GROUP_NAME).eq(group_name))
         for item in response['Items']:
             photo_url = S3PhotosHandler.get_photo_url(
                 kindergarten_id, item[CHILD_ID])
