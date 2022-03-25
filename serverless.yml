@@ -159,12 +159,12 @@ functions:
         - 'lambdas/signup/**'
         -
   UpdateTeacherName:
-    handler: lambdas/signup/update_teacher_name_lambda.update_teacher_name
+    handler: lambdas/teacher/update_teacher_name_lambda.update_teacher_name
     role: UpdateTeacherNameRole
     events:
       - http:
           path: teacher/update_name
-          method: update
+          method: PATCH
           integration: lambda
           cors: true
           request:
