@@ -1,10 +1,9 @@
 import boto3
 from boto3.dynamodb.conditions import Key
-from botocore.exceptions import ClientError
 
 from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
     PHOTO_LINK, KINDERGARTEN_ID, GROUP_NUMBER, \
-    IS_ADMIN, TEACHER_ID
+    TEACHER_ID
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
@@ -22,8 +21,8 @@ class TeacherHandler:
             first_name: str = None,
             last_name: str = None,
             kindergarten_id: str = None,
-            group_number: str = None,
-            is_admin: str = None) -> None:
+            group_number: str = None
+    ) -> None:
         new_teacher = {
             TEACHER_ID: teacher_id,
             PHONE_NUMBER: phone_number,
@@ -31,7 +30,6 @@ class TeacherHandler:
             LAST_NAME: last_name,
             KINDERGARTEN_ID: kindergarten_id,
             GROUP_NUMBER: group_number,
-            IS_ADMIN: is_admin
         }
         logger.info(f'Adding teacher : {new_teacher}')
         teacher_table.put_item(Item=new_teacher)
@@ -56,19 +54,18 @@ class TeacherHandler:
             first_name: str = None,
             last_name: str = None,
             kindergarten_id: str = None,
-            group_number: str = None,
-            is_admin: str = None) -> None:
+            group_number: str = None
+    ) -> None:
         response = teacher_table.update_item(
             Key={
                 TEACHER_ID: teacher_id,
             },
-            UpdateExpression=f'set {FIRST_NAME}=:1, {LAST_NAME}=:2,{KINDERGARTEN_ID}=:3,{GROUP_NUMBER}=:4,{IS_ADMIN}=:5',
+            UpdateExpression=f'set {FIRST_NAME}=:1, {LAST_NAME}=:2,{KINDERGARTEN_ID}=:3,{GROUP_NUMBER}=:4',
             ExpressionAttributeValues={
                 ':1': first_name,
                 ':2': last_name,
                 ':3': kindergarten_id,
-                ':4': group_number,
-                ':5': is_admin},
+                ':4': group_number},
             ReturnValues='ALL_NEW')
         return response['Attributes']
 
