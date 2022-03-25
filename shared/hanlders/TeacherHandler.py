@@ -6,6 +6,7 @@ from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
     PHOTO_LINK, KINDERGARTEN_ID, GROUP_NAME, TEACHER_ID
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
+from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 from utils.logger import logger
 
@@ -97,3 +98,13 @@ class TeacherHandler:
             item[LAST_NAME] = last_name
         teacher_table.put_item(Item=item)
         return item
+
+    @staticmethod
+    def update_teacher_group_name(teacher_data:dict, group_name:str):
+        if GroupsHandler.group_exist(kindergarten_id=teacher_data[KINDERGARTEN_ID],group_name=group_name) is False:
+            raise MyException("group_name not exist", INPUT_ERROR)
+
+        teacher_data[GROUP_NAME] = group_name
+        teacher_table.put_item(Item=teacher_data)
+
+        return teacher_data
