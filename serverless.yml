@@ -157,6 +157,27 @@ functions:
     package:
       patterns:
         - 'lambdas/signup/**'
+        -
+  UpdateTeacherName:
+    handler: lambdas/teacher/update_teacher_name_lambda.update_teacher_name
+    role: UpdateTeacherNameRole
+    events:
+      - http:
+          path: teacher/update_name
+          method: PATCH
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/teacher/**'
+
 
   UploadTeacherPhoto:
     handler: lambdas/teacher/get_upload_link_lambda.get_upload_link
@@ -328,6 +349,7 @@ resources:
   - ${file(resources/iam/GetTeacherDataRole.yml)}
   - ${file(resources/iam/UpdateTeacherDataRole.yml)}
   - ${file(resources/iam/UploadTeacherPhotoRole.yml)}
+  - ${file(resources/iam/UpdateTeacherNameRole.yml)}
   - ${file(resources/iam/CogintoPostConfirmationRole.yml)}
   - ${file(resources/iam/GetKindergartenDataRole.yml)}
   - ${file(resources/iam/GetKindergartenChildrenRole.yml)}

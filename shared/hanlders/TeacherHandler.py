@@ -83,3 +83,20 @@ class TeacherHandler:
     def get_teacher_kindergarten_id(teacher_id: str) -> str:
         teacher_data = TeacherHandler.get_teacher_data(teacher_id)
         return teacher_data.get(KINDERGARTEN_ID)
+
+    @staticmethod
+    def update_teacher_name(
+            teacher_id: str,
+            first_name: str,
+            last_name: str) -> dict:
+        response = teacher_table.get_item(Key={
+            TEACHER_ID: teacher_id
+        })
+        item = response['Item']
+
+        if first_name is not None:
+            item[FIRST_NAME] = first_name
+        if last_name is not None:
+            item[LAST_NAME] = last_name
+        teacher_table.put_item(Item=item)
+        return item
