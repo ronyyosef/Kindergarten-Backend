@@ -44,18 +44,6 @@ def add_attendance_data(event, context):
             IS_PRESENT, None))
 
 
-# class Data(BaseModel):
-#     id: str
-#     p: str
-#
-#     @validator('id','p')
-#     def validate_id(cls,v):
-#         return v
-#
-# x = Data(**{'id':'20','p':'30'})
-# print(x)
-
-
 class InputData(BaseModel):
     child_id: str = Field(..., alies=CHILD_ID)
     is_present: str = Field(..., alias=IS_PRESENT)

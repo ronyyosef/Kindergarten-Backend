@@ -1,5 +1,5 @@
 from shared.const import FIRST_NAME, LAST_NAME, KINDERGARTEN_ID, GROUP_NAME, \
-    IS_ADMIN, \
+     \
     KINDERGARTEN_NAME, TEACHER_ID, MAIN_GROUP
 from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.KindergartenHandler import KindergartenHandler
@@ -20,8 +20,10 @@ def signup_teacher(event, context):
             body[KINDERGARTEN_NAME])
         GroupsHandler.add_group_to_kindergarten(body[KINDERGARTEN_ID], MAIN_GROUP)
 
-    if KindergartenHandler.check_if_kindergarten_exists(body[KINDERGARTEN_ID]) is False:
-        raise Exception(f"Kindergarten with id: {body[KINDERGARTEN_ID]} does not exist")
+    if KindergartenHandler.check_if_kindergarten_exists(
+            body[KINDERGARTEN_ID]) is False:
+        raise Exception(
+            f"Kindergarten with id: {body[KINDERGARTEN_ID]} does not exist")
 
     teacher_update_info = {
         TEACHER_ID: event[TEACHER_ID],
@@ -29,7 +31,6 @@ def signup_teacher(event, context):
         LAST_NAME: body.get(LAST_NAME, None),
         KINDERGARTEN_ID: body.get(KINDERGARTEN_ID, None),
         GROUP_NAME: MAIN_GROUP,
-        IS_ADMIN: body.get(IS_ADMIN, None),
     }
     TeacherHandler.update_teacher(**teacher_update_info)
 

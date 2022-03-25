@@ -157,6 +157,27 @@ functions:
     package:
       patterns:
         - 'lambdas/signup/**'
+        -
+  UpdateTeacherName:
+    handler: lambdas/teacher/update_teacher_name_lambda.update_teacher_name
+    role: UpdateTeacherNameRole
+    events:
+      - http:
+          path: teacher/update_name
+          method: PATCH
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/teacher/**'
+
 
   UploadTeacherPhoto:
     handler: lambdas/teacher/get_upload_link_lambda.get_upload_link
@@ -206,6 +227,22 @@ functions:
             name: PrivateAuthorizer
             type: COGNITO_USER_POOLS
             arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/kindergarten/**'
+
+  GetIsKindergartenIdExist:
+    handler: lambdas/kindergarten/kindergarten_exist_lambda.kindergarten_exist
+    role: GetIsKindergartenIdExistRole
+    events:
+      - http:
+          path: kindergarten/exist
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
     package:
       patterns:
         - 'lambdas/kindergarten/**'
@@ -375,9 +412,11 @@ resources:
   - ${file(resources/iam/GetTeacherDataRole.yml)}
   - ${file(resources/iam/UpdateTeacherDataRole.yml)}
   - ${file(resources/iam/UploadTeacherPhotoRole.yml)}
+  - ${file(resources/iam/UpdateTeacherNameRole.yml)}
   - ${file(resources/iam/CogintoPostConfirmationRole.yml)}
   - ${file(resources/iam/GetKindergartenDataRole.yml)}
   - ${file(resources/iam/GetKindergartenChildrenRole.yml)}
+  - ${file(resources/iam/GetIsKindergartenIdExistRole.yml)}
   - ${file(resources/iam/AddAttendanceDataRole.yml)}
   - ${file(resources/iam/WebsocketRole.yml)}
   - ${file(resources/iam/AttandanceDataStreamRole.yml)}

@@ -1,5 +1,6 @@
 import boto3
 from boto3.dynamodb.conditions import Key
+from botocore.exceptions import ClientError
 
 from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
     PHOTO_LINK, KINDERGARTEN_ID, GROUP_NAME, \
@@ -22,7 +23,7 @@ class TeacherHandler:
             last_name: str = None,
             kindergarten_id: str = None,
             group_name: str = None,
-            is_admin: str = None) -> None:
+            ) -> None:
         new_teacher = {
             TEACHER_ID: teacher_id,
             PHONE_NUMBER: phone_number,
@@ -30,7 +31,6 @@ class TeacherHandler:
             LAST_NAME: last_name,
             KINDERGARTEN_ID: kindergarten_id,
             GROUP_NAME: group_name,
-            IS_ADMIN: is_admin
         }
         logger.info(f'Adding teacher : {new_teacher}')
         teacher_table.put_item(Item=new_teacher)
@@ -56,18 +56,17 @@ class TeacherHandler:
             last_name: str = None,
             kindergarten_id: str = None,
             group_name: str = None,
-            is_admin: str = None) -> None:
+            ) -> None:
         response = teacher_table.update_item(
             Key={
                 TEACHER_ID: teacher_id,
             },
-            UpdateExpression=f'set {FIRST_NAME}=:1, {LAST_NAME}=:2,{KINDERGARTEN_ID}=:3,{GROUP_NAME}=:4,{IS_ADMIN}=:5',
+            UpdateExpression=f'set {FIRST_NAME}=:1, {LAST_NAME}=:2,{KINDERGARTEN_ID}=:3,{GROUP_NAME}=:4',
             ExpressionAttributeValues={
                 ':1': first_name,
                 ':2': last_name,
                 ':3': kindergarten_id,
-                ':4': group_name,
-                ':5': is_admin},
+                ':4': group_name},
             ReturnValues='ALL_NEW')
         return response['Attributes']
 
@@ -82,3 +81,20 @@ class TeacherHandler:
     def get_teacher_kindergarten_id(teacher_id: str) -> str:
         teacher_data = TeacherHandler.get_teacher_data(teacher_id)
         return teacher_data.get(KINDERGARTEN_ID)
+
+    @staticmethod
+    def update_teacher_name(
+            teacher_id: str,
+            first_name: str,
+            last_name: str) -> dict:
+        response = teacher_table.get_item(Key={
+            TEACHER_ID: teacher_id
+        })
+        item = response['Item']
+
+        if first_name is not None:
+            item[FIRST_NAME] = first_name
+        if last_name is not None:
+            item[LAST_NAME] = last_name
+        teacher_table.put_item(Item=item)
+        return item

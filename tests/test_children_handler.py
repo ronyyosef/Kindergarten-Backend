@@ -1,3 +1,5 @@
+import os
+
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from utils.random import get_random_id
 
@@ -52,6 +54,7 @@ def test_delete_child_handler():
         'parent1_phone_number': 'test_parent1_phone_number',
         'photo_link': None}
 
-    ChildrenHandler.delete_child(child_id=test_child_id, kindergarten_id=response["kindergarten_id"])
+    ChildrenHandler.delete_child(child_id=test_child_id,
+                                 kindergarten_id=response["kindergarten_id"])
     response = ChildrenHandler.get_child(child_id=test_child_id)
     assert response is None
