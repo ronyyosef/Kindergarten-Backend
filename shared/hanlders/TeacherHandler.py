@@ -3,8 +3,7 @@ from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 
 from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
-    PHOTO_LINK, KINDERGARTEN_ID, GROUP_NAME, \
-    IS_ADMIN, TEACHER_ID
+    PHOTO_LINK, KINDERGARTEN_ID, GROUP_NAME, TEACHER_ID
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler

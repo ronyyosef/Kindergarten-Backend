@@ -1,7 +1,7 @@
 from typing import List
 
 import boto3
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Key, Attr
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     GROUP_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
@@ -55,6 +55,17 @@ class ChildrenHandler:
     def get_children_for_kindergarten(kindergarten_id: str) -> List[dict]:
         response = child_table.scan(
             FilterExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id))
+        for item in response['Items']:
+            photo_url = S3PhotosHandler.get_photo_url(
+                kindergarten_id, item[CHILD_ID])
+            item[PHOTO_LINK] = photo_url
+        return response['Items']
+
+    @staticmethod
+    def get_children_for_kindergarten_and_group(
+            kindergarten_id: str, group_name: str) -> List[dict]:
+        response = child_table.scan(FilterExpression=Key(KINDERGARTEN_ID).eq(
+            kindergarten_id) & Attr(GROUP_NAME).eq(group_name))
         for item in response['Items']:
             photo_url = S3PhotosHandler.get_photo_url(
                 kindergarten_id, item[CHILD_ID])

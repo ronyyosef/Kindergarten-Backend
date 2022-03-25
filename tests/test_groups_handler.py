@@ -13,7 +13,7 @@ def test_add_groups():
 
 def test_get_groups():
     response = GroupsHandler.get_kindergarten_groups(test_kindergarten_id)
-    assert "תינוקייה" in response["groups_in_kindergarten"]
+    assert "67f3fb57" in response["groups_in_kindergarten"]
 
 
 def test_delete_groups():
