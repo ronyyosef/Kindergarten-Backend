@@ -309,7 +309,7 @@ functions:
         - 'lambdas/kindergarten/**'
 
   GetChildAttendance:
-    handler: lambdas/groups/get_child_attendance.get_child_attendance
+    handler: lambdas/attendance/get_child_attendance.get_child_attendance
     role: AddAttendanceDataRole
     events:
       - http:
