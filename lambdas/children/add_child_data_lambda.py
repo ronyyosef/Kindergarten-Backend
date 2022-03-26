@@ -3,6 +3,8 @@ import uuid
 from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, \
     GROUP_NAME, TEACHER_ID, CHILD_ID, EVENT_BODY
+from shared.error_handling.error_codes import INPUT_ERROR
+from shared.error_handling.exception import MyException
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -21,7 +23,7 @@ def add_child_data(event, context):
     if GroupsHandler.group_exist(
             kindergarten_id=teacher_data[KINDERGARTEN_ID],
             group_name=group_name) is False:
-        return "group_name does not exist"
+        raise MyException("group_name does not exist",INPUT_ERROR)
     child_to_add = {
         CHILD_ID: new_child_id,
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],
