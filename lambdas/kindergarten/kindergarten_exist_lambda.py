@@ -13,4 +13,6 @@ def kindergarten_exist(event, context):
         return KindergartenHandler.check_if_kindergarten_exists(
             kindergarten_id)
     else:
-        raise MyException("kindergarten_id is missing", INPUT_ERROR)
+        return {"statusCode": "400",
+                "message": "kindergarten_id is missing",
+                "internal_code": INPUT_ERROR}
