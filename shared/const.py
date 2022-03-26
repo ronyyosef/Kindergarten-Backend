@@ -34,7 +34,7 @@ TEACHER_ID = 'teacher_id'
 TIME_IN = "time_in"
 TIME_OUT = "time_out"
 IS_PRESENT = "is_present"
-MAIN_GROUP = "Main Group"
+MAIN_GROUP = "קבוצה ראשית"
 
 JANUARY = "01"
 FEBRUARY = "02"
