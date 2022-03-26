@@ -50,6 +50,7 @@ class SpreadsheetHandler:
         child = ChildrenHandler.get_child(child_id)
         report_generated = {}
         monthly_attendance_report = AttendanceHandler.get_attendance_for_entire_month(child["child_id"], month)
-        for attendance in monthly_attendance_report:
-            report_generated[(attendance["date"])] = True if attendance["date"] == "yes" else False
+        if monthly_attendance_report:
+            for attendance in monthly_attendance_report:
+                report_generated[(attendance["date"])] = True if attendance["date"] == "yes" else False
         return report_generated
