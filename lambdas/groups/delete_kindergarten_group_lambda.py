@@ -23,6 +23,6 @@ def delete_kindergarten_group(event, context):
         GroupsHandler.delete_group_from_kindergarten(kindergarten_id,
                                                      group_name_to_delete)
     else:
-        raise MyException("there are childs in that group, move them to "
+        raise MyException("there are children in that group, move them to "
                           "another group "
-                                 "and then try agive to delete", INPUT_ERROR)
+                          "and then try to delete again", INPUT_ERROR)
