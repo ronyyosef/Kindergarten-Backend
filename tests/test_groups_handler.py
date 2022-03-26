@@ -1,7 +1,7 @@
 from shared.hanlders.GroupsHandler import GroupsHandler
 from utils.random import get_random_id
 
-test_kindergarten_id = "test"
+test_kindergarten_id = "6cbe4a65"
 test_group_name = "test_group_name"
 
 

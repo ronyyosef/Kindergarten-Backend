@@ -5,7 +5,7 @@ from boto3.dynamodb.conditions import Key, Attr
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     GROUP_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
-    CHILD_ID
+    CHILD_ID, MAIN_GROUP
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.GroupsHandler import GroupsHandler
@@ -132,6 +132,14 @@ def add_s3_photo_link(children: list, kindergarten_id: str) -> list:
 
 
 def sort_children_list(children: list, ) -> list:
-    sorted_list_of_children = sorted(children, key=lambda child: (
+    main_group = filter(lambda child: child["group_name"] == MAIN_GROUP, children)
+    non_main_group = filter(lambda child: child["group_name"] != MAIN_GROUP, children)
+
+    sorted_list_of_children_without_main_group = sorted(non_main_group, key=lambda child: (
         child["group_name"], child["first_name"], child["last_name"]))
-    return sorted_list_of_children
+
+    sorted_list_of_children_main_group = sorted(main_group, key=lambda child: (
+        child["first_name"], child["last_name"]))
+
+    res = sorted_list_of_children_main_group + sorted_list_of_children_without_main_group
+    return res

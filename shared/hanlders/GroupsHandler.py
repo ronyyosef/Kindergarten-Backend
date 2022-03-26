@@ -1,9 +1,16 @@
 import boto3
 from boto3.dynamodb.conditions import Key
 
-from shared.const import KINDERGARTEN_ID, GROUPS_TABLE, GROUP_NAME
+from shared.const import KINDERGARTEN_ID, GROUPS_TABLE, GROUP_NAME, MAIN_GROUP
 
 groups_table = boto3.resource('dynamodb').Table(GROUPS_TABLE)
+
+
+def sort_groups_list(groups_in_kindergarten: list) -> list:
+    groups_in_kindergarten.remove(MAIN_GROUP)
+    sorted_groups_list = sorted(groups_in_kindergarten, key=lambda x: x)
+    sorted_groups_list.insert(0, MAIN_GROUP)
+    return sorted_groups_list
 
 
 class GroupsHandler:
@@ -15,6 +22,7 @@ class GroupsHandler:
         groups_in_kindergarten = []
         for group in response['Items']:
             groups_in_kindergarten.append(group["group_name"])
+        groups_in_kindergarten = sort_groups_list(groups_in_kindergarten)
         return {'groups_in_kindergarten': groups_in_kindergarten}
 
     @staticmethod
