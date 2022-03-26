@@ -1,5 +1,5 @@
 import boto3
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Key, Attr
 from botocore.exceptions import ClientError
 
 from shared.const import TEACHERS_TABLE, PHONE_NUMBER, FIRST_NAME, LAST_NAME, \
@@ -23,7 +23,7 @@ class TeacherHandler:
             last_name: str = None,
             kindergarten_id: str = None,
             group_name: str = None,
-            ) -> None:
+    ) -> None:
         new_teacher = {
             TEACHER_ID: teacher_id,
             PHONE_NUMBER: phone_number,
@@ -56,7 +56,7 @@ class TeacherHandler:
             last_name: str = None,
             kindergarten_id: str = None,
             group_name: str = None,
-            ) -> None:
+    ) -> None:
         response = teacher_table.update_item(
             Key={
                 TEACHER_ID: teacher_id,
@@ -100,11 +100,21 @@ class TeacherHandler:
         return item
 
     @staticmethod
-    def update_teacher_group_name(teacher_data:dict, group_name:str):
-        if GroupsHandler.group_exist(kindergarten_id=teacher_data[KINDERGARTEN_ID],group_name=group_name) is False:
+    def update_teacher_group_name(teacher_data: dict, group_name: str):
+        if GroupsHandler.group_exist(
+                kindergarten_id=teacher_data[KINDERGARTEN_ID],
+                group_name=group_name) is False:
             raise MyException("group_name not exist", INPUT_ERROR)
 
         teacher_data[GROUP_NAME] = group_name
         teacher_table.put_item(Item=teacher_data)
 
         return teacher_data
+
+    @staticmethod
+    def get_all_teacher_in_group(teacher_data):
+        response = teacher_table.scan(
+            FilterExpression=Key(KINDERGARTEN_ID).eq(
+                teacher_data[KINDERGARTEN_ID]) & Attr(GROUP_NAME).eq(
+                teacher_data[GROUP_NAME]))
+        return response['Items']
