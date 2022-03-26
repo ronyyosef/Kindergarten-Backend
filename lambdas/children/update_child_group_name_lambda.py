@@ -3,6 +3,8 @@ import uuid
 from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, \
     GROUP_NAME, TEACHER_ID, CHILD_ID, EVENT_BODY
+from shared.error_handling.error_codes import INPUT_ERROR
+from shared.error_handling.exception import MyException
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -18,8 +20,9 @@ def update_child_group_name(event, context):
     child_id = body.get(CHILD_ID, None)
     group_name = body.get(GROUP_NAME, None)
     if child_id is not None and group_name is not None:
-        ChildrenHandler.update_child_group_name(child_id=child_id,
-                                                kindergarten_id=kindergarten_id,
-                                                group_name=group_name)
+        ChildrenHandler.update_child_group_name(
+            child_id=child_id,
+            kindergarten_id=kindergarten_id,
+            group_name=group_name)
     else:
-        return "parameter is missing"
+        raise MyException("parameter is missing", INPUT_ERROR)

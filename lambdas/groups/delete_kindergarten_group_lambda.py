@@ -1,4 +1,6 @@
 from shared.const import TEACHER_ID, EVENT_BODY
+from shared.error_handling.error_codes import INPUT_ERROR
+from shared.error_handling.exception import MyException
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -21,5 +23,6 @@ def delete_kindergarten_group(event, context):
         GroupsHandler.delete_group_from_kindergarten(kindergarten_id,
                                                      group_name_to_delete)
     else:
-        return "there are childs in that group, move them to another group " \
-               "and then try agive to delete "
+        raise MyException("there are childs in that group, move them to "
+                          "another group "
+                                 "and then try agive to delete", INPUT_ERROR)

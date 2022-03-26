@@ -1,6 +1,8 @@
 from shared.const import FIRST_NAME, LAST_NAME, KINDERGARTEN_ID, GROUP_NAME, \
  \
     KINDERGARTEN_NAME, TEACHER_ID, MAIN_GROUP, EVENT_BODY
+from shared.error_handling.error_codes import INPUT_ERROR
+from shared.error_handling.exception import MyException
 from shared.hanlders.GroupsHandler import GroupsHandler
 from shared.hanlders.KindergartenHandler import KindergartenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -15,10 +17,13 @@ def signup_teacher(event, context):
 
     if body.get(KINDERGARTEN_ID, None) is None:
         if KINDERGARTEN_NAME not in body:
-            return "Error If kindergarten_id is null, new kindergarten_name must be provided"
+            raise MyException(
+                "Error If kindergarten_id is null, new kindergarten_name must be provided",
+                INPUT_ERROR)
         body[KINDERGARTEN_ID] = create_kindergarten_for_teacher(
             body[KINDERGARTEN_NAME])
-        GroupsHandler.add_group_to_kindergarten(body[KINDERGARTEN_ID], MAIN_GROUP)
+        GroupsHandler.add_group_to_kindergarten(
+            body[KINDERGARTEN_ID], MAIN_GROUP)
 
     if KindergartenHandler.check_if_kindergarten_exists(
             body[KINDERGARTEN_ID]) is False:
