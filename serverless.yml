@@ -308,6 +308,26 @@ functions:
       patterns:
         - 'lambdas/kindergarten/**'
 
+  GetChildAttendance:
+    handler: lambdas/attendance/get_child_attendance.get_child_attendance
+    role: AddAttendanceDataRole
+    events:
+      - http:
+          path: attendance
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/attendance/**'
+
   GetKindergartenGroups:
     handler: lambdas/groups/get_kindergarten_groups_lambda.get_kindergarten_groups
     role: GetGroupDataRole
@@ -431,9 +451,9 @@ functions:
   AttandanceDataStream:
     handler: lambdas/websocket/dynamodb_stream_lambda.send_message
     role: AttandanceDataStreamRole
-#    events:
-#      - stream:
-#          arn: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/stream/2022-03-10T22:55:54.027
+    #    events:
+    #      - stream:
+    #          arn: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/AttendanceData/stream/2022-03-10T22:55:54.027
     package:
       patterns:
         - 'lambdas/websocket/**'
@@ -469,7 +489,7 @@ resources:
   - ${file(resources/dynamodb/KindergartenData.yml)}
   - ${file(resources/dynamodb/TeacherData.yml)}
   - ${file(resources/dynamodb/GroupsData.yml)}
-#  - ${file(resources/dynamodb/Websocket.yml)}
+  #  - ${file(resources/dynamodb/Websocket.yml)}
 
   # cognito
 #  - ${file(resources/cognito/Kindergarten-02.yml)}
