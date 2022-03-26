@@ -22,14 +22,14 @@ def delete_kindergarten_group(event, context):
     kindergarten_id = teacher_data.get("kindergarten_id")
     body: dict = event[EVENT_BODY]
     group_name_to_delete = body["group_name"]
-    if group_name_to_delete == MAIN_GROUP:
-        raise MyException("the main group cannot be deleted", INPUT_ERROR)
-    if group_is_empty(teacher_data) is True:
-        GroupsHandler.delete_group_from_kindergarten(kindergarten_id,
-                                                     group_name_to_delete)
-    else:
-        raise MyException(
-            "there are children or teachers in that group, move them to "
-            "another group "
-            "and then try to delete again",
-            INPUT_ERROR)
+    # if group_name_to_delete == MAIN_GROUP:
+    #     raise MyException("the main group cannot be deleted", INPUT_ERROR)
+    # if group_is_empty(teacher_data) is True:
+    GroupsHandler.delete_group_from_kindergarten(kindergarten_id,
+                                                 group_name_to_delete)
+    # else:
+    #     raise MyException(
+    #         "there are children or teachers in that group, move them to "
+    #         "another group "
+    #         "and then try to delete again",
+    #         INPUT_ERROR)
