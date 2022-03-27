@@ -44,3 +44,21 @@ class SpreadsheetHandler:
                      ate_pizza])) + "\n"
 
         return report_generated
+
+    @staticmethod
+    def get_child_spreadsheet(child_id: str, month=MARCH):
+        child = ChildrenHandler.get_child(child_id)
+        report_generated = {}
+        report_generated["notified_missing"] = []
+        report_generated["arrived"] = []
+        monthly_attendance_report = AttendanceHandler.get_attendance_for_entire_month(child["child_id"], month)
+        if monthly_attendance_report:
+            for attendance in monthly_attendance_report:
+                if attendance["is_present"] == "notified_missing":
+                    report_generated["notified_missing"].append(attendance["date"])
+                if attendance["is_present"] == "yes" or attendance["is_present"] == "no":
+                    report_generated["arrived"].append(attendance["date"])
+
+        report_generated["notified_missing"] = sorted(report_generated["notified_missing"])
+        report_generated["arrived"] = sorted(report_generated["arrived"])
+        return report_generated
