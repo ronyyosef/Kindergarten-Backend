@@ -1,8 +1,13 @@
+from typing import Any
+
 import boto3
+import jwt
+
+from E2E.const import Auth
 
 
 def authenticate_and_get_token(username: str, password: str,
-                               user_pool_id: str, app_client_id: str) -> str:
+                               user_pool_id: str, app_client_id: str) -> Auth:
     client = boto3.client('cognito-idp')
 
     resp = client.admin_initiate_auth(
@@ -16,4 +21,7 @@ def authenticate_and_get_token(username: str, password: str,
     )
 
     print("Log in successfully")
-    return resp['AuthenticationResult']['IdToken']
+    username = jwt.decode(resp['AuthenticationResult']['IdToken'], options={
+        "verify_signature": False})['cognito:username']
+    return Auth(**{'token': resp['AuthenticationResult']
+                ['IdToken'], 'teacher_id': username})
