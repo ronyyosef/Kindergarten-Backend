@@ -30,7 +30,7 @@ def add_attendance_data(event, context):
         child_attendance["time_out"] = current_time
         child_attendance["is_present"] = "no"
     elif data.is_present == "notified_missing":
-        child_attendance["is_present"] = "no"
+        child_attendance["is_present"] = "notified_missing"
         child_attendance["time_in"] = None
         child_attendance["time_out"] = None
 
