@@ -4,12 +4,13 @@ from E2E.API.teacher.get_teacher import get_teacher_api
 from E2E.API.teacher.update_teacher import update_teacher_api
 from shared.hanlders.TeacherHandler import TeacherHandler
 
+
 def setup_module():
     pass
 
 
-def teardown_module(auth):
-    TeacherHandler.delete_teacher(auth.teacher_id)
+def teardown_module():
+    pass
 
 
 def test_update_teacher_create_new_kindergarten(auth):
@@ -23,7 +24,6 @@ def test_update_teacher_create_new_kindergarten(auth):
     assert data['last_name'] == 'e2e_last_name'
     assert data['kindergarten_id'] is not None
     assert data['first_name'] == 'e2e_first_name'
-    assert data['phone_number'] == '+972999999999'
-    assert data['teacher_id'] is not None
+    assert data['teacher_id'] == auth.teacher_id
     assert data['group_name'] == 'קבוצה ראשית'
     assert data['photo_link'] is None

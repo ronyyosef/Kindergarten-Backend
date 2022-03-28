@@ -3,7 +3,7 @@ from typing import Any
 import boto3
 import jwt
 
-from E2E.const import Auth
+from E2E.model import Auth
 
 
 def authenticate_and_get_token(username: str, password: str,
