@@ -4,7 +4,7 @@ import json
 from E2E.const import BASE_API_URL
 
 
-def update_teacher_name_api(token, group_name):
+def update_teacher_group_name_api(token, group_name):
     payload = json.dumps({
         "group_name": group_name
     })

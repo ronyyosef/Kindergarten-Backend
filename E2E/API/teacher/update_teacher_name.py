@@ -13,7 +13,7 @@ def update_teacher_name_api(token, first_name, last_name):
         'Authorization': token,
         'Content-Type': 'application/json'
     }
-
-    return requests.request("PATCH", f'{BASE_API_URL}teacher/update_name',
-                            headers=headers,
-                            data=payload)
+    response = requests.request("PUT", f'{BASE_API_URL}teacher/update_name',
+                                headers=headers,
+                                data=payload)
+    return response
