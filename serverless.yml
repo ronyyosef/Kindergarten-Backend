@@ -205,7 +205,7 @@ functions:
     events:
       - http:
           path: teacher/update_name
-          method: PATCH
+          method: PUT
           integration: lambda
           cors: true
           request:
