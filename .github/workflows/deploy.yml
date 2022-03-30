@@ -29,7 +29,8 @@ jobs:
           aws-region: us-east-1
       - name: Serverless Deploy
         run: npm run-script deploy
-  E2e:
+  E2E:
+    needs: deploy
     name: E2E
     runs-on: ubuntu-latest
     env:
