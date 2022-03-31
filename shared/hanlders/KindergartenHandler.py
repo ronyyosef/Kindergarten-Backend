@@ -25,17 +25,19 @@ class KindergartenHandler:
             KeyConditionExpression=Key(KINDERGARTEN_ID).eq(kindergarten_id),
             Limit=1)
         kindergarten_data = response["Items"][0] if response[
-                                                        'Count'] == 1 else None
+            'Count'] == 1 else None
         return kindergarten_data
 
     @staticmethod
-    def update_kindergarten():
+    def update_kindergarten(kindergarten_id):
         pass
 
     @staticmethod
     def delete_kindergarten(kindergarten_id: str):
-        # TODO
-        pass
+        kindergarten_table.delete_item(
+            Key={
+                KINDERGARTEN_ID: kindergarten_id
+            })
 
     @staticmethod
     def check_if_kindergarten_exists(kindergarten_id: str) -> bool:

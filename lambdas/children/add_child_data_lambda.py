@@ -20,11 +20,10 @@ def add_child_data(event, context):
     group_name = body.get(
         GROUP_NAME,
         teacher_data[GROUP_NAME])
-    # TODO return this 
-    # if GroupsHandler.group_exist(
-    #         kindergarten_id=teacher_data[KINDERGARTEN_ID],
-    #         group_name=group_name) is False:
-    #     raise MyException("group_name does not exist",INPUT_ERROR)
+    if GroupsHandler.group_exist(
+            kindergarten_id=teacher_data[KINDERGARTEN_ID],
+            group_name=group_name) is False:
+        raise MyException("group_name does not exist", INPUT_ERROR)
     child_to_add = {
         CHILD_ID: new_child_id,
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],

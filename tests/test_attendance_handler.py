@@ -24,5 +24,3 @@ def test_attendance_handler():
     assert response is not None
     AttendanceHandler.delete_attendance(
         child_id='test_child_id', date_query=str(date.today()))
-
-    dummy = 4

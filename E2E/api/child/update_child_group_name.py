@@ -4,16 +4,17 @@ import json
 from E2E.const import BASE_API_URL
 
 
-def update_teacher_name_api(token, first_name, last_name):
+def update_child_group_name_api(token, child_id, group_name):
     payload = json.dumps({
-        "first_name": first_name,
-        "last_name": last_name
+        "child_id": child_id,
+        "group_name": group_name
     })
     headers = {
         'Authorization': token,
         'Content-Type': 'application/json'
     }
-    response = requests.request("PUT", f'{BASE_API_URL}/teacher/update_name',
+
+    response = requests.request("PUT", f'{BASE_API_URL}/children/update_group_name',
                                 headers=headers,
-                                data=payload)
+                                data=payload).json()
     return response

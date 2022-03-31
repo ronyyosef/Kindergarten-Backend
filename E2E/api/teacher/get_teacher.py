@@ -11,5 +11,5 @@ def get_teacher_api(token):
 
     response = requests.request("GET", f'{BASE_API_URL}/teacher',
                                 headers=headers,
-                                data=payload)
+                                data=payload).json()
     return response

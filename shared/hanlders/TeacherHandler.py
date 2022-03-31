@@ -112,9 +112,9 @@ class TeacherHandler:
         return teacher_data
 
     @staticmethod
-    def get_all_teacher_in_group(teacher_data):
+    def get_all_teacher_in_group(teacher_data, group_name):
         response = teacher_table.scan(
             FilterExpression=Key(KINDERGARTEN_ID).eq(
                 teacher_data[KINDERGARTEN_ID]) & Attr(GROUP_NAME).eq(
-                teacher_data[GROUP_NAME]))
+                group_name))
         return response['Items']
