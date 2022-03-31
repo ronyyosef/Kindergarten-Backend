@@ -15,4 +15,4 @@ def add_attendance_child_api(token, child_id, month):
     return requests.request(
         "GET",
         f'{BASE_API_URL}/attendance?{query_string}',
-        headers=headers)
+        headers=headers).json()

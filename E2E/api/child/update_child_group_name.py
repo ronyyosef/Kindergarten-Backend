@@ -16,5 +16,5 @@ def update_child_group_name_api(token, child_id, group_name):
 
     response = requests.request("PUT", f'{BASE_API_URL}/children/update_group_name',
                                 headers=headers,
-                                data=payload)
+                                data=payload).json()
     return response

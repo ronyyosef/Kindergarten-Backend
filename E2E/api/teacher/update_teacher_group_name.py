@@ -13,6 +13,6 @@ def update_teacher_group_name_api(token, group_name):
         'Content-Type': 'application/json'
     }
 
-    return requests.request("PUT", f'{BASE_API_URL}teacher/update_group_name',
+    return requests.request("PUT", f'{BASE_API_URL}/teacher/update_group_name',
                             headers=headers,
-                            data=payload)
+                            data=payload).json()

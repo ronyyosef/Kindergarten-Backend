@@ -12,5 +12,5 @@ def get_child_api(token, child_id):
         "GET",
         f'{BASE_API_URL}/children?id={child_id}',
         headers=headers
-    )
+    ).json()
     return response

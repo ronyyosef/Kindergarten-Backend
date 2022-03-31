@@ -11,4 +11,4 @@ def get_kindergarten_info_api(token):
     return requests.request(
         "GET",
         f'{BASE_API_URL}/kindergarten/info',
-        headers=headers)
+        headers=headers).json()

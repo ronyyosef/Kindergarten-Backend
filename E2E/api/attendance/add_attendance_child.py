@@ -16,4 +16,4 @@ def add_attendance_child_api(token, child_id, is_present):
 
     return requests.request("POST", f'{BASE_API_URL}/attendance',
                             headers=headers,
-                            data=payload)
+                            data=payload).json()

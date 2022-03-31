@@ -13,4 +13,4 @@ def get_attendance_report_api(token, month):
     return requests.request(
         "GET",
         f'{BASE_API_URL}/kindergarten/attendance_spreadsheet?{query_string}',
-        headers=headers)
+        headers=headers).json()

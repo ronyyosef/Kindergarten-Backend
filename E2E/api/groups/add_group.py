@@ -15,4 +15,4 @@ def add_group_api(token, group_name):
 
     return requests.request("POST", f'{BASE_API_URL}/groups',
                             headers=headers,
-                            data=payload)
+                            data=payload).json()

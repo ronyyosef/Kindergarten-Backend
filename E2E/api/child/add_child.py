@@ -20,5 +20,5 @@ def add_child_api(token, first_name, last_name, parent1_phone_number,
 
     response = requests.request("POST", f'{BASE_API_URL}/children',
                                 headers=headers,
-                                data=payload)
+                                data=payload).json()
     return response

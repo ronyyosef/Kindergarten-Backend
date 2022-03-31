@@ -19,4 +19,4 @@ def update_teacher_api(token, first_name, last_name,
 
     return requests.request("PUT", f'{BASE_API_URL}/teacher/signup',
                             headers=headers,
-                            data=payload)
+                            data=payload).json()

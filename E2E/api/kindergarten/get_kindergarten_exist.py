@@ -20,4 +20,4 @@ def get_kindergarten_exist_api(kindergarten_id):
     return requests.request(
         "GET",
         f'{BASE_API_URL}/kindergarten/exist?{query_string}',
-        headers=headers)
+        headers=headers).json()

@@ -15,5 +15,5 @@ def delete_child_api(token, child_id):
 
     response = requests.request("POST", f'{BASE_API_URL}/children/delete',
                                 headers=headers,
-                                data=payload)
+                                data=payload).json()
     return response

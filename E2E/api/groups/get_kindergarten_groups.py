@@ -3,7 +3,7 @@ import requests
 from E2E.const import BASE_API_URL
 
 
-def delete_group_api(token, group_name):
+def get_kindergarten_groups_api(token):
 
     headers = {
         'Authorization': token,
@@ -11,4 +11,4 @@ def delete_group_api(token, group_name):
     }
 
     return requests.request("GET", f'{BASE_API_URL}/groups',
-                            headers=headers)
+                            headers=headers).json()

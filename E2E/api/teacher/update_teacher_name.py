@@ -15,5 +15,5 @@ def update_teacher_name_api(token, first_name, last_name):
     }
     response = requests.request("PUT", f'{BASE_API_URL}/teacher/update_name',
                                 headers=headers,
-                                data=payload)
+                                data=payload).json()
     return response
