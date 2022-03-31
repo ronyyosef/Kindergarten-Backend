@@ -96,7 +96,7 @@ def test_add_child(auth):
         last_name='test_last_name',
         parent1_phone_number='123',
         parent2_phone_number='456',
-        group_name='123')
+        group_name='1234')
     assert response.status_code == 200
     data_child_create = json.loads(response.text)
     response = get_child_api(auth.token,
@@ -107,4 +107,6 @@ def test_add_child(auth):
     assert child_data['first_name'] == 'test_first_name'
     assert child_data['parent1_phone_number'] == '123'
     assert child_data['parent2_phone_number'] == '456'
-    assert child_data['group_name'] == '123'
+    assert child_data['group_name'] == '1234'
+
+
