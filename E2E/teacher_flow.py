@@ -4,6 +4,7 @@ import pytest
 from uuid import UUID
 
 from E2E.API.child.add_child import add_child_api
+from E2E.API.child.delete_child import delete_child_api
 from E2E.API.child.get_child import get_child_api
 from E2E.API.teacher.get_teacher import get_teacher_api
 from E2E.API.teacher.update_teacher import update_teacher_api
@@ -108,5 +109,7 @@ def test_add_child(auth):
     assert child_data['parent1_phone_number'] == '123'
     assert child_data['parent2_phone_number'] == '456'
     assert child_data['group_name'] == '1234'
-
-
+    delete_child_api(token=auth.token, child_id=child_data['child_id'])
+    response = get_child_api(auth.token,
+                             child_id=child_data['child_id'])
+    print(response)
