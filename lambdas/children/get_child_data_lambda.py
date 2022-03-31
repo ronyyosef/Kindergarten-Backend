@@ -10,7 +10,7 @@ from shared.hanlders.lambda_decorator import lambda_decorator
 def get_child_data(event, context):
     response = ChildrenHandler.get_child(event[EVENT_QUERY_STRING]["id"])
     if response is None:
-        MyException("Child not exist", INPUT_ERROR)
+        raise MyException("Child not exist", INPUT_ERROR)
     child_id = response.get("child_id", None)
     if child_id:
         child_attendance = AttendanceHandler.get_attendance(child_id=child_id)
