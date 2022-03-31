@@ -1,5 +1,3 @@
-import os
-
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from utils.random import get_random_id
 

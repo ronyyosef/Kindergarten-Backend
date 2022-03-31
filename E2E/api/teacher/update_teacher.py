@@ -1,5 +1,5 @@
-import requests
 import json
+import requests
 
 from E2E.const import BASE_API_URL
 

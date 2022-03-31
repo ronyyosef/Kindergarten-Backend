@@ -3,14 +3,14 @@ import json
 import pytest
 from uuid import UUID
 
-from E2E.API.child.add_child import add_child_api
-from E2E.API.child.delete_child import delete_child_api
-from E2E.API.child.get_child import get_child_api
-from E2E.API.teacher.get_teacher import get_teacher_api
-from E2E.API.teacher.update_teacher import update_teacher_api
-from E2E.API.teacher.update_teacher_name import update_teacher_name_api
+from E2E.api.child.add_child import add_child_api
+from E2E.api.child.delete_child import delete_child_api
+from E2E.api.child.get_child import get_child_api
+from E2E.api.child.update_child_group_name import update_child_group_name_api
+from E2E.api.teacher.get_teacher import get_teacher_api
+from E2E.api.teacher.update_teacher import update_teacher_api
+from E2E.api.teacher.update_teacher_name import update_teacher_name_api
 from shared.hanlders.KindergartenHandler import KindergartenHandler
-from shared.hanlders.TeacherHandler import TeacherHandler
 
 
 def setup_module():
@@ -91,25 +91,42 @@ def test_update_teacher_change_group_name(auth):
 
 # Child
 def test_add_child(auth):
+
+    # add child api
     response = add_child_api(
         token=auth.token,
         first_name='test_first_name',
         last_name='test_last_name',
         parent1_phone_number='123',
         parent2_phone_number='456',
-        group_name='1234')
+        group_name='test_group_name1')
     assert response.status_code == 200
     data_child_create = json.loads(response.text)
+    child_id = data_child_create['id_created']
     response = get_child_api(auth.token,
-                             child_id=data_child_create['id_created'])
+                             child_id=child_id)
     child_data = json.loads(response.text)
-    assert child_data['child_id'] == data_child_create['id_created']
+    assert child_data['child_id'] == child_id
     assert child_data['last_name'] == 'test_last_name'
     assert child_data['first_name'] == 'test_first_name'
     assert child_data['parent1_phone_number'] == '123'
     assert child_data['parent2_phone_number'] == '456'
-    assert child_data['group_name'] == '1234'
-    delete_child_api(token=auth.token, child_id=child_data['child_id'])
+    assert child_data['group_name'] == 'test_group_name1'
+
+    # update child group name api
+    response = update_child_group_name_api(
+        token=auth.token,
+        child_id=child_id,
+        group_name='test_group_name2')
+    assert response.status_code == 200
     response = get_child_api(auth.token,
-                             child_id=child_data['child_id'])
-    print(response)
+                             child_id=child_id)
+    child_data = json.loads(response.text)
+    assert child_data['group_name'] == 'test_group_name2'
+
+    # delete child api
+    delete_child_api(token=auth.token, child_id=child_id)
+    response = get_child_api(auth.token,
+                             child_id=child_id)
+    response = json.loads(response.text)
+    assert response['statusCode'] == '400'

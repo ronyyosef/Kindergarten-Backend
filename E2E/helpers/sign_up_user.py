@@ -1,5 +1,3 @@
-import uuid
-
 import boto3
 
 from E2E.helpers.delete_user import delete_user
