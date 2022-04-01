@@ -1,5 +1,7 @@
 from datetime import date
 
+from moto import mock_dynamodb2
+
 from shared.hanlders.AttendanceHandler import AttendanceHandler
 
 
