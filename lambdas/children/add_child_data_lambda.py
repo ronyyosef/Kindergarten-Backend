@@ -31,15 +31,14 @@ def add_child_data(event, context):
     gender = body.get(
         GENDER,
         '')
-    if birthday_date is not '':
+    if birthday_date != '':
         try:
             datetime.strptime(birthday_date, '%Y %m %d')
         except BaseException:
             raise MyException(
                 "birthday_date is not the right format(%Y %m %d)", INPUT_ERROR)
-    if gender is not '':
-        if gender != "boy" and gender != "girl":
-            raise MyException("Gender should be boy or girl", INPUT_ERROR)
+    if gender != '' and gender != "boy" and gender != "girl":
+        raise MyException("Gender should be boy or girl", INPUT_ERROR)
     child_to_add = {
         CHILD_ID: new_child_id,
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],

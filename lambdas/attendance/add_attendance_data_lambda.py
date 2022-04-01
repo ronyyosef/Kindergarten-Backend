@@ -1,6 +1,6 @@
 import datetime
 
-from pydantic import BaseModel, Field, root_validator, validator
+from pydantic import BaseModel, Field, root_validator
 
 from shared.const import TEACHER_ID, CHILD_ID, DATE, KINDERGARTEN_ID, TIME_OUT, \
     TIME_IN, IS_PRESENT, EVENT_BODY, ID
@@ -56,7 +56,7 @@ class InputData(BaseModel):
         try:
             values[CHILD_ID] = values[EVENT_BODY][ID]
             values[IS_PRESENT] = values[EVENT_BODY][IS_PRESENT]
-        except BaseException:
+        except KeyError:
             raise MyException("Input Error", INPUT_ERROR)
 
         if values[IS_PRESENT] != 'yes' and values[IS_PRESENT] != 'no':

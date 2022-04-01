@@ -30,7 +30,7 @@ class KindergartenHandler:
 
     @staticmethod
     def update_kindergarten(kindergarten_id):
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def delete_kindergarten(kindergarten_id: str):
