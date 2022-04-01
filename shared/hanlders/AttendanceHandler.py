@@ -42,7 +42,7 @@ class AttendanceHandler:
         response = attendance_table.query(KeyConditionExpression=Key(
             ATTENDANCE_PK).eq(child_id) & Key(ATTENDANCE_SK).eq(date_query))
         attendance_data = response["Items"][0] if response[
-                                                      'Count'] == 1 else None
+            'Count'] == 1 else None
         return attendance_data
 
     @staticmethod
@@ -87,14 +87,8 @@ class AttendanceHandler:
     @staticmethod
     def check_if_attendance_exists(
             child_id: str, time_to_check: str = str(date.today())) -> bool:
-        response = None
-        try:
-            response = attendance_table.query(
-                KeyConditionExpression=Key(CHILD_ID).eq(
-                    child_id) & Key(DATE).eq(time_to_check),
-                Limit=1)
-        except Exception as err:
-            a = err
-            print(err)
-
+        response = attendance_table.query(
+            KeyConditionExpression=Key(CHILD_ID).eq(
+                child_id) & Key(DATE).eq(time_to_check),
+            Limit=1)
         return response['Count'] >= 1

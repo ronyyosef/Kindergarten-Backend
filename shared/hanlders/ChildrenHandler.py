@@ -5,7 +5,7 @@ from boto3.dynamodb.conditions import Key, Attr
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     GROUP_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
-    CHILD_ID, MAIN_GROUP
+    CHILD_ID, MAIN_GROUP, BIRTHDAY_DATE, GENDER
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.GroupsHandler import GroupsHandler
@@ -22,8 +22,11 @@ class ChildrenHandler:
             first_name: str,
             last_name: str,
             group_name: str,
+            birthday_date: str,
+            gender: str,
             parent1_phone_number: str,
-            parent2_phone_number: str = None) -> None:
+            parent2_phone_number: str = None,
+    ) -> None:
         new_child = {
             CHILD_ID: child_id,
             KINDERGARTEN_ID: kindergarten_id,
@@ -32,6 +35,8 @@ class ChildrenHandler:
             GROUP_NAME: group_name,
             PARENT1_PHONE_NUMBER: parent1_phone_number,
             PARENT2_PHONE_NUMBER: parent2_phone_number,
+            BIRTHDAY_DATE: birthday_date,
+            GENDER: gender
         }
         child_table.put_item(Item=new_child)
 
@@ -132,14 +137,20 @@ def add_s3_photo_link(children: list, kindergarten_id: str) -> list:
 
 
 def sort_children_list(children: list, ) -> list:
-    main_group = filter(lambda child: child["group_name"] == MAIN_GROUP, children)
-    non_main_group = filter(lambda child: child["group_name"] != MAIN_GROUP, children)
+    main_group = filter(
+        lambda child: child["group_name"] == MAIN_GROUP,
+        children)
+    non_main_group = filter(
+        lambda child: child["group_name"] != MAIN_GROUP,
+        children)
 
-    sorted_list_of_children_without_main_group = sorted(non_main_group, key=lambda child: (
-        child["group_name"], child["first_name"], child["last_name"]))
+    sorted_list_of_children_without_main_group = sorted(
+        non_main_group, key=lambda child: (
+            child["group_name"], child["first_name"], child["last_name"]))
 
     sorted_list_of_children_main_group = sorted(main_group, key=lambda child: (
         child["first_name"], child["last_name"]))
 
-    res = sorted_list_of_children_main_group + sorted_list_of_children_without_main_group
+    res = sorted_list_of_children_main_group + \
+        sorted_list_of_children_without_main_group
     return res

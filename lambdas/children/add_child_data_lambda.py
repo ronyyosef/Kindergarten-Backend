@@ -1,8 +1,9 @@
 import uuid
+from datetime import datetime
 
 from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, \
-    GROUP_NAME, TEACHER_ID, CHILD_ID, EVENT_BODY
+    GROUP_NAME, TEACHER_ID, CHILD_ID, EVENT_BODY, BIRTHDAY_DATE, GENDER
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.ChildrenHandler import ChildrenHandler
@@ -24,6 +25,20 @@ def add_child_data(event, context):
             kindergarten_id=teacher_data[KINDERGARTEN_ID],
             group_name=group_name) is False:
         raise MyException("group_name does not exist", INPUT_ERROR)
+    birthday_date = body.get(
+        BIRTHDAY_DATE,
+        '')
+    gender = body.get(
+        GENDER,
+        '')
+    if birthday_date != '':
+        try:
+            datetime.strptime(birthday_date, '%Y %m %d')
+        except BaseException:
+            raise MyException(
+                "birthday_date is not the right format(%Y %m %d)", INPUT_ERROR)
+    if gender != '' and gender != "boy" and gender != "girl":
+        raise MyException("Gender should be boy or girl", INPUT_ERROR)
     child_to_add = {
         CHILD_ID: new_child_id,
         KINDERGARTEN_ID: teacher_data[KINDERGARTEN_ID],
@@ -32,9 +47,11 @@ def add_child_data(event, context):
         GROUP_NAME: body.get(GROUP_NAME, teacher_data[GROUP_NAME]),
         PARENT1_PHONE_NUMBER: body.get(PARENT1_PHONE_NUMBER, None),
         PARENT2_PHONE_NUMBER: body.get(PARENT2_PHONE_NUMBER, None),
+        BIRTHDAY_DATE: birthday_date,
+        GENDER: gender
     }
 
     logger.info(f"child to be added is :{child_to_add}")
     ChildrenHandler.add_child(**child_to_add)
-    return {"code": "200", "message": "Child updated successfully",
+    return {"code": "200", "message": "Child added successfully",
             "id_created": new_child_id}
