@@ -38,7 +38,7 @@ def add_child_data(event, context):
             raise MyException(
                 "birthday_date is not the right format(%Y %m %d)", INPUT_ERROR)
     if gender is not '':
-        if gender is not "boy" and gender is not "girl":
+        if gender != "boy" and gender != "girl":
             raise MyException("Gender should be boy or girl", INPUT_ERROR)
     child_to_add = {
         CHILD_ID: new_child_id,

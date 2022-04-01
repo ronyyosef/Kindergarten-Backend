@@ -119,7 +119,9 @@ def test_add_child(auth):
         last_name='test_last_name',
         parent1_phone_number='123',
         parent2_phone_number='456',
-        group_name='קבוצה ראשית')
+        group_name='קבוצה ראשית',
+        gender='girl',
+        birthday_date="2000 10 10")
     assert response['id_created'] is not None
     child_id = response['id_created']
     response = get_child_api(auth.token,
