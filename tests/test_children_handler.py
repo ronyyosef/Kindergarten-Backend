@@ -18,7 +18,7 @@ def test_add_child_handler():
                               parent1_phone_number='test_parent1_phone_number',
                               parent2_phone_number='test_parent2_phone_number',
                               group_name='test_group_name',
-                              birthday_data='',
+                              birthday_date='',
                               gender=''
                               )
     response = ChildrenHandler.get_child(child_id='test_child_id')
@@ -31,7 +31,7 @@ def test_add_child_handler():
         'parent2_phone_number': 'test_parent2_phone_number',
         'parent1_phone_number': 'test_parent1_phone_number',
         'gender': '',
-        'birthday_data': '',
+        'birthday_date': '',
         'photo_link': None}
 
 
@@ -44,7 +44,7 @@ def test_delete_child_handler():
                               parent1_phone_number='test_parent1_phone_number',
                               parent2_phone_number='test_parent2_phone_number',
                               group_name='test_group_name',
-                              birthday_data='',
+                              birthday_date='',
                               gender=''
                               )
     response = ChildrenHandler.get_child(child_id=test_child_id)
@@ -57,7 +57,7 @@ def test_delete_child_handler():
         'parent2_phone_number': 'test_parent2_phone_number',
         'parent1_phone_number': 'test_parent1_phone_number',
         'gender': '',
-        'birthday_data': '',
+        'birthday_date': '',
         'photo_link': None}
 
     ChildrenHandler.delete_child(child_id=test_child_id,

@@ -5,7 +5,7 @@ from boto3.dynamodb.conditions import Key, Attr
 
 from shared.const import CHILD_TABLE, KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     GROUP_NAME, PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, PHOTO_LINK, \
-    CHILD_ID, MAIN_GROUP, BIRTHDAY_DATA, GENDER
+    CHILD_ID, MAIN_GROUP, BIRTHDAY_DATE, GENDER
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.GroupsHandler import GroupsHandler
@@ -22,7 +22,7 @@ class ChildrenHandler:
             first_name: str,
             last_name: str,
             group_name: str,
-            birthday_data: str,
+            birthday_date: str,
             gender: str,
             parent1_phone_number: str,
             parent2_phone_number: str = None,
@@ -35,7 +35,7 @@ class ChildrenHandler:
             GROUP_NAME: group_name,
             PARENT1_PHONE_NUMBER: parent1_phone_number,
             PARENT2_PHONE_NUMBER: parent2_phone_number,
-            BIRTHDAY_DATA: birthday_data,
+            BIRTHDAY_DATE: birthday_date,
             GENDER: gender
         }
         child_table.put_item(Item=new_child)

@@ -35,7 +35,7 @@ TIME_IN = "time_in"
 TIME_OUT = "time_out"
 IS_PRESENT = "is_present"
 MAIN_GROUP = "קבוצה ראשית"
-BIRTHDAY_DATA = 'birthday_data'
+BIRTHDAY_DATE = 'birthday_date'
 GENDER = 'gender'
 
 JANUARY = "01"

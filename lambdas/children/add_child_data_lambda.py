@@ -3,7 +3,7 @@ from datetime import datetime
 
 from shared.const import KINDERGARTEN_ID, FIRST_NAME, LAST_NAME, \
     PARENT1_PHONE_NUMBER, PARENT2_PHONE_NUMBER, \
-    GROUP_NAME, TEACHER_ID, CHILD_ID, EVENT_BODY, BIRTHDAY_DATA, GENDER
+    GROUP_NAME, TEACHER_ID, CHILD_ID, EVENT_BODY, BIRTHDAY_DATE, GENDER
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.ChildrenHandler import ChildrenHandler
@@ -26,7 +26,7 @@ def add_child_data(event, context):
             group_name=group_name) is False:
         raise MyException("group_name does not exist", INPUT_ERROR)
     birthday_date = body.get(
-        BIRTHDAY_DATA,
+        BIRTHDAY_DATE,
         '')
     gender = body.get(
         GENDER,
@@ -48,7 +48,7 @@ def add_child_data(event, context):
         GROUP_NAME: body.get(GROUP_NAME, teacher_data[GROUP_NAME]),
         PARENT1_PHONE_NUMBER: body.get(PARENT1_PHONE_NUMBER, None),
         PARENT2_PHONE_NUMBER: body.get(PARENT2_PHONE_NUMBER, None),
-        BIRTHDAY_DATA: birthday_date,
+        BIRTHDAY_DATE: birthday_date,
         GENDER: gender
     }
 

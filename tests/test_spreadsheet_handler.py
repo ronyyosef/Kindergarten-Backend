@@ -19,7 +19,7 @@ def test_spreadsheet_handler():
                               parent1_phone_number='test_parent1_phone_number',
                               parent2_phone_number='test_parent2_phone_number',
                               group_name='test_group_name',
-                              birthday_data='',
+                              birthday_date='',
                               gender=''
                               )
     AttendanceHandler.add_attendance(
