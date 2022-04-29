@@ -16,32 +16,27 @@ from shared.hanlders.lambda_decorator import lambda_decorator
 def add_attendance_data(event, context):
     data = InputData(**event)
 
-    current_time = datetime.datetime.now().strftime("%H:%M:%S")
     child_attendance = AttendanceHandler.get_attendance(child_id=data.child_id)
-    if AttendanceHandler.get_attendance(child_id=data.child_id) is None:
-        child_attendance = AttendanceHandler.add_attendance(
-            child_id=data.child_id, kindergarten_id=data.kindergarten_id)
+    attendance_exists = True if child_attendance is not None else False
 
-    if data.is_present == "yes":
-        child_attendance["time_in"] = current_time
-        child_attendance["is_present"] = "yes"
-        child_attendance["time_out"] = None
-    elif data.is_present == "no":
-        child_attendance["time_out"] = current_time
-        child_attendance["is_present"] = "no"
-    elif data.is_present == "notified_missing":
-        child_attendance["is_present"] = "notified_missing"
-        child_attendance["time_in"] = None
-        child_attendance["time_out"] = None
-
-    AttendanceHandler.update_attendance(
-        child_id=child_attendance.get(
-            CHILD_ID, None), date_query=child_attendance.get(
-            DATE, None), kindergarten_id=child_attendance.get(
-            KINDERGARTEN_ID, None), time_out=child_attendance.get(
-            TIME_OUT, None), time_in=child_attendance.get(
-            TIME_IN, None), is_present=child_attendance.get(
-            IS_PRESENT, None))
+    if attendance_exists:
+        if data.is_present == "yes":
+            AttendanceHandler.update_attendance(child_id=data.child_id, kindergarten_id=data.kindergarten_id,
+                                                is_present="yes")
+        elif data.is_present == "no":
+            AttendanceHandler.delete_attendance(child_id=data.child_id)
+        elif data.is_present == "notified_missing":
+            AttendanceHandler.update_attendance(child_id=data.child_id, kindergarten_id=data.kindergarten_id,
+                                                is_present="notified_missing")
+    else:
+        if data.is_present == "yes":
+            AttendanceHandler.add_attendance(child_id=data.child_id, kindergarten_id=data.kindergarten_id,
+                                             is_present="yes")
+        elif data.is_present == "no":
+            pass
+        elif data.is_present == "notified_missing":
+            AttendanceHandler.add_attendance(child_id=data.child_id, kindergarten_id=data.kindergarten_id,
+                                             is_present="notified_missing")
 
 
 class InputData(BaseModel):
