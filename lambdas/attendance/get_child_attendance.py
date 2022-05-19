@@ -15,6 +15,7 @@ def get_child_attendance(event, context):
     current_month = datetime.now().strftime('%m')
     month = event[EVENT_QUERY_STRING]["month"] if "month" in event[
         EVENT_QUERY_STRING] else current_month
+    month = month.zfill(2)
 
     if child_exists:
         return SpreadsheetHandler.get_child_spreadsheet(
