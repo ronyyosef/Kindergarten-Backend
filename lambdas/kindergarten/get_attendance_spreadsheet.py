@@ -1,5 +1,5 @@
 import csv, io
-
+from requests.models import Response
 from shared.const import TEACHER_ID, EVENT_QUERY_STRING
 from shared.hanlders.SpreadsheetHandler import SpreadsheetHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -26,13 +26,5 @@ def get_attendance_spreadsheet(event, context):
         cw.writerow(row)
     resFile = si.getvalue()
 
-    response = {
-        "statusCode": 200,
-        "headers": {
-            "Content-Type": "text/csv",
-            "Content-Disposition": "attachment;filename=report.csv"
-        },
-        "body": resFile
-    }
-    return response
+    return resFile
 
