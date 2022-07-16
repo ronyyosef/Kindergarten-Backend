@@ -13,14 +13,26 @@ class SpreadsheetHandler:
         kindergarten_data = KindergartenHandler.get_kindergarten(kindergarten_id)
         kindergarten_id = kindergarten_data["kindergarten_id"]
 
-        children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id, )
-        report_generated = {}
+        children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id)
+        report_generated = []
+        report_generated.append = ["להכניס פה כותרת של הדוח"]
+        report_generated.append = list(range(1,31+1)) # Creating days column names 
+        
         for child in children:
             child_name = f'{child["first_name"]} {child["last_name"]}'
             child_id = child["child_id"]
-            report_generated[child_id] = "child_name, day, time_in, time_out, total_stay, ate_pizza\n"
-            child["monthly_attendance_report"] = AttendanceHandler.get_attendance_for_entire_month(child["child_id"],
+
+            monthly_attendance_report = AttendanceHandler.get_attendance_for_entire_month(child["child_id"],
                                                                                                    month)
+
+            if monthly_attendance_report:
+                for attendance in monthly_attendance_report:
+                    if attendance[IS_PRESENT] == "notified_missing":
+                        report_generated["notified_missing"].append(attendance["date"])
+                    if attendance[IS_PRESENT] == "yes":
+                        report_generated["arrived"].append(attendance["date"])
+
+            child_addndance_vector =[]
 
             if child["monthly_attendance_report"] is None:
                 child["monthly_attendance_report"] = []
@@ -31,22 +43,13 @@ class SpreadsheetHandler:
                 ate_pizza = ""
                 day = attendance.get("date", None)
 
-                if time_in and time_out:
-                    time_in_obj = datetime.strptime(time_in, "%H:%M:%S")
-                    time_out_obj = datetime.strptime(time_out, "%H:%M:%S")
-                    if time_out_obj > time_in_obj:
-                        total_stay = str(time_out_obj - time_in_obj)
-                else:
-                    time_in = time_out = ""
-
                 report_generated[child_id] += (','.join(
                     [child_name, day, time_in, time_out, total_stay,
                      ate_pizza])) + "\n"
-
         return report_generated
 
     @staticmethod
-    def get_child_spreadsheet(child_id: str, month="0"+str(date.today().month)):
+    def get_child_spreadsheet(child_id: str, month):
         child = ChildrenHandler.get_child(child_id)
         report_generated = {}
         report_generated["notified_missing"] = []
@@ -62,3 +65,5 @@ class SpreadsheetHandler:
         report_generated["notified_missing"] = sorted(report_generated["notified_missing"])
         report_generated["arrived"] = sorted(report_generated["arrived"])
         return report_generated
+        
+SpreadsheetHandler.get_kindergarten_spreadsheet('SpreadsheetHandler')
