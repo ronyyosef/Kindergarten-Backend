@@ -398,7 +398,7 @@ functions:
           integration: lambda
           cors: true
           request:
-            template: ${file(./response_apigateway_csv.yml)}
+            template: ${file(./request_apigateway.yml)}
           response: ${file(./response_apigateway_csv.yml)}
           authorizer:
             name: PrivateAuthorizer
