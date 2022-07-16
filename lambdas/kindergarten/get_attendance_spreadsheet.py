@@ -6,6 +6,7 @@ from datetime import datetime
 from shared.const import MARCH, MAY, IS_PRESENT
 from datetime import date
 
+
 @lambda_decorator
 def get_attendance_spreadsheet(event, context):
     kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(event[TEACHER_ID])
@@ -16,4 +17,14 @@ def get_attendance_spreadsheet(event, context):
     month = month.zfill(2)
     attendance_report_data = SpreadsheetHandler.get_kindergarten_spreadsheet(kindergarten_id=kindergarten_id,
                                                                              month=month)
-    return attendance_report_data
+    response = {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "text/csv",
+            "Content-Disposition": "attachment;filename=report.csv"
+        },
+        "body": attendance_report_data
+    }
+
+    return response
+
