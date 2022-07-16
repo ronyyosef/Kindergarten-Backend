@@ -1,3 +1,5 @@
+import csv, io
+
 from shared.const import TEACHER_ID, EVENT_QUERY_STRING
 from shared.hanlders.SpreadsheetHandler import SpreadsheetHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
@@ -17,14 +19,20 @@ def get_attendance_spreadsheet(event, context):
     month = month.zfill(2)
     attendance_report_data = SpreadsheetHandler.get_kindergarten_spreadsheet(kindergarten_id=kindergarten_id,
                                                                              month=month)
+
+    si = io.StringIO()
+    cw = csv.writer(si)
+    for row in attendance_report_data:
+        cw.writerow(row)
+    resFile = si.getvalue()
+
     response = {
         "statusCode": 200,
         "headers": {
             "Content-Type": "text/csv",
             "Content-Disposition": "attachment;filename=report.csv"
         },
-        "body": attendance_report_data
+        "body": resFile
     }
-
     return response
 
