@@ -1,0 +1,12 @@
+Resources:
+  ParentData:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "parent_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "parent_id"
+          KeyType: "HASH"
+      BillingMode: PAY_PER_REQUEST
+      TableName: "ParentData"

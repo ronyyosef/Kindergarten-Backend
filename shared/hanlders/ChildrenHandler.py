@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple, Optional
 
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
@@ -124,6 +124,15 @@ class ChildrenHandler:
         item[GROUP_NAME] = group_name
         child_table.put_item(Item=item)
 
+    @staticmethod
+    def get_child_by_parent_number(parent_number: str) -> Optional[str]:
+        response = child_table.scan(
+            FilterExpression=Key(PARENT1_PHONE_NUMBER).eq(parent_number) | Key(PARENT2_PHONE_NUMBER).eq(parent_number))
+        if response['Count'] == 1:
+            return response['Items'][0]
+        else:
+            return None
+
 
 # ChildrenHandler.update_child_group_name(child_id="b19cc6dc-641c-4a3d-8b41-3adebe2379f4",kindergarten_id= "71801af0", group_name="1")
 
@@ -152,5 +161,5 @@ def sort_children_list(children: list, ) -> list:
         child["first_name"], child["last_name"]))
 
     res = sorted_list_of_children_main_group + \
-        sorted_list_of_children_without_main_group
+          sorted_list_of_children_without_main_group
     return res
