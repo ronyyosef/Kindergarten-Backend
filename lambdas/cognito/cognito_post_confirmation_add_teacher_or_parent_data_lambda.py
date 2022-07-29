@@ -18,7 +18,7 @@ def add_teacher_or_parent(event, context):
     user_id = event['userName']
     phone_number = event['request']['userAttributes'][PHONE_NUMBER]
     child = ChildrenHandler.get_child_by_parent_number(phone_number)
-    if child is None:
+    if child is not None:
         TeacherHandler.add_teacher(
             teacher_id=user_id, phone_number=phone_number)
         send_new_user_msg(f"New Teacher register, phone number: {phone_number}")
