@@ -488,8 +488,8 @@ resources:
   - ${file(resources/dynamodb/ChildData.yml)}
   - ${file(resources/dynamodb/KindergartenData.yml)}
   - ${file(resources/dynamodb/TeacherData.yml)}
-  - ${file(resources/dynamodb/GroupsData.yml)}
-  - ${file(resources/dynamodb/ParentData.yml)}
+#  - ${file(resources/dynamodb/GroupsData.yml)}
+#  - ${file(resources/dynamodb/ParentData.yml)}
 
   #  - ${file(resources/dynamodb/Websocket.yml)}
 
