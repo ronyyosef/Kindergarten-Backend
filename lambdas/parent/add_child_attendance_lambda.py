@@ -6,6 +6,11 @@ from shared.hanlders.lambda_decorator import lambda_decorator
 
 @lambda_decorator
 def add_child_attendance(event, context):
+    return {
+        DATE: event[DATE],
+        CHILD_ID: event[CHILD_ID],
+        IS_PRESENT: event[IS_PRESENT],
+        KINDERGARTEN_ID: event[KINDERGARTEN_ID]}
     date = event[DATE]
     child_id = event[CHILD_ID]
     is_present = event[IS_PRESENT]
