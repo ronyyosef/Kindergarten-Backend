@@ -20,3 +20,8 @@ class ParentHandler:
             KINDERGARTEN_ID: kindergarten_id
         }
         child_table.put_item(Item=new_child)
+
+    @staticmethod
+    def get_parent_data(user_id):
+        return child_table.get_item(Key={
+            PARENT_ID: user_id})
