@@ -33,6 +33,7 @@ Resources:
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/KindergartenData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/TeacherData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/GroupsData
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ParentData
                 - Effect: Allow
                   Action:
                     - s3:GetObject
