@@ -11,10 +11,6 @@ def add_child_attendance(event, context):
         CHILD_ID: event[EVENT_BODY][CHILD_ID],
         IS_PRESENT: event[EVENT_BODY][IS_PRESENT],
         KINDERGARTEN_ID: event[EVENT_BODY][KINDERGARTEN_ID]}
-    date = event[DATE]
-    child_id = event[CHILD_ID]
-    is_present = event[IS_PRESENT]
-    kindergarten_id = event[KINDERGARTEN_ID]
 
     AttendanceHandler.add_attendance(
         date_query=date,
