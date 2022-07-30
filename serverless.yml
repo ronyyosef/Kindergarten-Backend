@@ -241,7 +241,7 @@ functions:
         - 'lambdas/teacher/**'
 
   CogintoPostConfirmation:
-    handler: lambdas/cognito/cognito_post_confirmation_add_teacher_data_lambda.add_teacher_data
+    handler: lambdas/cognito/cognito_post_confirmation_add_teacher_or_parent_data_lambda.add_teacher_or_parent
     role: CogintoPostConfirmationRole
 #    events:
 #      - cognitoUserPool:
@@ -484,11 +484,12 @@ resources:
   - ${file(resources/iam/WebsocketRole.yml)}
   - ${file(resources/iam/AttandanceDataStreamRole.yml)}
   # dynamodb
-  - ${file(resources/dynamodb/AttendanceData.yml)}
-  - ${file(resources/dynamodb/ChildData.yml)}
-  - ${file(resources/dynamodb/KindergartenData.yml)}
-  - ${file(resources/dynamodb/TeacherData.yml)}
-  - ${file(resources/dynamodb/GroupsData.yml)}
+#  - ${file(resources/dynamodb/AttendanceData.yml)}
+#  - ${file(resources/dynamodb/ChildData.yml)}
+#  - ${file(resources/dynamodb/KindergartenData.yml)}
+#  - ${file(resources/dynamodb/TeacherData.yml)}
+#  - ${file(resources/dynamodb/GroupsData.yml)}
+#  - ${file(resources/dynamodb/ParentData.yml)}
   #  - ${file(resources/dynamodb/Websocket.yml)}
 
   # cognito
