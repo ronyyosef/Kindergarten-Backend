@@ -33,4 +33,5 @@ def add_teacher_or_parent(event, context):
             child_id=child[CHILD_ID],
             kindergarten_id=child[KINDERGARTEN_ID])
         send_new_user_msg(f"New Parent register, phone number: {phone_number}")
+
     return event
