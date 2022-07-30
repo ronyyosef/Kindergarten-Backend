@@ -448,6 +448,26 @@ functions:
       patterns:
         - 'lambdas/parent/**'
 
+  AddParentChildAttendance:
+    handler: lambdas/parent/add_child_attendance_lambda.add_child_attendance
+    role: AddAttendanceDataRole
+    events:
+      - http:
+          path: parent/attendance
+          method: post
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/parent/**'
+
   connectHandler:
     handler: lambdas/websocket/connect_lambda.connect
     role: WebsocketRole
