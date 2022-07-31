@@ -56,3 +56,4 @@ class SpreadsheetHandler:
         report_generated["arrived"] = sorted(report_generated["arrived"])
         return report_generated
 
+#SpreadsheetHandler.get_kindergarten_spreadsheet('238595d7','06')
