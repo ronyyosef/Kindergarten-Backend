@@ -54,8 +54,8 @@ class InputData(BaseModel):
         except KeyError:
             raise MyException("Input Error", INPUT_ERROR)
 
-        if values[IS_PRESENT] != 'yes' and values[IS_PRESENT] != 'no':
-            raise MyException("is_present should be: yes|no", INPUT_ERROR)
+        if values[IS_PRESENT] not in ['yes', 'no', 'notified_missing']:
+            raise MyException("is_present should be: yes / no / notified_missing", INPUT_ERROR)
 
         values[
             KINDERGARTEN_ID] = TeacherHandler.get_teacher_kindergarten_id(
