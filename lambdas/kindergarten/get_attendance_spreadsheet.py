@@ -20,11 +20,11 @@ def get_attendance_spreadsheet(event, context):
     attendance_report_data = SpreadsheetHandler.get_kindergarten_spreadsheet(kindergarten_id=kindergarten_id,
                                                                              month=month)
 
-    si = io.StringIO()
-    cw = csv.writer(si)
-    for row in attendance_report_data:
-        cw.writerow(row)
-    resFile = si.getvalue()
+    with open("out.csv", "w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.writer(f)
+        writer.writerows(attendance_report_data)
 
-    return resFile
+    # upload file to s3 here.
+    # delete file from local storage
+    return "s3 link to file"
 
