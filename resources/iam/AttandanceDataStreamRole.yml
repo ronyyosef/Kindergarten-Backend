@@ -41,6 +41,7 @@ Resources:
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/GroupsData
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/WebsocketConnectionManager/*
                     - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/WebsocketConnectionManager
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ParentData
                 - Effect: Allow
                   Action:
                     - execute-api:ManageConnections

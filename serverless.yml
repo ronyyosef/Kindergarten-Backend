@@ -241,7 +241,7 @@ functions:
         - 'lambdas/teacher/**'
 
   CogintoPostConfirmation:
-    handler: lambdas/cognito/cognito_post_confirmation_add_teacher_data_lambda.add_teacher_data
+    handler: lambdas/cognito/cognito_post_confirmation_add_teacher_or_parent_data_lambda.add_teacher_or_parent
     role: CogintoPostConfirmationRole
 #    events:
 #      - cognitoUserPool:
@@ -428,6 +428,46 @@ functions:
       patterns:
         - 'lambdas/attendance/**'
 
+  GetParentData:
+    handler: lambdas/parent/get_parent_data_lambda.get_parent_data
+    role: AddAttendanceDataRole
+    events:
+      - http:
+          path: parent
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/parent/**'
+
+  AddParentChildAttendance:
+    handler: lambdas/parent/add_child_attendance_lambda.add_child_attendance
+    role: AddAttendanceDataRole
+    events:
+      - http:
+          path: parent/attendance
+          method: post
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+          authorizer:
+            name: PrivateAuthorizer
+            type: COGNITO_USER_POOLS
+            arn: ${self:custom.cognitoAuthorizerArn}
+    package:
+      patterns:
+        - 'lambdas/parent/**'
+
   connectHandler:
     handler: lambdas/websocket/connect_lambda.connect
     role: WebsocketRole
@@ -489,6 +529,7 @@ resources:
   - ${file(resources/dynamodb/KindergartenData.yml)}
   - ${file(resources/dynamodb/TeacherData.yml)}
   - ${file(resources/dynamodb/GroupsData.yml)}
+  - ${file(resources/dynamodb/ParentData.yml)}
   #  - ${file(resources/dynamodb/Websocket.yml)}
 
   # cognito

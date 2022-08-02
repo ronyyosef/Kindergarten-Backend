@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
@@ -123,6 +123,15 @@ class ChildrenHandler:
             raise MyException('child does not exist', INPUT_ERROR)
         item[GROUP_NAME] = group_name
         child_table.put_item(Item=item)
+
+    @staticmethod
+    def get_child_by_parent_number(parent_number: str) -> Optional[str]:
+        response = child_table.scan(
+            FilterExpression=Key(PARENT1_PHONE_NUMBER).eq(parent_number) | Key(PARENT2_PHONE_NUMBER).eq(parent_number))
+        if response['Count'] == 1:
+            return response['Items'][0]
+        else:
+            return None
 
 
 # ChildrenHandler.update_child_group_name(child_id="b19cc6dc-641c-4a3d-8b41-3adebe2379f4",kindergarten_id= "71801af0", group_name="1")
