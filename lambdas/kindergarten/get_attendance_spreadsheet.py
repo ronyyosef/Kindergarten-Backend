@@ -1,7 +1,7 @@
 import csv
 import logging
 import os
-# from shared.hanlders.lambda_decorator import lambda_decorator
+from shared.hanlders.lambda_decorator import lambda_decorator
 from datetime import datetime
 
 import boto3 as boto3
@@ -23,7 +23,7 @@ s3_client = boto3.client("s3",
 
 
 
-#@lambda_decorator
+@lambda_decorator
 def get_attendance_spreadsheet(event, context):
     kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(event[TEACHER_ID])
 
@@ -73,4 +73,3 @@ def upload_file(file_name, bucket, object_name=None):
         return False
     return True
 
-get_attendance_spreadsheet({TEACHER_ID:"03118409-b0f2-4464-94eb-93d2cd728b16",EVENT_QUERY_STRING:{"month":'8'}},{})
