@@ -15,7 +15,7 @@ class SpreadsheetHandler:
 
         children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id)
         report_generated = []
-        report_generated.append(["להכניס פה כותרת של הדוח"])
+        report_generated.append(["דוח נוכחות"])
         list_of_days_index = list(range(1, 31 + 1))
         list_of_days_index.insert(0,'') # blank cell for alignment
         report_generated.append(list_of_days_index )# Creating days column names
