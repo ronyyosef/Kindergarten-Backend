@@ -21,8 +21,6 @@ s3_client = boto3.client("s3",
                          )
 
 
-
-
 @lambda_decorator
 def get_attendance_spreadsheet(event, context):
     kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(event[TEACHER_ID])
@@ -33,14 +31,16 @@ def get_attendance_spreadsheet(event, context):
     month = month.zfill(2)
     attendance_report_data = SpreadsheetHandler.get_kindergarten_spreadsheet(kindergarten_id=kindergarten_id,
                                                                              month=month)
+    if not os.path.exists('tmp'):
+        os.makedirs('tmp')
 
-    with open("out.csv", "w", newline="", encoding="utf-8-sig") as f:
+    with open("./tmp/out.csv", "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.writer(f)
         writer.writerows(attendance_report_data)
 
-    upload_file("out.csv", PHOTOS_BUCKET, f"{event[TEACHER_ID]}.csv")
-    if os.path.isfile("out.csv"):
-        os.remove("out.csv")
+    upload_file("/tmp/out.csv", PHOTOS_BUCKET, f"{event[TEACHER_ID]}.csv")
+    if os.path.isfile("/tmp/out.csv"):
+        os.remove("/tmp/out.csv")
 
     url = s3_client.generate_presigned_url(
         ClientMethod='get_object',
@@ -72,4 +72,5 @@ def upload_file(file_name, bucket, object_name=None):
         logging.error(e)
         return False
     return True
+
 
