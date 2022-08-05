@@ -36,7 +36,7 @@ def get_attendance_spreadsheet(event, context):
         writer = csv.writer(f)
         writer.writerows(attendance_report_data)
 
-    upload_file("/tmp/out.csv", PHOTOS_BUCKET, f"{event[TEACHER_ID]}.csv")
+    upload_file("/tmp/out.csv", PHOTOS_BUCKET, f"Attendance {month}.csv")
     if os.path.isfile("/tmp/out.csv"):
         os.remove("/tmp/out.csv")
 
