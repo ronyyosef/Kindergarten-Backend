@@ -40,7 +40,7 @@ def add_attendance_data(event, context):
 
 
 class InputData(BaseModel):
-    child_id: str = Field(..., alies=CHILD_ID)
+    child_id: str = Field(..., alias=CHILD_ID)
     is_present: str = Field(..., alias=IS_PRESENT)
     teacher_id: str = Field(..., alias=TEACHER_ID)
     kindergarten_id: str = Field(..., alias=KINDERGARTEN_ID)
