@@ -460,10 +460,6 @@ functions:
           request:
             template: ${file(./request_apigateway.yml)}
           response: ${file(./response_apigateway.yml)}
-          authorizer:
-            name: PrivateAuthorizer
-            type: COGNITO_USER_POOLS
-            arn: ${self:custom.cognitoAuthorizerArn}
     package:
       patterns:
         - 'lambdas/parent/**'
