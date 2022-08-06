@@ -8,46 +8,36 @@ from shared.error_handling.exception import MyException
 from shared.hanlders.AttendanceHandler import AttendanceHandler
 from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
-from shared.hanlders.lambda_decorator import lambda_decorator
 
 
-@lambda_decorator
+# from shared.hanlders.lambda_decorator import lambda_decorator
+
+
+#@lambda_decorator
 def add_child_attendance(event, context):
-    data = InputData(**event)
+    teacher_id = event[TEACHER_ID]
+    event_body = event["body"]
+    is_present = event_body["is_present"]
+    child_id = event_body["id"]
+    attendance_date = event_body["attendance_date"]
+    kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(teacher_id)
 
-    child_attendance = AttendanceHandler.get_attendance(child_id=data.child_id, date_query=data.attendance_date)
+
+    child_attendance = AttendanceHandler.get_attendance(child_id=child_id, date_query=attendance_date)
     attendance_exists = True if child_attendance is not None else False
 
     if attendance_exists:
-        if data.is_present == "no":
-            AttendanceHandler.delete_attendance(child_id=data.child_id, date_query=data.attendance_date)
-        elif data.is_present == "notified_missing":
-            AttendanceHandler.update_attendance(child_id=data.child_id, kindergarten_id=data.kindergarten_id,
-                                                is_present="notified_missing", date_query=data.attendance_date)
+        if is_present == "no":
+            AttendanceHandler.delete_attendance(child_id=child_id, date_query=attendance_date)
+        elif is_present == "notified_missing":
+            AttendanceHandler.update_attendance(child_id=child_id, kindergarten_id=kindergarten_id,
+                                                is_present="notified_missing", date_query=attendance_date)
     else:
-        if data.is_present == "no":
+        if is_present == "no":
             pass
-        elif data.is_present == "notified_missing":
-            AttendanceHandler.add_attendance(child_id=data.child_id, kindergarten_id=data.kindergarten_id,
-                                             is_present="notified_missing", date_query=data.attendance_date)
+        elif is_present == "notified_missing":
+            AttendanceHandler.add_attendance(child_id=child_id, kindergarten_id=kindergarten_id,
+                                             is_present="notified_missing", date_query=attendance_date)
 
 
-class InputData(BaseModel):
-    child_id: str = Field(..., alias=CHILD_ID)
-    is_present: str = Field(..., alias=IS_PRESENT)
-    kindergarten_id: str = Field(..., alias=KINDERGARTEN_ID)
-    attendance_date: str = Field(..., alias=ATTENDANCE_DATE)
-
-    @root_validator(pre=True)
-    @classmethod
-    def validate_data(cls, values):
-        try:
-            values[CHILD_ID] = values[EVENT_BODY][ID]
-            values[IS_PRESENT] = values[EVENT_BODY][IS_PRESENT]
-        except KeyError:
-            raise MyException("Input Error", INPUT_ERROR)
-
-        if values[IS_PRESENT] not in ['no', 'notified_missing']:
-            raise MyException("is_present should be:  no / notified_missing", INPUT_ERROR)
-
-        return values
+add_child_attendance({"teacher_id":"f2cc2909-386a-4de8-930d-09a89fcf6db5","body": {"attendance_date": "2022-08-06","id": "a3fe3ef2-80d6-4ab2-bee1-909593a3ff85","is_present": "notified_missing"}}, {})
