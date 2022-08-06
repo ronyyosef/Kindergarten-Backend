@@ -10,10 +10,10 @@ from shared.hanlders.ChildrenHandler import ChildrenHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 
 
-# from shared.hanlders.lambda_decorator import lambda_decorator
+from shared.hanlders.lambda_decorator import lambda_decorator
 
 
-#@lambda_decorator
+@lambda_decorator
 def add_child_attendance(event, context):
     teacher_id = event[TEACHER_ID]
     event_body = event["body"]
@@ -40,4 +40,3 @@ def add_child_attendance(event, context):
                                              is_present="notified_missing", date_query=attendance_date)
 
 
-add_child_attendance({"teacher_id":"f2cc2909-386a-4de8-930d-09a89fcf6db5","body": {"attendance_date": "2022-08-06","id": "a3fe3ef2-80d6-4ab2-bee1-909593a3ff85","is_present": "notified_missing"}}, {})
