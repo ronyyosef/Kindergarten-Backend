@@ -454,7 +454,7 @@ functions:
     events:
       - http:
           path: parent-exist
-          method: get
+          method: post
           integration: lambda
           cors: true
           request:
