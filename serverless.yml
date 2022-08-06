@@ -448,6 +448,22 @@ functions:
       patterns:
         - 'lambdas/parent/**'
 
+  ParentExist:
+    handler: lambdas/parent/get_parent_exist_lambda.get_parent_exist
+    role: AddAttendanceDataRole
+    events:
+      - http:
+          path: parent-exist
+          method: get
+          integration: lambda
+          cors: true
+          request:
+            template: ${file(./request_apigateway.yml)}
+          response: ${file(./response_apigateway.yml)}
+    package:
+      patterns:
+        - 'lambdas/parent/**'
+
   AddParentChildAttendance:
     handler: lambdas/parent/add_child_attendance_lambda.add_child_attendance
     role: AddAttendanceDataRole
