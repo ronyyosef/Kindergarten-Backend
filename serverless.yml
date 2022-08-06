@@ -454,7 +454,7 @@ functions:
     events:
       - http:
           path: parent-exist
-          method: get
+          method: post
           integration: lambda
           cors: true
           request:
@@ -471,26 +471,6 @@ functions:
       - http:
           path: parent/attendance
           method: post
-          integration: lambda
-          cors: true
-          request:
-            template: ${file(./request_apigateway.yml)}
-          response: ${file(./response_apigateway.yml)}
-          authorizer:
-            name: PrivateAuthorizer
-            type: COGNITO_USER_POOLS
-            arn: ${self:custom.cognitoAuthorizerArn}
-    package:
-      patterns:
-        - 'lambdas/parent/**'
-
-  GetUserType:
-    handler: lambdas/cognito/get_user_type_lambda.get_user_type
-    role: AddAttendanceDataRole
-    events:
-      - http:
-          path: user-type
-          method: get
           integration: lambda
           cors: true
           request:
