@@ -16,7 +16,7 @@ from shared.hanlders.lambda_decorator import lambda_decorator
 @lambda_decorator
 def add_child_attendance(event, context):
     teacher_id = event[TEACHER_ID]
-    event_body = event["body"]
+    event_body =  event[EVENT_BODY]
     is_present = event_body["is_present"]
     child_id = event_body["id"]
     attendance_date = event_body["attendance_date"]
