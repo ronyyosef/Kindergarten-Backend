@@ -12,7 +12,6 @@ class ParentHandler:
             phone_number: str,
             child_id: str,
             kindergarten_id: str):
-
         new_child = {
             PARENT_ID: parent_id,
             PHONE_NUMBER: phone_number,
@@ -25,3 +24,8 @@ class ParentHandler:
     def get_parent_data(user_id):
         return child_table.get_item(Key={
             PARENT_ID: user_id})
+
+    @staticmethod
+    def get_parent_kindergarten_id(parent_id: str) -> str:
+        parent_data = ParentHandler.get_parent_data(parent_id)
+        return parent_data.get(KINDERGARTEN_ID)
