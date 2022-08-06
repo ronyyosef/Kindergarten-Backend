@@ -2,7 +2,7 @@ import datetime
 
 from pydantic import BaseModel, Field, root_validator
 from shared.const import TEACHER_ID, CHILD_ID, DATE, KINDERGARTEN_ID, TIME_OUT, \
-    TIME_IN, IS_PRESENT, EVENT_BODY, ID, ATTENDANCE_DATE
+    TIME_IN, IS_PRESENT, EVENT_BODY, ID
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.AttendanceHandler import AttendanceHandler
