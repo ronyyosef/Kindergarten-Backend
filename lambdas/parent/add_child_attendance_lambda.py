@@ -11,10 +11,10 @@ from shared.hanlders.ParentHandler import ParentHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 
 
-# from shared.hanlders.lambda_decorator import lambda_decorator
+from shared.hanlders.lambda_decorator import lambda_decorator
 
 
-# @lambda_decorator
+@lambda_decorator
 def add_child_attendance(event, context):
     teacher_id = event[TEACHER_ID]
     event_body = event[EVENT_BODY]
