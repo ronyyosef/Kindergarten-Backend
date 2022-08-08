@@ -28,4 +28,4 @@ class ParentHandler:
     @staticmethod
     def get_parent_kindergarten_id(parent_id: str) -> str:
         parent_data = ParentHandler.get_parent_data(parent_id)
-        return parent_data.get(KINDERGARTEN_ID)
+        return parent_data['Item'].get(KINDERGARTEN_ID)
