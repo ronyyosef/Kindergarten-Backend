@@ -1,6 +1,6 @@
 # return child_id and kindergarten id by  access token of parent
 from shared.const import TEACHER_ID, KINDERGARTEN_ID, CHILD_ID, PHOTO_LINK
-from shared.hanlders.ParendHandler import ParentHandler
+from shared.hanlders.ParentHandler import ParentHandler
 
 
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler

@@ -13,40 +13,33 @@ class SpreadsheetHandler:
         kindergarten_data = KindergartenHandler.get_kindergarten(kindergarten_id)
         kindergarten_id = kindergarten_data["kindergarten_id"]
 
-        children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id, )
-        report_generated = {}
+        children = ChildrenHandler.get_children_for_kindergarten(kindergarten_id)
+        report_generated = []
+        report_generated.append(["דוח נוכחות"])
+        list_of_days_index = list(range(1, 31 + 1))
+        list_of_days_index.insert(0,'') # blank cell for alignment
+        report_generated.append(list_of_days_index )# Creating days column names
+        
         for child in children:
             child_name = f'{child["first_name"]} {child["last_name"]}'
             child_id = child["child_id"]
-            report_generated[child_id] = "child_name, day, time_in, time_out, total_stay, ate_pizza\n"
-            child["monthly_attendance_report"] = AttendanceHandler.get_attendance_for_entire_month(child["child_id"],
-                                                                                                   month)
 
-            if child["monthly_attendance_report"] is None:
-                child["monthly_attendance_report"] = []
-            for attendance in child["monthly_attendance_report"]:
-                time_in = attendance.get("time_in", None)
-                time_out = attendance.get("time_out", None)
-                total_stay = ""
-                ate_pizza = ""
-                day = attendance.get("date", None)
+            monthly_attendance_report = AttendanceHandler.get_attendance_for_entire_month(child_id, month)
+            child_addndance_vector = []
+            for i in range(31):
+                child_addndance_vector.append('-')
 
-                if time_in and time_out:
-                    time_in_obj = datetime.strptime(time_in, "%H:%M:%S")
-                    time_out_obj = datetime.strptime(time_out, "%H:%M:%S")
-                    if time_out_obj > time_in_obj:
-                        total_stay = str(time_out_obj - time_in_obj)
-                else:
-                    time_in = time_out = ""
+            if monthly_attendance_report:
+                for attendance in monthly_attendance_report:
+                    if attendance[IS_PRESENT] == "yes":
+                        child_addndance_vector[int(attendance["date"].split("-")[-1])-1] = 'YES'
 
-                report_generated[child_id] += (','.join(
-                    [child_name, day, time_in, time_out, total_stay,
-                     ate_pizza])) + "\n"
-
+            child_addndance_vector.insert(0, child_name)
+            report_generated.append(child_addndance_vector)
         return report_generated
 
     @staticmethod
-    def get_child_spreadsheet(child_id: str, month="0"+str(date.today().month)):
+    def get_child_spreadsheet(child_id: str, month):
         child = ChildrenHandler.get_child(child_id)
         report_generated = {}
         report_generated["notified_missing"] = []
@@ -62,3 +55,5 @@ class SpreadsheetHandler:
         report_generated["notified_missing"] = sorted(report_generated["notified_missing"])
         report_generated["arrived"] = sorted(report_generated["arrived"])
         return report_generated
+
+#SpreadsheetHandler.get_kindergarten_spreadsheet('238595d7','06')

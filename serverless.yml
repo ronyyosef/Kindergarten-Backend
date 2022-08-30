@@ -399,7 +399,7 @@ functions:
           cors: true
           request:
             template: ${file(./request_apigateway.yml)}
-          response: ${file(./response_apigateway.yml)}
+          response: ${file(./response_apigateway_csv.yml)}
           authorizer:
             name: PrivateAuthorizer
             type: COGNITO_USER_POOLS
