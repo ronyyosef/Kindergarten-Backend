@@ -2,7 +2,7 @@ import logging
 
 from shared.const import PHONE_NUMBER, CHILD_ID, KINDERGARTEN_ID
 from shared.hanlders.ChildrenHandler import ChildrenHandler
-from shared.hanlders.ParendHandler import ParentHandler
+from shared.hanlders.ParentHandler import ParentHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.slack_notification import send_new_user_msg
 

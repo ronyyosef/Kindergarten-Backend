@@ -1,5 +1,5 @@
 from shared.const import TEACHER_ID
-from shared.hanlders.ParendHandler import ParentHandler
+from shared.hanlders.ParentHandler import ParentHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
 
 
