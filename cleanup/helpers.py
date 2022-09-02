@@ -67,7 +67,14 @@ def clean_all_dynamodb():
             Key={
                 TEACHER_ID: item[TEACHER_ID]
             })
-
+    # TeacherData
+    table = boto3.resource('dynamodb').Table('ParentData')
+    data = table.scan()['Items']
+    for item in data:
+        table.delete_item(
+            Key={
+                'parent_id': item['parent_id']
+            })
 
 def clean_all_s3():
     s3 = boto3.resource('s3')
