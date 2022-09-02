@@ -2,7 +2,7 @@ from shared.const import KINDERGARTEN_ID, TEACHER_ID, EVENT_QUERY_STRING
 from shared.error_handling.error_codes import INPUT_ERROR
 from shared.error_handling.exception import MyException
 from shared.hanlders.ChildrenHandler import ChildrenHandler
-from shared.hanlders.ParendHandler import ParentHandler
+from shared.hanlders.ParentHandler import ParentHandler
 from shared.hanlders.S3PhotosHandler import S3PhotosHandler
 from shared.hanlders.TeacherHandler import TeacherHandler
 from shared.hanlders.lambda_decorator import lambda_decorator
