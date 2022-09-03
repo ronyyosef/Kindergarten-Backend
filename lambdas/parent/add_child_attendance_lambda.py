@@ -51,4 +51,4 @@ def add_child_attendance(event, context):
                                              is_present="notified_missing", date_query=attendance_date)
         elif is_present == "yes" and is_teacher:
             AttendanceHandler.add_attendance(child_id=child_id, kindergarten_id=kindergarten_id,
-                                             is_present="yes")
+                                             is_present="yes", date_query=attendance_date)
