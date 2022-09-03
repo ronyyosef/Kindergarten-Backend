@@ -21,7 +21,11 @@ def add_child_attendance(event, context):
     is_present = event_body["is_present"]
     child_id = event_body["id"]
     attendance_date = event_body["attendance_date"]
-    kindergarten_id = ParentHandler.get_parent_kindergarten_id(teacher_id)
+    parent_data = ParentHandler.get_parent_data(teacher_id)
+    if parent_data.get('Item') is None:
+        kindergarten_id = TeacherHandler.get_teacher_kindergarten_id(teacher_id)
+    else:
+        kindergarten_id = parent_data.get('Item')[KINDERGARTEN_ID]
 
     child_attendance = AttendanceHandler.get_attendance(child_id=child_id, date_query=attendance_date)
     attendance_exists = True if child_attendance is not None else False
