@@ -40,7 +40,7 @@ def add_child_attendance(event, context):
                 raise Exception("Error, You cannot delete a child attendance if child had attended")
             else:
                 AttendanceHandler.delete_attendance(child_id=child_id, date_query=attendance_date)
-        elif is_present == "notified_missing":
+        elif is_present == "notified_missing" and is_teacher:
             AttendanceHandler.update_attendance(child_id=child_id, kindergarten_id=kindergarten_id,
                                                 is_present="notified_missing", date_query=attendance_date)
     else:
