@@ -39,14 +39,14 @@ def get_attendance_spreadsheet(event, context):
         writer = csv.writer(f)
         writer.writerows(attendance_report_data)
 
-    upload_file("/tmp/out.csv", PHOTOS_BUCKET, f"{month} חודש {kindergarten_name}.csv")
+    upload_file("/tmp/out.csv", PHOTOS_BUCKET, f"{kindergarten_name} חודש {month}.csv")
     if os.path.isfile("/tmp/out.csv"):
         os.remove("/tmp/out.csv")
 
     url = s3_client.generate_presigned_url(
         ClientMethod='get_object',
         Params={'Bucket': PHOTOS_BUCKET,
-                'Key': f"{month} חודש {kindergarten_name}.csv"},
+                'Key': f"{kindergarten_name} חודש {month}.csv"},
         ExpiresIn=PRESIGNED_URL_EXPIRE_TIME)
 
     return url
