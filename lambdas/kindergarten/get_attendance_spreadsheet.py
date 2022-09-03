@@ -46,7 +46,7 @@ def get_attendance_spreadsheet(event, context):
     url = s3_client.generate_presigned_url(
         ClientMethod='get_object',
         Params={'Bucket': PHOTOS_BUCKET,
-                'Key': f"{event[TEACHER_ID]}.csv"},
+                'Key': f"{month} חודש {kindergarten_name}.csv"},
         ExpiresIn=PRESIGNED_URL_EXPIRE_TIME)
 
     return url
